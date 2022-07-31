@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.recognitionor.mvvm_sample.R
+import com.ham.onettsix.R
 import com.ham.onettsix.data.model.Test
 import java.util.*
 
