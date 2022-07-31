@@ -7,10 +7,15 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_launcher_background"
-            android:title="11" />
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_launcher_background"
-            android:title="22" />
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_game"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/menu_game" />
+
     </group>
 </menu>
