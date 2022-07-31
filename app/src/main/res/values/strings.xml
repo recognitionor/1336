@@ -13,4 +13,11 @@
     <string name="home_game_price_title">당첨금액</string>
     <string name="home_game_price">%1$s만원</string>
     <string name="home_game_get_ticket_btn">티켓 득템하러 가기</string>
+    <string name="game_daily_title">티켓 득템하러 가기</string>
+    <string name="game_daily_title_info">참여하면 100% 1 티켓 바로 응모</string>
+    <string name="game_rv_title">동영상 보고 티켓 얻기</string>
+    <string name="game_rv_title_info">영상 보면 최대 3개 티겟 당첨! 참여시 바로 응모</string>
+    <string name="profile_toady_attend">오늘의 참여</string>
+    <string name="profile_toady_attend_divider">/</string>
+    <string name="profile_history">History</string>
 </resources>
