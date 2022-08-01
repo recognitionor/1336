@@ -27,9 +27,9 @@
     </style>
 
     <style name="TranslationBar" parent="@style/ThemeOverlay.AppCompat">
-        <item name="android:showDividers">none</item>
-        <item name="android:dividerHeight">0dp</item>
-        <item name="android:divider">@null</item>
+        <item name="android:showDividers">middle</item>
+<!--        <item name="android:dividerHeight">5dp</item>-->
+        <item name="android:divider">@drawable/grey_background</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
