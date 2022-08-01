@@ -16,28 +16,29 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/remain_time_days_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
             android:gravity="center"
             android:background="@drawable/grey_background"
             android:text="1"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/black"
-            android:textSize="50dp" />
+            android:textColor="@color/text_black"
+            android:lineSpacingExtra="-15sp"
+            android:textSize="32dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/home_remain_drawing_time_days"
-            android:textColor="@color/black"
+            android:textColor="@color/text_black"
             android:textSize="15dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="@color/black"
+        android:textColor="@color/text_black"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:textSize="50dp"
@@ -52,28 +53,29 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/remain_time_hour_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
             android:background="@drawable/grey_background"
             android:gravity="center"
             android:text="2"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/black"
-            android:textSize="50dp" />
+            android:textColor="@color/text_black"
+            android:lineSpacingExtra="-15sp"
+            android:textSize="32dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/home_remain_drawing_time_hours"
-            android:textColor="@color/black"
+            android:textColor="@color/text_black"
             android:textSize="15dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="@color/black"
+        android:textColor="@color/text_black"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:textSize="50dp"
@@ -88,14 +90,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/remain_time_mins_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
             android:background="@drawable/grey_background"
             android:gravity="center"
             android:text="39"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/black"
-            android:textSize="50dp"
+            android:textColor="@color/text_black"
+            android:textSize="32dp"
+            android:lineSpacingExtra="-15sp"
             android:autoSizeMaxTextSize="50dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -103,14 +106,14 @@
             android:layout_height="20dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/home_remain_drawing_time_hours"
-            android:textColor="@color/black"
+            android:textColor="@color/text_black"
             android:textSize="15dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="@color/black"
+        android:textColor="@color/text_black"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:textSize="50dp"
@@ -126,21 +129,22 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/remain_time_secs_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
             android:background="@drawable/grey_background"
             android:gravity="center"
             android:text="59"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/black"
-            android:textSize="50dp" />
+            android:textColor="@color/text_black"
+            android:lineSpacingExtra="-15sp"
+            android:textSize="32dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/home_remain_drawing_time_mins"
-            android:textColor="@color/black"
+            android:textColor="@color/text_black"
             android:textSize="15dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

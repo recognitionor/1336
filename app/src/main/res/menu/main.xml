@@ -4,6 +4,7 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="menu_item"
-        app:showAsAction="never" />
+        android:title="@string/menu_alarm"
+        android:icon="@drawable/ic_alarm"
+        app:showAsAction="always" />
 </menu>

@@ -1,17 +1,16 @@
 package com.ham.onettsix
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layount_main_activity.view.*
+import kotlinx.android.synthetic.main.app_bar_main.view.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -19,6 +18,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        app_bar_main.toolbar.setTitleTextColor(Color.TRANSPARENT)
         setSupportActionBar(app_bar_main.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main, menu)
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
