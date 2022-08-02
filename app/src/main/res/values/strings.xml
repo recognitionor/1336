@@ -3,7 +3,15 @@
     <string name="menu_home">홈</string>
     <string name="menu_game">참여</string>
     <string name="menu_alarm">알람</string>
+    <string name="menu_login">로그인</string>
     <string name="menu_profile">내 정보</string>
+
+
+    <string name="common_error">에러가 발생했습니다. 다시 시도 해주세요</string>
+
+    <string name="splash_title">일삼삼뉵</string>
+
+
     <string name="home_remain_drawing_time_title">당첨까지\n남은 시간</string>
     <string name="home_remain_drawing_time_days">DAYS</string>
     <string name="home_remain_drawing_time_hours">HOURS</string>

@@ -7,4 +7,10 @@
         android:title="@string/menu_alarm"
         android:icon="@drawable/ic_alarm"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="100"
+        android:title="@string/menu_login"
+        app:showAsAction="always" />
 </menu>

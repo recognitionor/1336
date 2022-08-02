@@ -163,7 +163,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/get_ticket_background"
+        android:background="@drawable/main_color_btn_background"
         android:fontFamily="@font/montserrat_extra_bold"
         android:text="@string/home_game_get_ticket_btn"
         android:textColor="@color/white"
