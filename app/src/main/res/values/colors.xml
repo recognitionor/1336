@@ -9,5 +9,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#E5E5E5</color>
     <color name="text_grey">#C4C4C4</color>
+    <color name="grey_070">#282828</color>
+    <color name="grey_030">#d2d2d2</color>
+    <color name="green_02">#4ac370</color>
+    <color name="black">#b3000000</color>
+    <color name="grey_040">#9c9c9c</color>
+    <color name="white_00">#ffffff</color>
 
+    <color name="social_login_kakao">#fee500</color>
+    <color name="black_card_shadow">#19000000</color>
+    <color name="social_login_google">#f44336</color>
+    <color name="social_login_naver">#03cf5d</color>
 </resources>

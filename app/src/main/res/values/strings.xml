@@ -11,7 +11,7 @@
 
     <string name="splash_title">일삼삼뉵</string>
 
-
+    <!--Home-->
     <string name="home_remain_drawing_time_title">당첨까지\n남은 시간</string>
     <string name="home_remain_drawing_time_days">DAYS</string>
     <string name="home_remain_drawing_time_hours">HOURS</string>
@@ -26,13 +26,26 @@
     <string name="home_profile_user_name">%1$s 님은</string>
     <string name="home_profile_user_reward">%1$s 입니다.</string>
 
+
+    <!--티켓참여-->
     <string name="game_daily_title">티켓 득템하러 가기</string>
     <string name="game_daily_title_info">참여하면 100% 1 티켓 바로 응모</string>
     <string name="game_rv_title">동영상 보고 티켓 얻기</string>
     <string name="game_rv_title_info">영상 보면 최대 3개 티겟 당첨! 참여시 바로 응모</string>
 
-
+    <!--Profile-->
     <string name="profile_toady_attend">오늘의 참여</string>
     <string name="profile_toady_attend_divider">/</string>
     <string name="profile_history">History</string>
+
+    <!--Login-->
+    <string name="login_info_title">회원가입 / 로그인</string>
+    <string name="login_google">구글로 로그인</string>
+    <string name="login_kakao">카카오로 로그인</string>
+    <string name="login_naver">네이버로 로그인</string>
+    <string name="login_apple">Apple로 로그인</string>
+    <string name="login_do">로그인 하세요.</string>
+    <string name="login_next_signin">다음에 가입하기 ></string>
+    <string name="login_error">%1$s 소셜 로그인에 실패 했습니다.</string>
+    <string name="naver_login_required_agreement">네이버 로그인시 필수 약관에 동의해주세요.</string>
 </resources>
