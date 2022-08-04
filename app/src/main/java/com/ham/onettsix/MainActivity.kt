@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 activityResult.launch(Intent(this, LoginActivity::class.java))
                 true
             }
+            R.id.action_eula -> {
+                activityResult.launch(Intent(this, PermissionActivity::class.java))
+                true
+            }
             R.id.action_settings -> {
                 true
             }

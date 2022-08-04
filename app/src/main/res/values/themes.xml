@@ -37,8 +37,14 @@
     </style>
 
     <color name="main_color">#657CD7</color>
-<!--    <color name="main_color_gradient_1">#FF7EB0</color>-->
-<!--    <color name="main_color_gradient_2">#F9F871</color>-->
-    <color name="main_color_gradient_1">#9761A4</color>
-    <color name="main_color_gradient_2">#8D69B6</color>
+    <color name="sub_color_gradient_pink">#CA79D0</color>
+    <color name="sub_color_gradient_red">#FF7EB0</color>
+    <color name="sub_color_gradient_grapefruit">#FF9B86</color>
+    <color name="sub_color_gradient_orange">#FF9B86</color>
+    <color name="sub_color_gradient_yellow">#F9F871</color>
+
+    <color name="main_color_matched_gradient_1">#9761A4</color>
+    <color name="main_color_matched_gradient_2">#8D69B6</color>
+
+    <color name="main_color_classy_red">#982137</color>
 </resources>

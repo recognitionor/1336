@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginActivity">
 
-    <include
+    <com.ham.onettsix.view.ToolbarView
         android:id="@+id/login_toolbar_back"
-        layout="@layout/toolbar_back"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_title="@string/menu_login" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,10 +23,10 @@
         android:paddingTop="19dp"
         android:paddingRight="40dp"
         android:paddingBottom="20dp"
-        app:layout_constraintTop_toBottomOf="@id/login_toolbar_back"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/login_toolbar_back">
 
         <TextView
             android:layout_width="match_parent"
@@ -34,8 +34,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
-            android:gravity="center"
             android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
             android:text="@string/login_info_title"
             android:textColor="@color/text_black"
             android:textSize="16sp" />
@@ -51,14 +51,14 @@
                 android:id="@+id/btn_login_google"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:textColor="@color/white_00"
                 android:background="@drawable/login_google_btn_background"
                 android:drawableLeft="@drawable/icn_join_google_24"
+                android:lineHeight="22sp"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="@string/login_google"
-                android:textSize="15dp"
-                android:lineHeight="22sp"/>
+                android:textColor="@color/white_00"
+                android:textSize="15dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login_kakao"
@@ -67,40 +67,40 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_kakao_btn_background"
                 android:drawableLeft="@drawable/icn_join_kakao_24"
+                android:lineHeight="22sp"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="@string/login_kakao"
-                android:textSize="15dp"
-                android:lineHeight="22sp" />
+                android:textSize="15dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login_naver"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:textColor="@color/white_00"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_naver_btn_background"
                 android:drawableLeft="@drawable/icn_join_naver_24"
+                android:lineHeight="22sp"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="@string/login_naver"
-                android:lineHeight="22sp"
+                android:textColor="@color/white_00"
                 android:textSize="15dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_next_signin"
                 android:layout_width="match_parent"
-                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:lineHeight="22sp"
+                android:paddingLeft="40dp"
+                android:paddingTop="20dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="20dp"
                 android:text="@string/login_next_signin"
                 android:textColor="@color/grey_040"
-                android:textSize="13sp"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:lineHeight="22sp"/>
+                android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
 

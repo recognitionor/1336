@@ -1,11 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">1336</string>
+    <!--common-->
+    <string name="must">[필수]</string>
+    <string name="confirm">확인</string>
+
+    <!--menu-->
     <string name="menu_home">홈</string>
     <string name="menu_game">참여</string>
     <string name="menu_alarm">알람</string>
     <string name="menu_login">로그인</string>
+    <string name="menu_signup">회원가입</string>
     <string name="menu_profile">내 정보</string>
 
+    <string name="eula_item_terms">약관</string>
+    <string name="eula_item_privacy_policy">개인정보 처리방침</string>
+    <string name="sign_up">가입하기</string>
 
     <string name="common_error">에러가 발생했습니다. 다시 시도 해주세요</string>
 
@@ -48,4 +57,6 @@
     <string name="login_next_signin">다음에 가입하기 ></string>
     <string name="login_error">%1$s 소셜 로그인에 실패 했습니다.</string>
     <string name="naver_login_required_agreement">네이버 로그인시 필수 약관에 동의해주세요.</string>
+
+
 </resources>

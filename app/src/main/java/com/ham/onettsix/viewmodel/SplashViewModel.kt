@@ -26,7 +26,6 @@ class SplashViewModel(
     fun test() {
         result.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "error : " + e.message)
             result.postValue(Resource.error("", Result("", Pagination(), "", "", "")))
         }
 

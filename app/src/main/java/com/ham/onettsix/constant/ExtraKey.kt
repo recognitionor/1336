@@ -1,0 +1,10 @@
+package com.ham.onettsix.constant
+
+object ExtraKey {
+    const val PERMISSION_CLICK_SECTION = "PERMISSION_CLICK_TERMS"
+
+    const val PERMISSION_CHECKED_TERMS = "PERMISSION_CHECKED_TERMS"
+
+    const val PERMISSION_PRIVACY_POLICY = "PERMISSION_PRIVACY_POLICY"
+
+}

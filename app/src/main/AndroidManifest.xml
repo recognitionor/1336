@@ -27,6 +27,12 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.ham.NoActionBar" />
+        <activity
+            android:name=".EulaActivity"
+            android:theme="@style/Theme.ham.NoActionBar" />
+        <activity
+            android:name=".PermissionActivity"
+            android:theme="@style/Theme.ham.NoActionBar" />
     </application>
 
 </manifest>
