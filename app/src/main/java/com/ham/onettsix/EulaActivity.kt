@@ -10,7 +10,6 @@ import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ExtraKey
 import com.ham.onettsix.fragment.EulaFragment
 import kotlinx.android.synthetic.main.activity_eula.*
-import kotlinx.android.synthetic.main.activity_eula.view.*
 
 class EulaActivity : AppCompatActivity(R.layout.activity_eula) {
 
