@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
+import com.ham.onettsix.viewmodel.GameViewModel
 import com.ham.onettsix.viewmodel.SplashViewModel
 import com.ham.onettsix.viewmodel.TestViewModel
 
@@ -21,6 +22,10 @@ class ViewModelFactory(
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
             return SplashViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
+        if (modelClass.isAssignableFrom(GameViewModel::class.java)) {
+            return GameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
         throw IllegalArgumentException("Unknown class name")
     }
 }
