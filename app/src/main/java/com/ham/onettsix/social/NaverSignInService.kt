@@ -1,0 +1,44 @@
+package com.ham.onettsix.social
+
+import android.content.Context
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.OAuthLoginCallback
+
+class NaverSignInService(private val ctx: Context) : OAuthLoginCallback {
+
+    companion object {
+        const val TAG: String = "NaverSignInService"
+        const val OAUTH_CLIENT_ID = "vkrfB1sRhfja9_foALjy"
+        private const val OAUTH_CLIENT_SECRET = "94pfH6GiOZ"
+        private const val OAUTH_CLIENT_NAME = "onettsix"
+    }
+
+    private var listener: ISocialLoginListener? = null
+
+    fun signIn(listener: ISocialLoginListener) {
+        this.listener = listener
+        NaverIdLoginSDK.initialize(
+            ctx,
+            OAUTH_CLIENT_ID,
+            OAUTH_CLIENT_SECRET,
+            OAUTH_CLIENT_NAME
+        )
+        NaverIdLoginSDK.authenticate(ctx, this)
+    }
+
+    override fun onError(errorCode: Int, message: String) {
+        listener?.onError(ISocialLoginListener.SOCIAL_TYPE_NAVER)
+    }
+
+    override fun onFailure(httpStatus: Int, message: String) {
+        listener?.onError(ISocialLoginListener.SOCIAL_TYPE_NAVER)
+    }
+
+    override fun onSuccess() {
+        NaverIdLoginSDK.getAccessToken()?.let {
+            listener?.getToken(
+                ISocialLoginListener.SOCIAL_TYPE_NAVER, it
+            )
+        }
+    }
+}

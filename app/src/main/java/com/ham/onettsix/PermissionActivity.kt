@@ -43,7 +43,8 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         view_eula_item_terms.setOnClickListener(this)
-        signup_toolbar_back.back_btn.setOnClickListener(this)
+        permission_toolbar_back.back_btn.setOnClickListener(this)
+        btn_permission_confirm.setOnClickListener(this)
         setupObserver()
     }
 
@@ -59,8 +60,14 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View
             view_eula_item_privacy_policy -> {
                 clickedSection = EulaFragment.SECTION_NUMBER_1
             }
-            signup_toolbar_back.back_btn -> {
+            permission_toolbar_back.back_btn -> {
                 finish()
+                return
+            }
+            btn_permission_confirm -> {
+                Intent(this@PermissionActivity, SignUpActivity::class.java).apply {
+                    activityResult.launch(this)
+                }
                 return
             }
         }

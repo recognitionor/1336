@@ -33,6 +33,10 @@
         <activity
             android:name=".PermissionActivity"
             android:theme="@style/Theme.ham.NoActionBar" />
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/Theme.ham.NoActionBar" />
+
     </application>
 
 </manifest>

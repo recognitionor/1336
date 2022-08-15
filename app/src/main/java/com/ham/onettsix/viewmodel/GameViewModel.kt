@@ -26,8 +26,8 @@ class GameViewModel(
     fun game() {
         Log.d("jhlee", "game")
         result.postValue(Resource.loading(null))
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            result.postValue(Resource.error("", Result("", Pagination(), "", "", "")))
+        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+            result.postValue(Resource.error("", null))
         }
 
         viewModelScope.launch(exceptionHandler) {

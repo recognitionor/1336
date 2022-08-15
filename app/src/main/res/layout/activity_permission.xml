@@ -8,7 +8,7 @@
     tools:context=".PermissionActivity">
 
     <com.ham.onettsix.view.ToolbarView
-        android:id="@+id/signup_toolbar_back"
+        android:id="@+id/permission_toolbar_back"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -6,36 +6,35 @@ import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.data.model.Pagination
+import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
-class SplashViewModel(
+class MyProfileViewModel(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
     private val preferenceHelper: PreferencesHelper?
 ) : ViewModel() {
 
-    val result = MutableLiveData<Resource<Result>>()
+    val userInfo = MutableLiveData<Resource<DBUser>>()
 
-    fun test() {
-        result.postValue(Resource.loading(null))
+    fun getUserInfo() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            result.postValue(Resource.error("", Result("", Pagination(), "", "", "")))
+            userInfo.postValue(Resource.error("signin error", null))
         }
 
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-//                Thread.sleep(2000)
-//                if (System.currentTimeMillis().toInt() % 2 == 0) {
-                if (true) {
-                    result.postValue(Resource.success(Result("", Pagination(), "", "", "")))
+                val tempUserInfo = dbHelper.getUser()
+                if (tempUserInfo.uid != null && tempUserInfo.uid > 0) {
+                    userInfo.postValue(Resource.success(tempUserInfo))
                 } else {
-                    result.postValue(Resource.error("", Result("", Pagination(), "", "", "")))
+                    throw Exception("not login")
                 }
             }
         }

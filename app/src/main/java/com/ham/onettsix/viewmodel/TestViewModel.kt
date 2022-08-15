@@ -26,7 +26,7 @@ class TestViewModel(
         }
         viewModelScope.launch(exceptionHandler) {
             val params = hashMapOf<String, Any?>().apply {
-                put(ParamsKeys.KEY_TEST, "token")
+                put(ParamsKeys.KEY_AUTH_TOKEN, "token")
             }
             apiHelper.getTest(params)
         }

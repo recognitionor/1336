@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
-import com.ham.onettsix.viewmodel.GameViewModel
-import com.ham.onettsix.viewmodel.SplashViewModel
-import com.ham.onettsix.viewmodel.TestViewModel
+import com.ham.onettsix.viewmodel.*
 
 class ViewModelFactory(
     private val apiHelper: ApiHelper,
@@ -24,6 +22,17 @@ class ViewModelFactory(
         }
         if (modelClass.isAssignableFrom(GameViewModel::class.java)) {
             return GameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(MyProfileViewModel::class.java)) {
+            return MyProfileViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
         throw IllegalArgumentException("Unknown class name")

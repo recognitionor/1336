@@ -61,5 +61,14 @@
     <!--game-->
     <string name="game_start">슬롯 시작</string>
 
+    <!--sign_up-->
+    <string name="nickname_hint">[선택]닉네임을 입력해주세요</string>
+    <string name="account_number">계좌번호</string>
+    <string name="bank_name">은행이름</string>
+    <string name="account_holder">예금주 명</string>
+    <string name="account_number_hint">계좌번호를 입력해주세요</string>
+    <string name="bank_name_hint">은행이름을 입력해주세요</string>
+    <string name="account_holder_hint">예금주 성함을 입력해주세요</string>
+
 
 </resources>
