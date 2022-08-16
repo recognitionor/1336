@@ -38,4 +38,6 @@ object ParamsKeys {
     const val KEY_REFRESH_TOKEN = "refreshToken"
 
     const val KEY_AUTH_TOKEN = "X-AUTH-TOKEN"
+
+    const val KEY_GAME_TYPE = "gameType"
 }

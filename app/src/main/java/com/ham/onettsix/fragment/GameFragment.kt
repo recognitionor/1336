@@ -38,29 +38,48 @@ class GameFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserve()
-
+        gameViewModel.gameLoad()
     }
 
     private fun setupObserve() {
-        Log.d("jhlee", "setupObserve")
-        gameViewModel.result.observe(this) {
-            Log.d("jhlee", "observe")
+        gameViewModel.gameTypeInfo.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "SUCCESS")
-                    layout_game_start.visibility = View.GONE
-                    game_layout.start()
-                    return@observe
+                    val gameCount = it.data?.data?.gameCount ?: 0
+                    val maxCount = it.data?.data?.maxCount ?: 0
+                    if (gameCount < maxCount) {
+                        // 참여가능
+                        layout_game_start.visibility = View.GONE
+                        game_layout.visibility = View.VISIBLE
+                        game_info_message_img.visibility = View.GONE
+                        game_info_message_tv.visibility = View.GONE
+                        game_load_progress.visibility = View.GONE
+                    } else {
+                        // 참여불가능
+                        layout_game_start.visibility = View.VISIBLE
+                        game_layout.visibility = View.VISIBLE
+                        game_info_message_img.visibility = View.VISIBLE
+                        game_info_message_tv.visibility = View.VISIBLE
+                        game_load_progress.visibility = View.GONE
+                    }
                 }
                 Status.LOADING -> {
-                    Log.d("jhlee", "loading")
                     game_load_progress.visibility = View.VISIBLE
-                    game_start_btn.visibility = View.GONE
-                    return@observe
                 }
                 Status.ERROR -> {
-                    Log.d("jhlee", "ERROR")
-                    return@observe
+                    game_load_progress.visibility = View.GONE
+                    game_info_message_img.visibility = View.VISIBLE
+                    game_info_message_tv.visibility = View.VISIBLE
+                }
+            }
+        }
+        gameViewModel.gameResult.observe(this) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    game_layout.onGameStop(it?.data)
+                }
+                Status.ERROR -> {
+                    game_layout.onGameStop(it?.data)
                 }
             }
         }
@@ -73,9 +92,12 @@ class GameFragment : Fragment() {
     ): View {
 
         return inflater.inflate(R.layout.fragment_game, null).apply {
-            layout_game_start.setOnClickListener {
-                gameViewModel.game()
-            }
+
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        game_layout.setGameViewModel(gameViewModel)
     }
 }

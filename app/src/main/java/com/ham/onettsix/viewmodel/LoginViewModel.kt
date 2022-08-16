@@ -33,7 +33,6 @@ class LoginViewModel(
         signIn.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             signIn.postValue(Resource.error("signin error", null))
-            Log.d("jhlee", "e : ${e.message}")
         }
 
         viewModelScope.launch(exceptionHandler) {

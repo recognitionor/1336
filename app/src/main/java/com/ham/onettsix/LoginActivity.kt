@@ -2,6 +2,7 @@ package com.ham.onettsix
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -58,6 +59,9 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                 Status.SUCCESS -> {
                     setResult(ActivityResultKey.LOGIN_RESULT_OK)
                     finish()
+                }
+                Status.ERROR -> {
+
                 }
             }
         }

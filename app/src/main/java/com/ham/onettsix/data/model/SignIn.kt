@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class SignIn(
     override val description: String,
     override val pagination: Pagination,
-    override val resultCode: String,
+    override val resultCode: Int,
     override val transactionTime: String,
     override val data: Data
 ) : BasicData<SignIn.Data>() {

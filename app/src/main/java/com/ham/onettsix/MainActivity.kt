@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val mainViewModel by lazy {
+        RetrofitBuilder.accessToken = "testtest"
         ViewModelProviders.of(
             this,
             ViewModelFactory(
@@ -82,9 +83,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         mainViewModel.userInfo.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "SUCCESS")
                     nav_header_nickname.text = it.data?.nickName
-
                 }
                 Status.ERROR -> {
 
@@ -135,7 +134,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
-                Log.d("jhlee", "nav_profile : ${mainViewModel.isLogin()}")
                 if (!mainViewModel.isLogin()) {
                     activityResult.launch(Intent(this@MainActivity, LoginActivity::class.java))
                     return false

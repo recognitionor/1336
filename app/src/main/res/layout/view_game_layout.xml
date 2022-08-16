@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="188dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/game_layout_background"
     android:orientation="horizontal">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -11,64 +13,121 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/game_info_message_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/ic_sixsix_man"/>
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/game_start_btn"
+            android:id="@+id/game_info_message_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="60dp"
-            android:gravity="center"
-            android:visibility="visible"
-            android:textColor="@color/text_black"
             android:fontFamily="@font/montserrat_extra_bold"
-            android:text="@string/game_start"/>
+            android:gravity="center_horizontal"
+            android:text="@string/game_expire"
+            android:textColor="@color/text_black"
+            android:textSize="16dp"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/game_load_progress"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:visibility="gone"
             android:layout_gravity="center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:visibility="visible" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/game_textview_1"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:textSize="40dp"
-        android:fontFamily="@font/montserrat_extra_bold"
-        android:gravity="center"
-        android:layout_height="match_parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:layout_weight="2">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/game_textview_2"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:textSize="40dp"
-        android:fontFamily="@font/montserrat_extra_bold"
-        android:gravity="center"
-        android:layout_height="match_parent"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/game_image_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="58dp"
+            android:src="@mipmap/ic_paper"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/game_textview_3"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:textSize="40dp"
-        android:fontFamily="@font/montserrat_extra_bold"
-        android:gravity="center"
-        android:layout_height="match_parent"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/game_image_rock"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="26dp"
+            android:src="@mipmap/ic_rock"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/game_image_scissors"
+            app:layout_constraintTop_toBottomOf="@id/game_image_view" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/game_image_scissors"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="26dp"
+            android:src="@mipmap/ic_scissors"
+            app:layout_constraintLeft_toRightOf="@id/game_image_rock"
+            app:layout_constraintRight_toLeftOf="@id/game_image_paper"
+            app:layout_constraintTop_toBottomOf="@id/game_image_view" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/game_image_paper"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="26dp"
+            android:src="@mipmap/ic_paper"
+            app:layout_constraintLeft_toRightOf="@id/game_image_scissors"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/game_image_view" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/game_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:lineHeight="48dp"
+            android:text="2/3"
+            android:textColor="@color/text_black"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/game_image_scissors" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/game_start_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
+            android:background="@drawable/main_color_selector_btn_background"
+            android:fontFamily="@font/montserrat_extra_bold"
+            android:lineHeight="36dp"
+            android:text="@string/game_rock_scissors_paper"
+            android:textColor="@color/white"
+            android:textSize="28dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/game_count_tv" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

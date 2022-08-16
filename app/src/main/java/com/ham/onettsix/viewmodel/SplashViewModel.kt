@@ -25,7 +25,7 @@ class SplashViewModel(
     fun test() {
         result.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            result.postValue(Resource.error("", Result("", Pagination(), "", "", "")))
+            result.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -33,9 +33,9 @@ class SplashViewModel(
 //                Thread.sleep(2000)
 //                if (System.currentTimeMillis().toInt() % 2 == 0) {
                 if (true) {
-                    result.postValue(Resource.success(Result("", Pagination(), "", "", "")))
+                    result.postValue(Resource.success(Result("", Pagination(), -1, "", "")))
                 } else {
-                    result.postValue(Resource.error("", Result("", Pagination(), "", "", "")))
+                    result.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
                 }
             }
         }

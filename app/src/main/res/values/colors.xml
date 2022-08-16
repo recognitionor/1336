@@ -20,4 +20,19 @@
     <color name="black_card_shadow">#19000000</color>
     <color name="social_login_google">#f44336</color>
     <color name="social_login_naver">#03cf5d</color>
+
+    <color name="main_color">#657CD7</color>
+    <color name="main_color_soft_15">#265F7DDE</color>
+
+    <color name="sub_color_gradient_pink">#CA79D0</color>
+    <color name="sub_color_gradient_red">#FF7EB0</color>
+    <color name="sub_color_gradient_grapefruit">#FF9B86</color>
+    <color name="sub_color_gradient_orange">#FF9B86</color>
+    <color name="sub_color_gradient_yellow">#F9F871</color>
+
+    <color name="main_color_matched_gradient_1">#9761A4</color>
+    <color name="main_color_matched_gradient_2">#8D69B6</color>
+
+    <color name="main_color_classy_red">#982137</color>
+    <color name="background_grey">#E5E5E5</color>
 </resources>

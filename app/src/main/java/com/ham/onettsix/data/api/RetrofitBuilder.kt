@@ -1,6 +1,9 @@
 package com.ham.onettsix.data.api
 
+import android.util.Log
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,15 +15,24 @@ object RetrofitBuilder {
     private fun getRetrofit(): Retrofit {
         val interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-//                Log.d("kkpoint", "message : $message")
+//                Log.d("jhlee", "interceptor : $message")
             }
         })
+
+        val headerInterceptor = Interceptor { chain ->
+            val request: Request =
+                chain.request().newBuilder().addHeader(ParamsKeys.KEY_AUTH_TOKEN, accessToken).build()
+            chain.proceed(request)
+        }
+
         interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
         val client: OkHttpClient = OkHttpClient.Builder()
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
+//            .addInterceptor(headerInterceptor)
             .addInterceptor(interceptor).build()
+
 
         return Retrofit.Builder()
             .baseUrl(UrlInfo.getBaseURL())
@@ -31,4 +43,5 @@ object RetrofitBuilder {
 
     val apiService: ApiService = getRetrofit().create(ApiService::class.java)
 
+    var accessToken = ""
 }
