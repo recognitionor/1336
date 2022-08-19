@@ -3,6 +3,7 @@
     <!--common-->
     <string name="must">[필수]</string>
     <string name="confirm">확인</string>
+    <string name="count_divide_mark">/</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
@@ -27,13 +28,22 @@
     <string name="home_remain_drawing_time_mins">MINUTES</string>
     <string name="home_remain_drawing_time_secs">SECONDS</string>
     <string name="home_remain_drawing_time_divider">:</string>
-    <string name="home_game_info">%1$s명이 참여해서\n총 %2$s개의 티켓이 모였어요.</string>
+    <string name="home_game_info">제 %1$s회 당첨 포인트</string>
+    <string name="home_game_price">%1$s원</string>
     <string name="home_game_next_update_info">정각에 업데이트 됩니다. %1$s 기준</string>
     <string name="home_game_price_title">당첨금액</string>
-    <string name="home_game_price">%1$s만원</string>
-    <string name="home_game_get_ticket_btn">티켓 득템하러 가기</string>
+    <string name="home_game_get_ticket_btn">행운의 당첨자 도전!</string>
     <string name="home_profile_user_name">%1$s 님은</string>
     <string name="home_profile_user_reward">%1$s 입니다.</string>
+    <string name="home_game_who_is_lucky">행운의 육뉵이는 뉴규?</string>
+    <string name="home_game_now_chance_percent">지금 참여하면 당첨 확률 %1$s%</string>
+    <string name="home_game_now_left_chance">남은 찬스 %1$s개</string>
+    <string name="home_game_ticket_info">%1$s명이 참여해서 총 %2$s개의 티켓이 모였어요.</string>
+    <string name="home_game_go_history_title">역대 육뉵이 보러가기</string>
+    <string name="home_game_caution_title">유의사항</string>
+    <string name="home_game_caution_content">카운트 시작 시 응모 가능한 횟수와 당첨 번호가 지정됩니다.\n이벤트는 최대 참여자수에 도달하면 100% 당첨 됩니다.\n얻은 티켓은 이벤트 운영 기간동안만 유효합니다.\n카운트 다운이 끝나면 모두 회수됩니다.</string>
+
+
 
 
     <!--티켓참여-->
@@ -62,7 +72,14 @@
     <!--game-->
     <string name="game_start">슬롯 시작</string>
     <string name="game_rock_scissors_paper">가위바위보</string>
+    <string name="game_win">승리</string>
+    <string name="game_lose">패배</string>
+    <string name="game_draw">무승부</string>
     <string name="game_expire">참여 할수 있는 횟수를 초과 했습니다.</string>
+    <!--attend-->
+    <string name="attend_title">매일 출석 체크</string>
+    <string name="attend_sub_title">하루 한번 출첵하면 1개 응모 티겟 지급</string>
+
     <!--sign_up-->
     <string name="nickname_hint">[선택]닉네임을 입력해주세요</string>
     <string name="account_number">계좌번호</string>

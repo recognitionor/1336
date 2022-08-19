@@ -1,9 +1,6 @@
 package com.ham.onettsix.data.api
 
-import com.ham.onettsix.data.model.GameResult
-import com.ham.onettsix.data.model.GameTypeInfo
-import com.ham.onettsix.data.model.SignIn
-import com.ham.onettsix.data.model.Test
+import com.ham.onettsix.data.model.*
 import retrofit2.http.*
 
 interface ApiService {
@@ -20,6 +17,9 @@ interface ApiService {
     @POST("signup")
     suspend fun signUp(@Body params: HashMap<String, Any>): SignIn
 
+    @POST("refreshAccessToken")
+    suspend fun refreshAccessToken(@QueryMap params: HashMap<String, Any>): RefreshToken
+
     @GET("getRockPaperScissors")
     suspend fun getRockPaperScissors(@HeaderMap params: HashMap<String, Any>): GameResult
 
@@ -29,5 +29,16 @@ interface ApiService {
         @QueryMap params: HashMap<String, Any?>
     ): GameTypeInfo
 
+    @POST("attendCheck")
+    suspend fun attendCheck(): Result
+
+    @GET("validate/attendCheck")
+    suspend fun validateAttendCheck(): Result
+
+    @GET("getSignature")
+    suspend fun getSignature(): Result
+
+    @GET("/validate/limitedRv")
+    suspend fun validateLimitedRv(): Result
 
 }

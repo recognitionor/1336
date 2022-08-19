@@ -31,7 +31,7 @@ class MyProfileViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val tempUserInfo = dbHelper.getUser()
-                if (tempUserInfo.uid != null && tempUserInfo.uid > 0) {
+                if (tempUserInfo?.uid != null && tempUserInfo.uid > 0) {
                     userInfo.postValue(Resource.success(tempUserInfo))
                 } else {
                     throw Exception("not login")

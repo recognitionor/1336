@@ -2,6 +2,7 @@ package com.ham.onettsix
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -37,11 +38,12 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("jhlee", "onCreate")
         setupObserver()
-        splashViewModel.test()
+        splashViewModel.refreshLogin()
 
         splash_error_btn.setOnClickListener {
-            splashViewModel.test()
+            splashViewModel.refreshLogin()
         }
     }
 

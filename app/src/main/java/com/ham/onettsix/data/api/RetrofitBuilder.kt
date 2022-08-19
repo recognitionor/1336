@@ -13,11 +13,9 @@ import java.util.concurrent.TimeUnit
 object RetrofitBuilder {
 
     private fun getRetrofit(): Retrofit {
-        val interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-//                Log.d("jhlee", "interceptor : $message")
-            }
-        })
+        val interceptor = HttpLoggingInterceptor {
+            //                Log.d("jhlee", "interceptor : $message")
+        }
 
         val headerInterceptor = Interceptor { chain ->
             val request: Request =
@@ -30,7 +28,7 @@ object RetrofitBuilder {
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
-//            .addInterceptor(headerInterceptor)
+            .addInterceptor(headerInterceptor)
             .addInterceptor(interceptor).build()
 
 

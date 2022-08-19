@@ -15,15 +15,23 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/attendance_btn"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
         android:background="@drawable/main_color_selector_btn_background"
         android:fontFamily="@font/montserrat_extra_bold"
         android:lineHeight="36dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginEnd="22dp"
         android:text="@string/attend_btn"
         android:textColor="@color/white"
+        android:visibility="gone"
         android:textSize="28dp" />
+
+    <ProgressBar
+        android:id="@+id/attendance_progress"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,9 +1,6 @@
 package com.ham.onettsix.data.api
 
-import com.ham.onettsix.data.model.GameResult
-import com.ham.onettsix.data.model.GameTypeInfo
-import com.ham.onettsix.data.model.SignIn
-import com.ham.onettsix.data.model.Test
+import com.ham.onettsix.data.model.*
 
 class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getTest(params: HashMap<String, Any?>): Test = apiService.getTest(params)
@@ -13,6 +10,17 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun signIn(params: HashMap<String, Any>): SignIn = apiService.signIn(params)
 
     override suspend fun signUp(params: HashMap<String, Any>): SignIn = apiService.signUp(params)
+
+    override suspend fun refreshAccessToken(params: HashMap<String, Any>): RefreshToken =
+        apiService.refreshAccessToken(params)
+
+    override suspend fun attendCheck(): Result = apiService.attendCheck()
+
+    override suspend fun validateAttendCheck(): Result = apiService.validateAttendCheck()
+
+    override suspend fun validateLimitedRv(): Result = apiService.validateLimitedRv()
+
+    override suspend fun getSignature(): Result = apiService.getSignature()
 
     override suspend fun getRockPaperScissors(header: HashMap<String, Any>): GameResult =
         apiService.getRockPaperScissors(header)

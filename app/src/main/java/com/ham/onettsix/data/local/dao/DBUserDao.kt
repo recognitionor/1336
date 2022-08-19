@@ -13,6 +13,9 @@ interface DBUserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertUser(user: DBUser)
 
+    @Update
+    fun update(user: DBUser)
+
     @Query("DELETE FROM DBUser")
     fun deleteUser()
 }

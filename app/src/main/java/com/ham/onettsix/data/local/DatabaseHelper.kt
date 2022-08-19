@@ -15,9 +15,11 @@ interface DatabaseHelper {
 
     suspend fun getSearchKeyword(searchKeyword: String): List<DBSearch>
 
-    suspend fun getUser(): DBUser
+    suspend fun getUser(): DBUser?
 
     suspend fun insertUser(user: DBUser)
+
+    suspend fun updateUser(user: DBUser)
 
     suspend fun deleteUser()
 }

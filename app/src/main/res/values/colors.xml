@@ -14,6 +14,8 @@
     <color name="green_02">#4ac370</color>
     <color name="black">#b3000000</color>
     <color name="grey_040">#9c9c9c</color>
+    <color name="caution_grey">#7D7D7D</color>
+
     <color name="white_00">#ffffff</color>
 
     <color name="social_login_kakao">#fee500</color>
@@ -23,6 +25,8 @@
 
     <color name="main_color">#657CD7</color>
     <color name="main_color_soft_15">#265F7DDE</color>
+    <color name="text_main_color">#625FDE</color>
+
 
     <color name="sub_color_gradient_pink">#CA79D0</color>
     <color name="sub_color_gradient_red">#FF7EB0</color>
@@ -35,4 +39,5 @@
 
     <color name="main_color_classy_red">#982137</color>
     <color name="background_grey">#E5E5E5</color>
+    <color name="border_grey">#7C7777</color>
 </resources>

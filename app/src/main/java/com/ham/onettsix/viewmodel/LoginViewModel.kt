@@ -10,6 +10,7 @@ import com.ham.onettsix.data.api.ParamsKeys.KEY_AUTH_TOKEN
 import com.ham.onettsix.data.api.ParamsKeys.KEY_ENABLE_ALARM
 import com.ham.onettsix.data.api.ParamsKeys.KEY_ENABLE_ALERT
 import com.ham.onettsix.data.api.ParamsKeys.KEY_SOCIAL_TYPE
+import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
@@ -30,9 +31,11 @@ class LoginViewModel(
     val signIn = MutableLiveData<Resource<SignIn>>()
 
     fun signIn(socialType: String, token: String) {
+        Log.d("jhlee", "signIn")
         signIn.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             signIn.postValue(Resource.error("signin error", null))
+            Log.d("jhlee", "error : ${e.message}")
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -43,13 +46,17 @@ class LoginViewModel(
                     this[KEY_ACCESS_TOKEN] = token
                     this[KEY_ENABLE_ALARM] = true
                 }
+                Log.d("jhlee", "signIn :")
                 var result = apiHelper.signIn(hashMap)
+                Log.d("jhlee", "signInResult : $result")
                 val needSigninUp = result?.data?.needSignUp == true
                 if (needSigninUp) {
                     result = apiHelper.signUp(hashMap)
                     return@withContext
                 }
                 result?.data?.let {
+                    RetrofitBuilder.accessToken = it.tokenSet.accessToken
+                    Log.d("jhlee", "it.tokenSet.accessToken : ${it.tokenSet.accessToken}")
                     dbHelper.insertUser(
                         DBUser(
                             it.tokenSet.accessToken,

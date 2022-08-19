@@ -121,6 +121,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/game_count_tv" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/game_result_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:textSize="60dp"
+            android:fontFamily="@font/montserrat_extra_bold"
+            android:textColor="@color/text_black"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

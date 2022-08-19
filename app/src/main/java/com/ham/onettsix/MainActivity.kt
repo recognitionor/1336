@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val mainViewModel by lazy {
-        RetrofitBuilder.accessToken = "testtest"
         ViewModelProviders.of(
             this,
             ViewModelFactory(
@@ -64,7 +63,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserve()
-
         app_bar_main.toolbar.setTitleTextColor(Color.TRANSPARENT)
         setSupportActionBar(app_bar_main.toolbar)
 
@@ -83,7 +81,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         mainViewModel.userInfo.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    nav_header_nickname.text = it.data?.nickName
+                    it.data?.nickName?.let { nickname ->
+                        nav_header_nickname?.text = nickname
+                    }
                 }
                 Status.ERROR -> {
 
@@ -145,5 +145,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.updateUserInfo()
     }
 }

@@ -1,18 +1,21 @@
 package com.ham.onettsix.viewmodel
 
+import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.StringUtil
 import com.ham.onettsix.data.api.ApiHelper
+import com.ham.onettsix.data.api.ParamsKeys
+import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.Pagination
 import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class SplashViewModel(
     private val apiHelper: ApiHelper,
@@ -22,21 +25,45 @@ class SplashViewModel(
 
     val result = MutableLiveData<Resource<Result>>()
 
-    fun test() {
+    fun refreshLogin() {
         result.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             result.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
+            Log.d("jhlee", "e :${e}")
         }
 
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-//                Thread.sleep(2000)
-//                if (System.currentTimeMillis().toInt() % 2 == 0) {
-                if (true) {
-                    result.postValue(Resource.success(Result("", Pagination(), -1, "", "")))
-                } else {
-                    result.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
+                delay(1000)
+                val user = dbHelper.getUser()
+                Log.d("jhlee", "user :${user}")
+                val accessToken = user?.accessToken ?: ""
+                val refreshToken = user?.refreshToken ?: ""
+                Log.d("jhlee", "accessToken :${accessToken}")
+                if (user != null &&
+                    !TextUtils.isEmpty(accessToken) &&
+                    !TextUtils.isEmpty(refreshToken)
+                ) {
+                    RetrofitBuilder.accessToken = accessToken
+                    Log.d("jhlee", "RetrofitBuilder.accessToken :${RetrofitBuilder.accessToken}")
+                    val params = HashMap<String, Any>().apply {
+                        this[ParamsKeys.KEY_REFRESH_TOKEN] = refreshToken
+                    }
+                    val result = apiHelper.refreshAccessToken(params)
+                    Log.d("jhlee", "refreshAccessToken :${result}")
+                    dbHelper.updateUser(
+                        DBUser(
+                            result.data.accessToken,
+                            result.data.refreshToken,
+                            user.email,
+                            user.nickName,
+                            user.socialType,
+                            user.profileImageId,
+                            user.uid
+                        )
+                    )
                 }
+                result.postValue(Resource.success(null))
             }
         }
     }

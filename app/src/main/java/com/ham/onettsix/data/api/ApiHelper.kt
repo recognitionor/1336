@@ -1,9 +1,6 @@
 package com.ham.onettsix.data.api
 
-import com.ham.onettsix.data.model.GameResult
-import com.ham.onettsix.data.model.GameTypeInfo
-import com.ham.onettsix.data.model.SignIn
-import com.ham.onettsix.data.model.Test
+import com.ham.onettsix.data.model.*
 
 interface ApiHelper {
 
@@ -15,9 +12,22 @@ interface ApiHelper {
 
     suspend fun signUp(params: HashMap<String, Any>): SignIn?
 
+    suspend fun refreshAccessToken(params: HashMap<String, Any>): RefreshToken
+
+    suspend fun attendCheck(): Result
+
+    suspend fun validateAttendCheck(): Result
+
+    suspend fun validateLimitedRv(): Result
+
+    suspend fun getSignature(): Result
+
     suspend fun getRockPaperScissors(params: HashMap<String, Any>): GameResult
 
-    suspend fun getGameCount(header: HashMap<String, Any>, params: HashMap<String, Any?>): GameTypeInfo
+    suspend fun getGameCount(
+        header: HashMap<String, Any>,
+        params: HashMap<String, Any?>
+    ): GameTypeInfo
 
 
 }

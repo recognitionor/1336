@@ -21,6 +21,8 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
 
     override suspend fun insertUser(user: DBUser) = appDatabase.userDao().insertUser(user)
 
+    override suspend fun updateUser(user: DBUser) = appDatabase.userDao().update(user)
+
     override suspend fun deleteUser() = appDatabase.userDao().deleteUser()
 
 }

@@ -55,7 +55,91 @@
                 app:layout_constraintTop_toBottomOf="@id/home_remain_time_view" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_next_update_info"
+                android:id="@+id/home_game_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/montserrat_extra_bold"
+                android:gravity="center"
+                android:lineHeight="48dp"
+                android:text="@string/home_game_price"
+                android:textColor="@color/text_main_color"
+                android:textSize="44dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_info" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/home_game_who_is_lucky"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:lineHeight="32dp"
+                android:text="@string/home_game_who_is_lucky"
+                android:textColor="@color/text_black"
+                android:textSize="24dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_price" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/home_game_six_six_man_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/profile_layout_background"
+                android:src="@drawable/ic_sixsix_man"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_question_mark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/home_game_now_chance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:lineHeight="32dp"
+                android:text="@string/home_game_who_is_lucky"
+                android:textColor="@color/text_black"
+                android:textSize="24dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_six_six_man_img" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/home_game_now_left_chance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:lineHeight="32dp"
+                android:text="@string/home_game_now_left_chance"
+                android:textColor="@color/text_black"
+                android:textSize="24dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_now_chance" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/home_game_start_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
@@ -69,10 +153,10 @@
                 android:textSize="14dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_game_info" />
+                app:layout_constraintTop_toBottomOf="@id/home_game_now_left_chance" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_price_title"
+                android:id="@+id/home_game_ticket_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -80,77 +164,113 @@
                 android:layout_marginEnd="12dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:lineHeight="48dp"
-                android:text="@string/home_game_price_title"
+                android:lineHeight="32dp"
+                android:text="@string/home_game_ticket_info"
                 android:textColor="@color/text_black"
                 android:textSize="24dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_game_next_update_info" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_start_btn" />
+
+            <View
+                android:id="@+id/home_game_border_view"
+                android:layout_width="58dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="57dp"
+                android:background="@color/border_grey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_ticket_info" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_price"
+                android:id="@+id/home_game_go_history_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="12dp"
-                android:fontFamily="@font/montserrat_extra_bold"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:lineHeight="48dp"
-                android:text="@string/home_game_price"
+                android:lineHeight="32dp"
+                android:text="@string/home_game_go_history_title"
                 android:textColor="@color/text_black"
-                android:textSize="44dp"
+                android:textSize="24dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_game_price_title" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_border_view" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/home_profile_image_view"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="70dp"
-                android:src="@drawable/ic_profile_dog"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:src="@drawable/ic_gold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_price" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_go_history_title" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/home_game_go_history_img"
+                android:layout_width="83dp"
+                android:layout_height="83dp"
+                android:layout_marginTop="53.5dp"
+                android:gravity="center"
+                android:src="@drawable/ic_money"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_go_history_title" />
+
+            <View
+                android:id="@+id/home_game_border_view2"
+                android:layout_width="58dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="50dp"
+                android:background="@color/border_grey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_go_history_img" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_profile_user_name"
+                android:id="@+id/home_game_caution_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="29dp"
-                android:fontFamily="@font/montserrat_regular"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:lineHeight="32dp"
-                android:text="@string/home_profile_user_name"
-                android:textColor="@color/text_black"
+                android:text="@string/home_game_caution_title"
+                android:textColor="@color/caution_grey"
                 android:textSize="24dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_profile_image_view" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_border_view2" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_profile_user_reward"
+                android:id="@+id/home_game_caution_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:lineHeight="32dp"
-                android:text="@string/home_profile_user_reward"
-                android:textColor="@color/text_black"
-                android:textSize="24dp"
+                android:text="@string/home_game_caution_content"
+                android:textColor="@color/caution_grey"
+                android:textSize="12dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_profile_user_name" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_caution_title" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="180dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_profile_user_reward" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_caution_content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,7 +279,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/home_game_get_ticket_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="82dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
