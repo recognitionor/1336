@@ -71,6 +71,7 @@
 
     <!--game-->
     <string name="game_start">슬롯 시작</string>
+    <string name="game_rock_scissors_paper_restart">다시 도전</string>
     <string name="game_rock_scissors_paper">가위바위보</string>
     <string name="game_win">승리</string>
     <string name="game_lose">패배</string>

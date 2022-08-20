@@ -8,6 +8,6 @@ data class RefreshToken(
     override val pagination: Pagination,
     override val resultCode: Int,
     override val transactionTime: String,
-    override val data: TokenSet
-) : BasicData<TokenSet>() {
+    override val data: TokenSet? = null
+) : BasicData<TokenSet?>() {
 }

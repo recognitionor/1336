@@ -17,10 +17,9 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.GameViewModel
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.android.synthetic.main.fragment_rps_game.*
 import kotlinx.android.synthetic.main.view_attendance_layout.*
 import kotlinx.android.synthetic.main.view_attendance_layout.view.*
-import kotlinx.android.synthetic.main.view_game_layout.*
-import kotlinx.android.synthetic.main.view_game_layout.view.*
 
 class GameFragment : Fragment() {
 
@@ -40,16 +39,21 @@ class GameFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupObserve()
+        Log.d("jhlee", "onCreate")
 
         gameViewModel.validateLimitedRv()
 //        gameViewModel.getVideoSignature()
-//        gameViewModel.gameLoad()
         gameViewModel.attendLoad()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObserve()
+    }
+
     private fun setupObserve() {
-        gameViewModel.validateLimitedRvStatus.observe(this) {
+        Log.d("jhlee", "setupObserve")
+        gameViewModel.validateLimitedRvStatus.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {}
                 Status.ERROR -> {}
@@ -57,7 +61,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        gameViewModel.videoSignature.observe(this) {
+        gameViewModel.videoSignature.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {}
                 Status.ERROR -> {}
@@ -65,7 +69,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        gameViewModel.attendStatus.observe(this) {
+        gameViewModel.attendStatus.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     if (it.data?.resultCode == ResultCode.DUPLICATED_ATTEND) {
@@ -88,49 +92,6 @@ class GameFragment : Fragment() {
                 }
             }
         }
-        gameViewModel.gameTypeInfo.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val gameCount = it.data?.data?.gameCount ?: 0
-                    val maxCount = it.data?.data?.maxCount ?: 0
-                    game_count_tv.text =
-                        "$gameCount${getString(R.string.count_divide_mark, "d")}$maxCount"
-                    if (gameCount < maxCount) {
-                        // 참여가능
-                        layout_game_start.visibility = View.GONE
-                        game_layout.visibility = View.VISIBLE
-                        game_info_message_img.visibility = View.GONE
-                        game_info_message_tv.visibility = View.GONE
-                        game_load_progress.visibility = View.GONE
-                    } else {
-                        // 참여불가능
-                        layout_game_start.visibility = View.VISIBLE
-                        game_layout.visibility = View.VISIBLE
-                        game_info_message_img.visibility = View.VISIBLE
-                        game_info_message_tv.visibility = View.VISIBLE
-                        game_load_progress.visibility = View.GONE
-                    }
-                }
-                Status.LOADING -> {
-                    game_load_progress.visibility = View.VISIBLE
-                }
-                Status.ERROR -> {
-                    game_load_progress.visibility = View.GONE
-                    game_info_message_img.visibility = View.VISIBLE
-                    game_info_message_tv.visibility = View.VISIBLE
-                }
-            }
-        }
-        gameViewModel.gameResult.observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    game_layout.onGameStop(it?.data)
-                }
-                Status.ERROR -> {
-                    game_layout.onGameStop(it?.data)
-                }
-            }
-        }
     }
 
     override fun onCreateView(
@@ -144,10 +105,5 @@ class GameFragment : Fragment() {
                 gameViewModel.attendCheck()
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        game_layout.setGameViewModel(gameViewModel)
     }
 }

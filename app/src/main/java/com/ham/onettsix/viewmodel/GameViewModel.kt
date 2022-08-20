@@ -32,9 +32,6 @@ class GameViewModel(
 
     val videoSignature = MutableLiveData<Resource<Result>>()
 
-    val gameTypeInfo = MutableLiveData<Resource<GameTypeInfo>>()
-
-    val gameResult = MutableLiveData<Resource<GameResult>>()
 
     fun validateLimitedRv() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
@@ -85,49 +82,6 @@ class GameViewModel(
                 delay(3000)
                 attendStatus.postValue(Resource.success(result))
 
-            }
-        }
-    }
-
-    fun gameLoad() {
-        gameTypeInfo.postValue(Resource.loading(null))
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            gameTypeInfo.postValue(Resource.error("", null))
-        }
-
-        viewModelScope.launch(exceptionHandler) {
-            withContext(Dispatchers.IO) {
-                dbHelper.getUser()?.accessToken?.let {
-                    val header = HashMap<String, Any>().apply {
-                        this[ParamsKeys.KEY_AUTH_TOKEN] = it
-                    }
-                    val params = HashMap<String, Any?>().apply {
-                        this[ParamsKeys.KEY_GAME_TYPE] = GAME_TYPE_RPC
-                    }
-                    val result = apiHelper.getGameCount(header, params)
-                    Log.d("jhlee", "gameLoad : $result")
-                    gameTypeInfo.postValue(Resource.success(result))
-                }
-            }
-        }
-    }
-
-    fun getRockPaperScissors() {
-        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-            gameResult.postValue(Resource.error("", null))
-        }
-
-        viewModelScope.launch(exceptionHandler) {
-            withContext(Dispatchers.IO) {
-                if (dbHelper.getUser()?.accessToken != null) {
-                    val header = HashMap<String, Any>().apply {
-                        put(ParamsKeys.KEY_AUTH_TOKEN, dbHelper.getUser()?.accessToken!!)
-                    }
-                    val result = apiHelper.getRockPaperScissors(header)
-                    gameResult.postValue(Resource.success(result))
-                } else {
-                    throw Exception("not login")
-                }
             }
         }
     }

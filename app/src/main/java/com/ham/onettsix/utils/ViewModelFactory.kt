@@ -1,5 +1,6 @@
 package com.ham.onettsix.utils
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ham.onettsix.data.local.PreferencesHelper
@@ -33,6 +34,11 @@ class ViewModelFactory(
 
         if (modelClass.isAssignableFrom(MyProfileViewModel::class.java)) {
             return MyProfileViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(RPSGameViewModel::class.java)) {
+            Log.d("jhlee", "RPSGameViewModel Create")
+            return RPSGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
         throw IllegalArgumentException("Unknown class name")

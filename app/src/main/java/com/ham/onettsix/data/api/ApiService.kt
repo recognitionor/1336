@@ -21,12 +21,10 @@ interface ApiService {
     suspend fun refreshAccessToken(@QueryMap params: HashMap<String, Any>): RefreshToken
 
     @GET("getRockPaperScissors")
-    suspend fun getRockPaperScissors(@HeaderMap params: HashMap<String, Any>): GameResult
+    suspend fun getRockPaperScissors(): GameResult
 
     @GET("getGameCount")
-    suspend fun getGameCount(
-        @HeaderMap header: HashMap<String, Any>,
-        @QueryMap params: HashMap<String, Any?>
+    suspend fun getGameCount(@QueryMap params: HashMap<String, Any?>
     ): GameTypeInfo
 
     @POST("attendCheck")

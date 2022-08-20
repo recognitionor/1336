@@ -51,17 +51,20 @@ class SplashViewModel(
                     }
                     val result = apiHelper.refreshAccessToken(params)
                     Log.d("jhlee", "refreshAccessToken :${result}")
-                    dbHelper.updateUser(
-                        DBUser(
-                            result.data.accessToken,
-                            result.data.refreshToken,
-                            user.email,
-                            user.nickName,
-                            user.socialType,
-                            user.profileImageId,
-                            user.uid
+                    if (result.data != null) {
+                        // refresh 를 했는데 데이터가 널이 아닌 경우 정상이므로 토큰값 업데이트 해준다.
+                        dbHelper.updateUser(
+                            DBUser(
+                                result.data.accessToken,
+                                result.data.refreshToken,
+                                user.email,
+                                user.nickName,
+                                user.socialType,
+                                user.profileImageId,
+                                user.uid
+                            )
                         )
-                    )
+                    }
                 }
                 result.postValue(Resource.success(null))
             }

@@ -22,12 +22,9 @@ interface ApiHelper {
 
     suspend fun getSignature(): Result
 
-    suspend fun getRockPaperScissors(params: HashMap<String, Any>): GameResult
+    suspend fun getRockPaperScissors(): GameResult
 
-    suspend fun getGameCount(
-        header: HashMap<String, Any>,
-        params: HashMap<String, Any?>
-    ): GameTypeInfo
+    suspend fun getGameCount(params: HashMap<String, Any?>): GameTypeInfo
 
 
 }

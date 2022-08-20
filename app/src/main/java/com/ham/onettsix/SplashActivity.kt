@@ -38,10 +38,8 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("jhlee", "onCreate")
         setupObserver()
         splashViewModel.refreshLogin()
-
         splash_error_btn.setOnClickListener {
             splashViewModel.refreshLogin()
         }

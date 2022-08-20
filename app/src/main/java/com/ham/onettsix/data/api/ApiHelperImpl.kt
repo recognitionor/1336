@@ -22,11 +22,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getSignature(): Result = apiService.getSignature()
 
-    override suspend fun getRockPaperScissors(header: HashMap<String, Any>): GameResult =
-        apiService.getRockPaperScissors(header)
+    override suspend fun getRockPaperScissors(): GameResult = apiService.getRockPaperScissors()
 
-    override suspend fun getGameCount(
-        header: HashMap<String, Any>,
-        params: HashMap<String, Any?>
-    ): GameTypeInfo = apiService.getGameCount(header, params)
+    override suspend fun getGameCount(params: HashMap<String, Any?>): GameTypeInfo = apiService.getGameCount(params)
 }

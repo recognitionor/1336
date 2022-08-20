@@ -3,16 +3,14 @@ package com.ham.onettsix
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnLayoutChangeListener
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
@@ -23,15 +21,12 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.fragment.GameFragment
-import com.ham.onettsix.fragment.HomeFragment
-import com.ham.onettsix.fragment.MyProfileFragment
+import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.view.*
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 
@@ -39,6 +34,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val progressDialog: ProgressDialog by lazy {
+        ProgressDialog.getInstance(supportFragmentManager)
+    }
 
     private val mainViewModel by lazy {
         ViewModelProviders.of(
@@ -62,6 +61,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        progressDialog.show()
         setupObserve()
         app_bar_main.toolbar.setTitleTextColor(Color.TRANSPARENT)
         setSupportActionBar(app_bar_main.toolbar)
@@ -75,14 +75,30 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
         nav_view.setNavigationItemSelectedListener(this)
+        nav_view.addOnLayoutChangeListener(object : OnLayoutChangeListener {
+            override fun onLayoutChange(
+                view: View,
+                i: Int,
+                i1: Int,
+                i2: Int,
+                i3: Int,
+                i4: Int,
+                i5: Int,
+                i6: Int,
+                i7: Int
+            ) {
+                mainViewModel.updateUserInfo()
+            }
+        })
     }
 
     private fun setupObserve() {
         mainViewModel.userInfo.observe(this) {
+            progressDialog.dismiss()
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.nickName?.let { nickname ->
-                        nav_header_nickname?.text = nickname
+                        nav_header_nickname.text = nickname
                     }
                 }
                 Status.ERROR -> {
@@ -145,15 +161,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mainViewModel.updateUserInfo()
     }
 }
