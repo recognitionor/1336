@@ -21,9 +21,6 @@ class ViewModelFactory(
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
             return SplashViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
-        if (modelClass.isAssignableFrom(GameViewModel::class.java)) {
-            return GameViewModel(apiHelper, dbHelper, preferenceHelper) as T
-        }
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
@@ -37,8 +34,15 @@ class ViewModelFactory(
         }
 
         if (modelClass.isAssignableFrom(RPSGameViewModel::class.java)) {
-            Log.d("jhlee", "RPSGameViewModel Create")
             return RPSGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(AttendViewModel::class.java)) {
+            return AttendViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(VideoViewModel::class.java)) {
+            return VideoViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
         throw IllegalArgumentException("Unknown class name")

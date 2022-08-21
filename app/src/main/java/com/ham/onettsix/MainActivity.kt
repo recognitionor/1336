@@ -3,15 +3,16 @@ package com.ham.onettsix
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnLayoutChangeListener
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
@@ -33,6 +34,8 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 class MainActivity : AppCompatActivity(R.layout.activity_main),
     NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var navController: NavController
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val progressDialog: ProgressDialog by lazy {
@@ -50,11 +53,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         )[MainViewModel::class.java]
     }
 
-    private val activityResult =
+    private val myProfileResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when (result.resultCode) {
                 LOGIN_RESULT_OK -> {
                     mainViewModel.updateUserInfo()
+                    val menu = nav_view.menu.getItem(1)
+                    menu.isChecked = true
+                    NavigationUI.onNavDestinationSelected(menu, navController)
+                    val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+                    drawer.closeDrawer(GravityCompat.START)
                 }
             }
         }
@@ -66,7 +74,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         app_bar_main.toolbar.setTitleTextColor(Color.TRANSPARENT)
         setSupportActionBar(app_bar_main.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_game
@@ -75,21 +83,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
         nav_view.setNavigationItemSelectedListener(this)
-        nav_view.addOnLayoutChangeListener(object : OnLayoutChangeListener {
-            override fun onLayoutChange(
-                view: View,
-                i: Int,
-                i1: Int,
-                i2: Int,
-                i3: Int,
-                i4: Int,
-                i5: Int,
-                i6: Int,
-                i7: Int
-            ) {
-                mainViewModel.updateUserInfo()
-            }
-        })
+        nav_view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> mainViewModel.updateUserInfo() }
     }
 
     private fun setupObserve() {
@@ -121,15 +115,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         // Handle item selection
         return when (item.itemId) {
             R.id.action_login -> {
-                activityResult.launch(Intent(this, LoginActivity::class.java))
+                myProfileResult.launch(Intent(this, LoginActivity::class.java))
                 true
             }
             R.id.action_eula -> {
-                activityResult.launch(Intent(this, PermissionActivity::class.java))
+                myProfileResult.launch(Intent(this, PermissionActivity::class.java))
                 true
             }
             R.id.action_sign_up -> {
-                activityResult.launch(Intent(this, SignUpActivity::class.java))
+                myProfileResult.launch(Intent(this, SignUpActivity::class.java))
                 true
             }
             R.id.action_settings -> {
@@ -151,12 +145,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         when (item.itemId) {
             R.id.nav_profile -> {
                 if (!mainViewModel.isLogin()) {
-                    activityResult.launch(Intent(this@MainActivity, LoginActivity::class.java))
+                    myProfileResult.launch(Intent(this@MainActivity, LoginActivity::class.java))
                     return false
                 }
             }
         }
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         NavigationUI.onNavDestinationSelected(item, navController)
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)

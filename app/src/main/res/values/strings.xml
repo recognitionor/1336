@@ -52,6 +52,7 @@
     <string name="game_rv_title">동영상 보고 티켓 얻기</string>
     <string name="game_rv_title_info">영상 보면 최대 3개 티겟 당첨! 참여시 바로 응모</string>
     <string name="attend_btn">출to the첵</string>
+    <string name="attend_done">출첵완료!</string>
     <string name="video_btn">영상보고 티겟얻기</string>
     <!--Profile-->
     <string name="profile_toady_attend">오늘의 참여</string>

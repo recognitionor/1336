@@ -23,7 +23,6 @@ class RPSGameFragment : Fragment(),
     View.OnClickListener {
 
     private val rpsGameViewModel by lazy {
-        Log.d("jhlee", "rpsGameViewModel lazy")
         ViewModelProviders.of(this, ViewModelFactory(
             ApiHelperImpl(RetrofitBuilder.apiService),
             DatabaseHelperImpl(DatabaseBuilder.getInstance(requireActivity().applicationContext))
@@ -53,14 +52,12 @@ class RPSGameFragment : Fragment(),
         rpsGameViewModel.gameResult.observe(this) {
             when (it?.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "gameResult.SUCCESS $it")
-                    it?.data?.resultCode?.let { resultCode ->
+                    it.data?.resultCode?.let { resultCode ->
                         onGameStop(resultCode)
                     }
                 }
                 Status.ERROR -> {
-                    Log.d("jhlee", "Status.ERROR")
-                    it?.data?.resultCode?.let { resultCode ->
+                    it.data?.resultCode?.let { resultCode ->
                         onGameStop(resultCode)
                     }
                 }
@@ -70,7 +67,6 @@ class RPSGameFragment : Fragment(),
         rpsGameViewModel.gameTypeInfo.observe(this) {
             when (it?.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "gameTypeInfo.SUCCESS $it")
                     val gameCount = it.data?.data?.gameCount ?: 0
                     val maxCount = it.data?.data?.maxCount ?: 0
                     game_count_tv.text =
@@ -123,11 +119,9 @@ class RPSGameFragment : Fragment(),
     override fun onDestroy() {
         super.onDestroy()
         viewModelStore.clear()
-        Log.d("jhlee", "onDestroy")
     }
 
     private fun requestGame() {
-        Log.d("jhlee", "requestGame")
         animationDelay = 200
         if (serverResult == null) {
             rpsGameViewModel.getRockPaperScissors()
@@ -185,7 +179,6 @@ class RPSGameFragment : Fragment(),
 
 
     private fun gameStart() {
-        Log.d("jhlee", "gameStart")
         game_result_tv.visibility = View.GONE
         game_result_tv.text = ""
         CoroutineScope(Dispatchers.Default).launch {
@@ -208,10 +201,8 @@ class RPSGameFragment : Fragment(),
                 count++
                 delay(animationDelay)
                 game_image_view?.post {
-                    Log.d("jhlee", "~~~~~~~~~~~~~~~~~ $selectedImage")
                     game_image_view?.setImageResource(selectedImage)
                 }
-                Log.d("jhlee", "~~~~~~~~~~~~~~~~~")
             }
         }
     }

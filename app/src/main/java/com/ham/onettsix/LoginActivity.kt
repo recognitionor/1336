@@ -44,12 +44,10 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             val naverService = NaverSignInService(this)
             naverService.signIn(object : ISocialLoginListener {
                 override fun getToken(socialType: String, token: String) {
-                    Log.d("jhlee", "getToken : $token")
                     loginViewModel.signIn(socialType, token)
                 }
 
                 override fun onError(socialType: String) {
-                    Log.d("jhlee", "onError")
                 }
             })
         }
