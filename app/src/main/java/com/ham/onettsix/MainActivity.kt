@@ -23,6 +23,7 @@ import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.dialog.ProgressDialog
+import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.MainViewModel
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         progressDialog.show()
+
         setupObserve()
         app_bar_main.toolbar.setTitleTextColor(Color.TRANSPARENT)
         setSupportActionBar(app_bar_main.toolbar)
@@ -83,7 +85,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
         nav_view.setNavigationItemSelectedListener(this)
-        nav_view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> mainViewModel.updateUserInfo() }
+        nav_view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            mainViewModel.updateUserInfo()
+        }
     }
 
     private fun setupObserve() {
@@ -91,9 +95,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
             progressDialog.dismiss()
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.nickName?.let { nickname ->
-                        nav_header_nickname.text = nickname
+                    it.data?.let { data ->
+                        nav_header_nickname.text = data.nickName
+                        nav_header_img.setImageDrawable(
+                            getDrawable(
+                                ProfileImageUtil.getImageId(data.profileImageId ?: 0)
+                            )
+                        )
                     }
+
                 }
                 Status.ERROR -> {
 

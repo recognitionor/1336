@@ -11,6 +11,8 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun signUp(params: HashMap<String, Any>): SignIn = apiService.signUp(params)
 
+    override suspend fun signOut(params: HashMap<String, Any>): Result = apiService.signOut(params)
+
     override suspend fun refreshAccessToken(params: HashMap<String, Any>): RefreshToken =
         apiService.refreshAccessToken(params)
 
@@ -30,4 +32,16 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getSlot(): Result = apiService.getSlot()
 
     override suspend fun getLotteryInfo(type: String): Result = apiService.getLotteryInfo(type)
+
+    override suspend fun getLottery(params: HashMap<String, Any?>): Result =
+        apiService.getLottery(params)
+
+    override suspend fun requestTicket(params: HashMap<String, Any?>): Result =
+        apiService.requestTicket(params)
+
+    override suspend fun createLottery(): Result = apiService.createLottery()
+
+    override suspend fun getInstantLotte(): Result = apiService.getInstantLottery()
+
+
 }

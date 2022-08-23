@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
+import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
@@ -35,8 +36,6 @@ class MainViewModel(
                 val params = HashMap<String, Any>().apply {
                     put("type", "RPC")
                 }
-//                val result = apiHelper.getLotteryInfo(params)
-//                Log.d("jhlee", "result : $result")
             }
         }
     }

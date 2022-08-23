@@ -12,6 +12,8 @@ interface ApiHelper {
 
     suspend fun signUp(params: HashMap<String, Any>): SignIn?
 
+    suspend fun signOut(params: HashMap<String, Any>): Result
+
     suspend fun refreshAccessToken(params: HashMap<String, Any>): RefreshToken
 
     suspend fun attendCheck(): Result
@@ -29,6 +31,19 @@ interface ApiHelper {
     suspend fun getSlot(): Result
 
     suspend fun getLotteryInfo(type: String): Result
+
+    suspend fun getLottery(params: HashMap<String, Any?>): Result
+
+    suspend fun requestTicket(params: HashMap<String, Any?>): Result
+
+    suspend fun createLottery(): Result
+
+    suspend fun getInstantLotte(): Result
+
+
+
+
+
 
 
 }
