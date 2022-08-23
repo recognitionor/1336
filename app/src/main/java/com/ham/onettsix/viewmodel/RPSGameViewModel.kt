@@ -1,5 +1,6 @@
 package com.ham.onettsix.viewmodel
 
+import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.GameResult
 import com.ham.onettsix.data.model.GameTypeInfo
 import com.ham.onettsix.utils.Resource
@@ -31,10 +33,30 @@ class RPSGameViewModel(
 
     val gameResult = MutableLiveData<Resource<GameResult>>()
 
+    val userInfo = MutableLiveData<Resource<DBUser>>()
+
+    fun updateUserInfo() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            userInfo.postValue(Resource.error("signin error", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val tempUserInfo = dbHelper.getUser()
+                if (!TextUtils.isEmpty(RetrofitBuilder.accessToken) && tempUserInfo?.uid != null && tempUserInfo.uid > 0) {
+                    userInfo.postValue(Resource.success(tempUserInfo))
+                } else {
+                    throw Exception("not login")
+                }
+            }
+        }
+    }
+
     fun gameLoad() {
         gameTypeInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             gameTypeInfo.postValue(Resource.error("", null))
+            Log.d("jhlee", "gameLoad error : ${e.message}")
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -43,6 +65,7 @@ class RPSGameViewModel(
                     this[ParamsKeys.KEY_GAME_TYPE] = GAME_TYPE_RPC
                 }
                 val result = apiHelper.getGameCount(params)
+                Log.d("jhlee", "gameLoad result : $result")
                 gameTypeInfo.postValue(Resource.success(result))
             }
         }

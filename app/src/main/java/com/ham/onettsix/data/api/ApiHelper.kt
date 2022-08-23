@@ -26,5 +26,9 @@ interface ApiHelper {
 
     suspend fun getGameCount(params: HashMap<String, Any?>): GameTypeInfo
 
+    suspend fun getSlot(): Result
+
+    suspend fun getLotteryInfo(type: String): Result
+
 
 }

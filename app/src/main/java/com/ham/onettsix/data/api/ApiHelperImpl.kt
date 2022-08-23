@@ -24,5 +24,10 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getRockPaperScissors(): GameResult = apiService.getRockPaperScissors()
 
-    override suspend fun getGameCount(params: HashMap<String, Any?>): GameTypeInfo = apiService.getGameCount(params)
+    override suspend fun getGameCount(params: HashMap<String, Any?>): GameTypeInfo =
+        apiService.getGameCount(params)
+
+    override suspend fun getSlot(): Result = apiService.getSlot()
+
+    override suspend fun getLotteryInfo(type: String): Result = apiService.getLotteryInfo(type)
 }

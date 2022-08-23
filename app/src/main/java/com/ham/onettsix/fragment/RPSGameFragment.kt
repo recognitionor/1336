@@ -1,13 +1,16 @@
 package com.ham.onettsix.fragment
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.ham.onettsix.LoginActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
@@ -17,17 +20,32 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.RPSGameViewModel
 import kotlinx.android.synthetic.main.fragment_rps_game.*
+import kotlinx.android.synthetic.main.fragment_rps_game.layout_game_needed_login
+import kotlinx.android.synthetic.main.layout_needed_login.*
 import kotlinx.coroutines.*
 
-class RPSGameFragment : Fragment(),
+class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
     View.OnClickListener {
 
+    private var maxCount: Int = 0
+    private var gameCount: Int = 0
+
     private val rpsGameViewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory(
-            ApiHelperImpl(RetrofitBuilder.apiService),
-            DatabaseHelperImpl(DatabaseBuilder.getInstance(requireActivity().applicationContext))
-        ))[RPSGameViewModel::class.java]
+        ViewModelProviders.of(
+            this, ViewModelFactory(
+                ApiHelperImpl(RetrofitBuilder.apiService),
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(requireActivity().applicationContext))
+            )
+        )[RPSGameViewModel::class.java]
     }
+
+    private val activityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == ActivityResultKey.LOGIN_RESULT_OK) {
+                layout_game_needed_login.visibility = View.GONE
+                rpsGameViewModel.gameLoad()
+            }
+        }
 
     private var isStopGame = true
     private var serverResult: Int? = null
@@ -38,18 +56,32 @@ class RPSGameFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupObserve()
-        rpsGameViewModel.gameLoad()
+        rpsGameViewModel.updateUserInfo()
+
         game_image_rock.setOnClickListener(this@RPSGameFragment)
         game_image_scissors.setOnClickListener(this@RPSGameFragment)
         game_image_paper.setOnClickListener(this@RPSGameFragment)
         game_start_btn.setOnClickListener(this@RPSGameFragment)
         game_info_message_img.setOnClickListener(this@RPSGameFragment)
+        rps_game_login_btn.setOnClickListener(this@RPSGameFragment)
 
     }
 
     private fun setupObserve() {
-        rpsGameViewModel.gameResult.observe(this) {
+        rpsGameViewModel.userInfo.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    layout_game_needed_login.visibility = View.GONE
+                    rpsGameViewModel.gameLoad()
+                }
+                else -> {
+                    layout_game_needed_login.visibility = View.VISIBLE
+                }
+            }
+        }
+        rpsGameViewModel.gameResult.observe(viewLifecycleOwner) {
             when (it?.status) {
                 Status.SUCCESS -> {
                     it.data?.resultCode?.let { resultCode ->
@@ -64,11 +96,11 @@ class RPSGameFragment : Fragment(),
             }
         }
 
-        rpsGameViewModel.gameTypeInfo.observe(this) {
+        rpsGameViewModel.gameTypeInfo.observe(viewLifecycleOwner) {
             when (it?.status) {
                 Status.SUCCESS -> {
-                    val gameCount = it.data?.data?.gameCount ?: 0
-                    val maxCount = it.data?.data?.maxCount ?: 0
+                    gameCount = it.data?.data?.gameCount ?: 0
+                    maxCount = it.data?.data?.maxCount ?: 0
                     game_count_tv.text =
                         "$gameCount${getString(R.string.count_divide_mark, "d")}$maxCount"
                     if (gameCount < maxCount) {
@@ -108,17 +140,11 @@ class RPSGameFragment : Fragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         coroutineScope?.cancel()
-
-//        rpsGameViewModel.gameResult.value = Resource.success(null)
+        viewModelStore.clear()
         rpsGameViewModel.gameResult.removeObservers(this)
         rpsGameViewModel.gameTypeInfo.removeObservers(this)
         rpsGameViewModel.gameResult.removeObservers(viewLifecycleOwner)
         rpsGameViewModel.gameTypeInfo.removeObservers(viewLifecycleOwner)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModelStore.clear()
     }
 
     private fun requestGame() {
@@ -134,6 +160,9 @@ class RPSGameFragment : Fragment(),
 
     override fun onClick(v: View?) {
         when (v) {
+            rps_game_login_btn -> {
+                activityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+            }
             game_info_message_img -> {
                 rpsGameViewModel.getRockPaperScissors()
             }
@@ -209,6 +238,8 @@ class RPSGameFragment : Fragment(),
 
     private fun onGameStop(result: Int, isError: Boolean = false) {
         val random = (0..2).random()
+        gameCount++;
+        game_count_tv.text = "$gameCount/$maxCount"
         if (random == 0) {
             // 무승부 케이스
             coroutineScope?.cancel()
@@ -216,7 +247,7 @@ class RPSGameFragment : Fragment(),
             game_result_tv.visibility = View.VISIBLE
             game_result_tv.setText(R.string.game_draw)
             game_start_btn.visibility = View.VISIBLE
-            game_start_btn.setText(R.string.game_draw)
+            game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
             selectedImage = when (selectedItem) {
                 0 -> {
                     R.mipmap.ic_rock
@@ -232,7 +263,12 @@ class RPSGameFragment : Fragment(),
             // 무승부가 아닌케이스
             coroutineScope?.cancel()
             isStopGame = true
-            game_start_btn.visibility = View.VISIBLE
+
+            if (gameCount >= maxCount) {
+                game_start_btn.visibility = View.GONE
+            } else {
+                game_start_btn.visibility = View.VISIBLE
+            }
             when (result) {
                 ResultCode.RPC_WIN -> {
                     game_result_tv.visibility = View.VISIBLE

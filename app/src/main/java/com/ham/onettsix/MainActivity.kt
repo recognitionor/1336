@@ -138,9 +138,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun updateLogin() {
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {

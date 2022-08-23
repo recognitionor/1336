@@ -1,5 +1,6 @@
 package com.ham.onettsix.viewmodel
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,22 @@ class MainViewModel(
         return (userInfo.value?.data?.uid ?: -1) > 0
     }
 
+    fun test1() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            userInfo.postValue(Resource.error("signin error", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val params = HashMap<String, Any>().apply {
+                    put("type", "RPC")
+                }
+//                val result = apiHelper.getLotteryInfo(params)
+//                Log.d("jhlee", "result : $result")
+            }
+        }
+    }
+
     fun updateUserInfo() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             userInfo.postValue(Resource.error("signin error", null))
@@ -41,6 +58,4 @@ class MainViewModel(
             }
         }
     }
-
-
 }

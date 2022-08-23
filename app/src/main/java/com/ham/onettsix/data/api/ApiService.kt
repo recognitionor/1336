@@ -17,6 +17,10 @@ interface ApiService {
     @POST("signup")
     suspend fun signUp(@Body params: HashMap<String, Any>): SignIn
 
+    @POST("signout")
+    suspend fun signOut(@QueryMap params: HashMap<String, Any>): Result
+
+
     @POST("refreshAccessToken")
     suspend fun refreshAccessToken(@QueryMap params: HashMap<String, Any>): RefreshToken
 
@@ -24,8 +28,13 @@ interface ApiService {
     suspend fun getRockPaperScissors(): GameResult
 
     @GET("getGameCount")
-    suspend fun getGameCount(@QueryMap params: HashMap<String, Any?>
+    suspend fun getGameCount(
+        @QueryMap params: HashMap<String, Any?>
     ): GameTypeInfo
+
+
+    @GET("getSlot")
+    suspend fun getSlot(): Result
 
     @POST("attendCheck")
     suspend fun attendCheck(): Result
@@ -38,5 +47,23 @@ interface ApiService {
 
     @GET("/validate/limitedRv")
     suspend fun validateLimitedRv(): Result
+
+    @GET("getLotteryInfo/{type}")
+    suspend fun getLotteryInfo(@Path(value = "type") type: String): Result
+
+    @POST("getTicket")
+    suspend fun getTicket(@Body params: HashMap<String, Any?>): Result
+
+    @GET("createLottery")
+    suspend fun createLottery(): Result
+
+    @GET("getInstantLottery")
+    suspend fun getInstantLottery(): Result
+
+    @POST("getLottery")
+    suspend fun getLottery(@Body params: HashMap<String, Any?>): Result
+
+    @POST("requestTicket")
+    suspend fun requestTicket(@Body params: HashMap<String, Any?>): Result
 
 }

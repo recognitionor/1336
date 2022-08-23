@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SignIn(
+data class Ticket(
     @SerializedName("description")
     override val description: String,
 
@@ -20,22 +20,17 @@ data class SignIn(
 
     @SerializedName("data")
     override val data: Data
-) : BasicData<SignIn.Data>() {
+
+) : BasicData<Ticket.Data>() {
     @Parcelize
     data class Data(
-        @SerializedName("tokenSet")
-        val tokenSet: TokenSet,
-        @SerializedName("email")
-        val email: String,
-        @SerializedName("nickName")
-        val nickName: String,
-        @SerializedName("socialType")
-        val socialType: String,
-        @SerializedName("uid")
-        val uid: Int,
-        @SerializedName("profileImageId")
-        val profileImageId: Int,
-        @SerializedName("needSignUp")
-        val needSignUp: Boolean
+        @SerializedName("gameCount")
+        val gameCount: Int,
+
+        @SerializedName("maxCount")
+        val maxCount: Int,
+
+        @SerializedName("type")
+        val type: String
     ) : Parcelable
 }

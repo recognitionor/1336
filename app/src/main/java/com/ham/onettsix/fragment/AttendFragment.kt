@@ -17,10 +17,11 @@ import kotlinx.android.synthetic.main.fragment_attendance.*
 
 class AttendFragment : Fragment(R.layout.fragment_attendance) {
     private val attendViewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory(
-            ApiHelperImpl(RetrofitBuilder.apiService),
-            DatabaseHelperImpl(DatabaseBuilder.getInstance(requireActivity().applicationContext))
-        )
+        ViewModelProviders.of(
+            this, ViewModelFactory(
+                ApiHelperImpl(RetrofitBuilder.apiService),
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(requireActivity().applicationContext))
+            )
         )[AttendViewModel::class.java]
     }
 
