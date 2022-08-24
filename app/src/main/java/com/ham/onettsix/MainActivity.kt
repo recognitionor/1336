@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 
 
 class MainActivity : AppCompatActivity(R.layout.activity_main),
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private lateinit var navController: NavController
 
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         ProgressDialog.getInstance(supportFragmentManager)
     }
 
-    private val mainViewModel by lazy {
+    val mainViewModel by lazy {
         ViewModelProviders.of(
             this,
             ViewModelFactory(
@@ -53,17 +53,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
             )
         )[MainViewModel::class.java]
     }
+    private val result =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                LOGIN_RESULT_OK -> {
+                    mainViewModel.updateUserInfo()
+                }
+            }
+        }
 
     private val myProfileResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when (result.resultCode) {
                 LOGIN_RESULT_OK -> {
                     mainViewModel.updateUserInfo()
-                    val menu = nav_view.menu.getItem(1)
-                    menu.isChecked = true
-                    NavigationUI.onNavDestinationSelected(menu, navController)
-                    val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-                    drawer.closeDrawer(GravityCompat.START)
+                    selectedItem(1)
                 }
             }
         }
@@ -87,6 +91,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             mainViewModel.updateUserInfo()
+            nav_header_img.setOnClickListener(this)
+            nav_header_nickname.setOnClickListener(this)
         }
     }
 
@@ -95,15 +101,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
             progressDialog.dismiss()
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.let { data ->
-                        nav_header_nickname.text = data.nickName
-                        nav_header_img.setImageDrawable(
-                            getDrawable(
-                                ProfileImageUtil.getImageId(data.profileImageId ?: 0)
+                    if (it.data != null) {
+                        it.data.let { data ->
+                            nav_header_nickname.text = data.nickName
+                            nav_header_img.setImageDrawable(
+                                getDrawable(
+                                    ProfileImageUtil.getImageId(data.profileImageId ?: -1)
+                                )
                             )
-                        )
+                        }
+                    } else {
+                        nav_header_nickname.setText(R.string.login_do)
+                        nav_header_img.setImageResource(R.drawable.ic_account_circle)
                     }
-
                 }
                 Status.ERROR -> {
 
@@ -152,7 +162,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         when (item.itemId) {
             R.id.nav_profile -> {
                 if (!mainViewModel.isLogin()) {
-                    myProfileResult.launch(Intent(this@MainActivity, LoginActivity::class.java))
+                    myProfileResult.launch(
+                        Intent(
+                            this@MainActivity,
+                            LoginActivity::class.java
+                        )
+                    )
                     return false
                 }
             }
@@ -161,5 +176,30 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            nav_header_img, nav_header_nickname -> {
+                if (!mainViewModel.isLogin()) {
+                    result.launch(
+                        Intent(
+                            this@MainActivity,
+                            LoginActivity::class.java
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
+        val menu = nav_view.menu.getItem(selectedIndex)
+        menu.isChecked = true
+        NavigationUI.onNavDestinationSelected(menu, navController)
+        val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+        if (doClose) {
+            drawer.closeDrawer(GravityCompat.START)
+        }
     }
 }

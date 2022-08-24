@@ -69,6 +69,7 @@
     <string name="login_next_signin">다음에 가입하기 ></string>
     <string name="login_error">%1$s 소셜 로그인에 실패 했습니다.</string>
     <string name="naver_login_required_agreement">네이버 로그인시 필수 약관에 동의해주세요.</string>
+    <string name="logout">로그아웃</string>
 
     <!--game-->
     <string name="game_start">슬롯 시작</string>

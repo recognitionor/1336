@@ -56,7 +56,6 @@ class RPSGameViewModel(
         gameTypeInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             gameTypeInfo.postValue(Resource.error("", null))
-            Log.d("jhlee", "gameLoad error : ${e.message}")
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -65,7 +64,6 @@ class RPSGameViewModel(
                     this[ParamsKeys.KEY_GAME_TYPE] = GAME_TYPE_RPC
                 }
                 val result = apiHelper.getGameCount(params)
-                Log.d("jhlee", "gameLoad result : $result")
                 gameTypeInfo.postValue(Resource.success(result))
             }
         }

@@ -7,13 +7,11 @@ import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
-import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class MyProfileViewModel(
     private val apiHelper: ApiHelper,
@@ -22,6 +20,19 @@ class MyProfileViewModel(
 ) : ViewModel() {
 
     val userInfo = MutableLiveData<Resource<DBUser>>()
+
+    fun logout() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            userInfo.postValue(Resource.error("signin error", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                dbHelper.deleteUser()
+                userInfo.postValue(Resource.success(null))
+            }
+        }
+    }
 
     fun getUserInfo() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
@@ -39,5 +50,4 @@ class MyProfileViewModel(
             }
         }
     }
-
 }

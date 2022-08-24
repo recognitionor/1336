@@ -81,6 +81,7 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
                 }
             }
         }
+
         rpsGameViewModel.gameResult.observe(viewLifecycleOwner) {
             when (it?.status) {
                 Status.SUCCESS -> {

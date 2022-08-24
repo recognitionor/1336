@@ -28,9 +28,37 @@
         android:text="육뉵이"
         android:textColor="@color/text_black"
         android:textSize="24dp"
-        app:layout_constraintLeft_toLeftOf="@id/profile_image_view"
-        app:layout_constraintRight_toRightOf="@id/profile_image_view"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_image_view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/profile_user_logout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:lineHeight="32dp"
+        android:text="@string/logout"
+        android:textColor="@color/main_color"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_user_name_tv"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@+id/profile_user_name_tv"
+        app:layout_constraintTop_toTopOf="@id/profile_user_name_tv" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/profile_logout_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintBottom_toBottomOf="@id/profile_user_logout_title"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@id/profile_user_logout_title"
+        app:layout_constraintTop_toTopOf="@id/profile_user_logout_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/profile_today_attend"

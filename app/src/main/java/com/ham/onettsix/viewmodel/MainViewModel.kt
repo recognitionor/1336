@@ -47,12 +47,11 @@ class MainViewModel(
 
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                //TODO@ jhlee 삭제하자
                 val tempUserInfo = dbHelper.getUser()
                 if (tempUserInfo?.uid != null && tempUserInfo.uid > 0) {
                     userInfo.postValue(Resource.success(tempUserInfo))
                 } else {
-                    throw Exception("not login")
+                    userInfo.postValue(Resource.success(null))
                 }
             }
         }

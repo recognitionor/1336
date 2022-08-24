@@ -10,7 +10,7 @@ class ProfileImageUtil {
     * */
     companion object {
         fun getImageId(profileImageId: Int): Int {
-            var id = 0
+            var id = -1
             when (profileImageId) {
                 0 -> {
                     id = R.drawable.ic_profile_badger
@@ -101,6 +101,9 @@ class ProfileImageUtil {
                 }
                 29 -> {
                     id = R.drawable.ic_profile_zebra
+                }
+                else -> {
+                    id = R.mipmap.ic_sixsix_go
                 }
             }
             return id
