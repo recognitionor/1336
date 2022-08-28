@@ -1,5 +1,6 @@
 package com.ham.onettsix.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,23 +14,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class WinningGameViewModel (
+class WinningGameViewModel(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
     private val preferenceHelper: PreferencesHelper?
 ) : ViewModel() {
 
-    val result = MutableLiveData<Resource<Result>>()
+    val winningViewModel = MutableLiveData<Resource<Result>>()
 
     fun validateLimitedRv() {
+        Log.d("jhlee", "validateLimitedRv")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            result.postValue(Resource.error("", null))
+            winningViewModel.postValue(Resource.error("", null))
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                val result = apiHelper.validateLimitedRv()
+                val result = apiHelper.getInstantLottery()
+                winningViewModel.postValue(Resource.success(result))
             }
         }
     }
-
 }

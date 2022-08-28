@@ -29,12 +29,12 @@
         android:layout_marginBottom="10dp"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/video_layout_img"
-        app:layout_constraintBottom_toTopOf="@+id/video_btn"
+        app:layout_constraintBottom_toTopOf="@+id/video_valid_check_btn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/video_btn"
+        android:id="@+id/video_valid_check_btn"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="22dp"
@@ -42,6 +42,7 @@
         android:background="@drawable/main_color_selector_btn_background"
         android:fontFamily="@font/montserrat_extra_bold"
         android:lineHeight="36dp"
+        android:enabled="false"
         android:text="@string/video_btn"
         android:textColor="@color/white"
         android:textSize="23dp"

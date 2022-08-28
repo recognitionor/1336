@@ -20,7 +20,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun validateAttendCheck(): Result = apiService.validateAttendCheck()
 
-    override suspend fun validateLimitedRv(): Result = apiService.validateLimitedRv()
+    override suspend fun validateLimitedRv(): ValidVideoLimitedRv = apiService.validateLimitedRv()
 
     override suspend fun getSignature(): Result = apiService.getSignature()
 
@@ -41,7 +41,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun createLottery(): Result = apiService.createLottery()
 
-    override suspend fun getInstantLotte(): Result = apiService.getInstantLottery()
+    override suspend fun getInstantLottery(): Result = apiService.getInstantLottery()
 
 
 }

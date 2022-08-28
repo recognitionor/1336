@@ -20,7 +20,7 @@ interface ApiHelper {
 
     suspend fun validateAttendCheck(): Result
 
-    suspend fun validateLimitedRv(): Result
+    suspend fun validateLimitedRv(): ValidVideoLimitedRv
 
     suspend fun getSignature(): Result
 
@@ -38,12 +38,6 @@ interface ApiHelper {
 
     suspend fun createLottery(): Result
 
-    suspend fun getInstantLotte(): Result
-
-
-
-
-
-
+    suspend fun getInstantLottery(): Result
 
 }

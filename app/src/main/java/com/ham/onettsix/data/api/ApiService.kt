@@ -46,7 +46,7 @@ interface ApiService {
     suspend fun getSignature(): Result
 
     @GET("/validate/limitedRv")
-    suspend fun validateLimitedRv(): Result
+    suspend fun validateLimitedRv(): ValidVideoLimitedRv
 
     @GET("getLotteryInfo/{type}")
     suspend fun getLotteryInfo(@Path(value = "type") type: String): Result
