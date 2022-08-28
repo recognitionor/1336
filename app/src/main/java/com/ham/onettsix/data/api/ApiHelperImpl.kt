@@ -43,5 +43,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getInstantLottery(): Result = apiService.getInstantLottery()
 
+    override suspend fun getHistoryInfo(): HistoryInfo = apiService.getHistoryInfo()
+
 
 }

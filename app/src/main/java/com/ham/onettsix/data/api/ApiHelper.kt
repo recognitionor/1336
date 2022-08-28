@@ -40,4 +40,6 @@ interface ApiHelper {
 
     suspend fun getInstantLottery(): Result
 
+    suspend fun getHistoryInfo(): HistoryInfo
+
 }

@@ -66,5 +66,7 @@ interface ApiService {
     @POST("requestTicket")
     suspend fun requestTicket(@Body params: HashMap<String, Any?>): Result
 
+    @GET("me/history")
+    suspend fun getHistoryInfo(): HistoryInfo
 
 }
