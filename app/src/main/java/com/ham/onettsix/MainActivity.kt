@@ -142,10 +142,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
                 myProfileResult.launch(Intent(this, PermissionActivity::class.java))
                 true
             }
-            R.id.action_sign_up -> {
-                myProfileResult.launch(Intent(this, SignUpActivity::class.java))
-                true
-            }
+
             R.id.action_settings -> {
                 true
             }

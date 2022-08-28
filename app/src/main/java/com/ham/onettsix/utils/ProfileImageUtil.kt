@@ -103,7 +103,7 @@ class ProfileImageUtil {
                     id = R.drawable.ic_profile_zebra
                 }
                 else -> {
-                    id = R.mipmap.ic_sixsix_go
+                    id = R.mipmap.ic_sixsix_man
                 }
             }
             return id

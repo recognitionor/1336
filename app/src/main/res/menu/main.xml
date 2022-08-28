@@ -20,9 +20,4 @@
         android:title="@string/eula_item_terms"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_sign_up"
-        android:orderInCategory="100"
-        android:title="@string/menu_signup"
-        app:showAsAction="always" />
 </menu>
