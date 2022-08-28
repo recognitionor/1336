@@ -238,59 +238,49 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
     }
 
     private fun onGameStop(result: Int, isError: Boolean = false) {
-        val random = (0..2).random()
         gameCount++;
         game_count_tv.text = "$gameCount/$maxCount"
-        if (random == 0) {
-            // 무승부 케이스
-            coroutineScope?.cancel()
-            isStopGame = true
-            game_result_tv.visibility = View.VISIBLE
-            game_result_tv.setText(R.string.game_draw)
-            game_start_btn.visibility = View.VISIBLE
-            game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
-            selectedImage = when (selectedItem) {
-                0 -> {
-                    R.mipmap.ic_rock
-                }
-                1 -> {
-                    R.mipmap.ic_scissors
-                }
-                else -> {
-                    R.mipmap.ic_paper
-                }
-            }
-        } else {
-            // 무승부가 아닌케이스
-            coroutineScope?.cancel()
-            isStopGame = true
-
-            if (gameCount >= maxCount) {
-                game_start_btn.visibility = View.GONE
-            } else {
-                game_start_btn.visibility = View.VISIBLE
-            }
-            when (result) {
-                ResultCode.RPC_WIN -> {
-                    game_result_tv.visibility = View.VISIBLE
-                    game_result_tv.setText(R.string.game_win)
-                    game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
-                    selectedImage = when (selectedItem) {
-                        0 -> {
-                            R.mipmap.ic_scissors
-                        }
-                        1 -> {
-                            R.mipmap.ic_paper
-                        }
-                        else -> {
-                            R.mipmap.ic_rock
-                        }
+        coroutineScope?.cancel()
+        isStopGame = true
+        game_result_tv.visibility = View.VISIBLE
+        game_start_btn.visibility = View.VISIBLE
+        game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
+        when (result) {
+            ResultCode.RPC_WIN -> {
+                game_result_tv.visibility = View.VISIBLE
+                game_result_tv.setText(R.string.game_win)
+                game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
+                selectedImage = when (selectedItem) {
+                    0 -> {
+                        R.mipmap.ic_scissors
+                    }
+                    1 -> {
+                        R.mipmap.ic_paper
+                    }
+                    else -> {
+                        R.mipmap.ic_rock
                     }
                 }
-                ResultCode.RPC_LOSE -> {
-                    game_result_tv.visibility = View.VISIBLE
+            }
+            ResultCode.RPC_LOSE -> {
+                val random = (0..1).random()
+                if (random == 0) {
+                    // 무승부 케이스
+                    game_result_tv.setText(R.string.game_draw)
+                    selectedImage = when (selectedItem) {
+                        0 -> {
+                            R.mipmap.ic_rock
+                        }
+                        1 -> {
+                            R.mipmap.ic_scissors
+                        }
+                        else -> {
+                            R.mipmap.ic_paper
+                        }
+                    }
+                } else {
+                    // 패배의 경우
                     game_result_tv.setText(R.string.game_lose)
-                    game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
                     selectedImage = when (selectedItem) {
                         0 -> {
                             R.mipmap.ic_paper
@@ -304,7 +294,6 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
                     }
                 }
             }
-            serverResult = null
         }
         game_image_view.setImageResource(selectedImage)
     }
