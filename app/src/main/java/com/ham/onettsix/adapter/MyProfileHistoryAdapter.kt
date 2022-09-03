@@ -18,7 +18,6 @@ class MyProfileHistoryAdapter(
 
     class MyProfileHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: HistoryInfo.Data) {
-            Log.d("jhlee", "bind ${item}")
             itemView.my_profile_history_item_episode.text =
                 itemView.resources.getString(R.string.profile_history_item_episode, item.episode)
             itemView.my_profile_history_item_price.text = itemView.resources.getString(

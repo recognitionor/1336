@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.ham.onettsix.R
+import java.lang.Exception
 
 class ProgressDialog : AppCompatDialogFragment() {
 
@@ -48,5 +49,13 @@ class ProgressDialog : AppCompatDialogFragment() {
 
     fun show() {
         show(mSupportFragmentManager, TAG)
+    }
+
+    override fun dismiss() {
+        try {
+            dismissAllowingStateLoss()
+        } catch (ignored: Exception) {
+        }
+
     }
 }

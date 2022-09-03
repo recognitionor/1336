@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 allprojects {
@@ -92,5 +93,7 @@ dependencies {
 
 
     implementation("androidx.multidex:multidex:2.0.1")
-
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 }

@@ -142,8 +142,6 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
         super.onDestroyView()
         coroutineScope?.cancel()
         viewModelStore.clear()
-        rpsGameViewModel.gameResult.removeObservers(this)
-        rpsGameViewModel.gameTypeInfo.removeObservers(this)
         rpsGameViewModel.gameResult.removeObservers(viewLifecycleOwner)
         rpsGameViewModel.gameTypeInfo.removeObservers(viewLifecycleOwner)
     }

@@ -49,7 +49,7 @@ interface ApiService {
     suspend fun validateLimitedRv(): ValidVideoLimitedRv
 
     @GET("getLotteryInfo/{type}")
-    suspend fun getLotteryInfo(@Path(value = "type") type: String): Result
+    suspend fun getLotteryInfo(@Path(value = "type") type: String): LotteryInfo
 
     @POST("getTicket")
     suspend fun getTicket(@Body params: HashMap<String, Any?>): Result

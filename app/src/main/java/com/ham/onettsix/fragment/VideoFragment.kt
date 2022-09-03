@@ -13,6 +13,7 @@ import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.ham.onettsix.R
+import com.ham.onettsix.ad.AdmobAdapter
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
@@ -42,10 +43,34 @@ class VideoFragment : Fragment(R.layout.fragment_video) {
         super.onViewCreated(view, savedInstanceState)
         setupObserve()
         videoViewModel.validateLimitedRv()
-        video_valid_check_btn.setOnClickListener {
-            videoViewModel.getVideoSignature()
+        video_layout_img.setOnClickListener {
+            Log.d("jhlee", "videoViewModel.getVideoSignature()")
+            progressDialog.show()
+            AdmobAdapter.load(requireActivity(), "ca-app-pub-5672204188980144/9812109243",
+                object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        super.onAdFailedToLoad(p0)
+                    }
+
+                    override fun onAdLoaded(p0: RewardedAd) {
+                        super.onAdLoaded(p0)
+                        progressDialog.dismiss()
+                        p0.show(requireActivity()) {
+
+                        }
+                    }
+                })
+
+//            videoViewModel.getVideoSignature()
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModelStore.clear()
+        videoViewModel.videoSignature.removeObservers(viewLifecycleOwner)
+        videoViewModel.validateLimitedRvStatus.removeObservers(viewLifecycleOwner)
     }
 
     private fun setupObserve() {
@@ -71,34 +96,28 @@ class VideoFragment : Fragment(R.layout.fragment_video) {
         videoViewModel.videoSignature.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressDialog.dismiss()
+                    Log.d("jhlee", "success")
                     it.data?.data?.let {
-                        MobileAds.initialize(
-                            requireActivity()
-                        ) {
-                            val adRequest = AdRequest.Builder().build()
-                            RewardedAd.load(
-                                requireActivity(),
-                                "ca-app-pub-3940256099942544/5224354917",
-                                adRequest,
-                                object : RewardedAdLoadCallback() {
-                                    override fun onAdFailedToLoad(p0: LoadAdError) {
-                                        super.onAdFailedToLoad(p0)
-                                        Log.d("jhlee", "onAdFailedToLoad : ${p0.message}")
-                                    }
+                        AdmobAdapter.load(
+                            requireActivity(),
+                            "ca-app-pub-5672204188980144/9812109243",
+                            object : RewardedAdLoadCallback() {
+                                override fun onAdFailedToLoad(error: LoadAdError) {
+                                    super.onAdFailedToLoad(error)
+                                    progressDialog.dismiss()
+                                }
 
-                                    override fun onAdLoaded(p0: RewardedAd) {
-                                        super.onAdLoaded(p0)
-                                        p0.show(requireActivity()
-                                        ) {
-                                            Log.d("jhlee", "show : ")
-                                        }
-                                        Log.d("jhlee", "onAdLoad : ")
+                                override fun onAdLoaded(rewardAd: RewardedAd) {
+                                    super.onAdLoaded(rewardAd)
+                                    progressDialog.dismiss()
+                                    rewardAd.show(requireActivity()) { rewardAd ->
+                                        Log.d(
+                                            "jhlee",
+                                            "reward : ${rewardAd.type}, ${rewardAd.amount}"
+                                        )
                                     }
                                 }
-                            )
-                            Log.d("jhlee", "init success : ")
-                        }
+                            })
                     }
                     Log.d("jhlee", "success : ${it.data?.data}")
                 }

@@ -37,9 +37,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
+        Log.d("jhlee", "onNewToken")
         PreferencesHelper.getInstance(this).setFireBaseToken(token)
         sendRegistrationToServer(token)
-        sendNotification("일삼삼뉵 테스트 타이틀", "body", "summary", "largeImage", "smallImage", "action")
+//        sendNotification("테스트 타이틀", "body", "summary", "largeImage", "smallImage", "action")
     }
 
     /**

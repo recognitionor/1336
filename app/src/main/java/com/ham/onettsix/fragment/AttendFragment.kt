@@ -29,7 +29,10 @@ class AttendFragment : Fragment(R.layout.fragment_attendance) {
         super.onViewCreated(view, savedInstanceState)
         setupObserve()
         attendViewModel.attendStatusLoad()
-        attendViewModel.attendCheck()
+
+        attendance_btn.setOnClickListener {
+            attendViewModel.attendCheck()
+        }
     }
 
     private fun setupObserve() {

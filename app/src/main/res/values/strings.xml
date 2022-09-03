@@ -6,6 +6,7 @@
     <string name="waiting">확인</string>
     <string name="unwinnable">미당첨</string>
     <string name="winning">축!당첨!</string>
+    <string name="mail">mail</string>
     <string name="count_divide_mark">/</string>
 
     <!--menu-->
@@ -41,12 +42,10 @@
     <string name="home_game_who_is_lucky">행운의 육뉵이는 뉴규?</string>
     <string name="home_game_now_chance_percent">지금 참여하면 당첨 확률 %1$s%</string>
     <string name="home_game_now_left_chance">남은 찬스 %1$s개</string>
-    <string name="home_game_ticket_info">%1$s명이 참여해서 총 %2$s개의 티켓이 모였어요.</string>
+    <string name="home_game_ticket_info">%1$s명이 참여해서\n총 %2$s개의 티켓이 모였어요.</string>
     <string name="home_game_go_history_title">역대 육뉵이 보러가기</string>
     <string name="home_game_caution_title">유의사항</string>
     <string name="home_game_caution_content">카운트 시작 시 응모 가능한 횟수와 당첨 번호가 지정됩니다.\n이벤트는 최대 참여자수에 도달하면 100% 당첨 됩니다.\n얻은 티켓은 이벤트 운영 기간동안만 유효합니다.\n카운트 다운이 끝나면 모두 회수됩니다.</string>
-
-
 
 
     <!--티켓참여-->

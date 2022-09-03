@@ -3,7 +3,6 @@ package com.ham.onettsix
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -136,6 +135,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         return when (item.itemId) {
             R.id.action_login -> {
                 myProfileResult.launch(Intent(this, LoginActivity::class.java))
+                true
+            }
+            R.id.action_mail -> {
+                val email = Intent(Intent.ACTION_SEND)
+                email.putExtra(Intent.EXTRA_EMAIL, arrayOf("ham.factories@gmail.com"))
+                email.putExtra(Intent.EXTRA_SUBJECT, "환급신청")
+                email.putExtra(Intent.EXTRA_TEXT, "메시지")
+                email.type = "message/rfc822"
+                startActivity(Intent.createChooser(email, "Choose an Email client :"))
                 true
             }
             R.id.action_eula -> {

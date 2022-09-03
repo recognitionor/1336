@@ -30,7 +30,7 @@ interface ApiHelper {
 
     suspend fun getSlot(): Result
 
-    suspend fun getLotteryInfo(type: String): Result
+    suspend fun getLotteryInfo(type: String): LotteryInfo
 
     suspend fun getLottery(params: HashMap<String, Any?>): Result
 

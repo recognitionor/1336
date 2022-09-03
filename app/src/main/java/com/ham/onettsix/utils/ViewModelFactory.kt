@@ -49,6 +49,10 @@ class ViewModelFactory(
             return WinningGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
         throw IllegalArgumentException("Unknown class name")
     }
 }
