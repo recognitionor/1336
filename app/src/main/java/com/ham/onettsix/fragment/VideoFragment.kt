@@ -12,6 +12,7 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions
 import com.ham.onettsix.R
 import com.ham.onettsix.ad.AdmobAdapter
 import com.ham.onettsix.data.api.ApiHelperImpl
@@ -45,23 +46,8 @@ class VideoFragment : Fragment(R.layout.fragment_video) {
         videoViewModel.validateLimitedRv()
         video_layout_img.setOnClickListener {
             Log.d("jhlee", "videoViewModel.getVideoSignature()")
-            progressDialog.show()
-            AdmobAdapter.load(requireActivity(), "ca-app-pub-5672204188980144/9812109243",
-                object : RewardedAdLoadCallback() {
-                    override fun onAdFailedToLoad(p0: LoadAdError) {
-                        super.onAdFailedToLoad(p0)
-                    }
-
-                    override fun onAdLoaded(p0: RewardedAd) {
-                        super.onAdLoaded(p0)
-                        progressDialog.dismiss()
-                        p0.show(requireActivity()) {
-
-                        }
-                    }
-                })
-
-//            videoViewModel.getVideoSignature()
+//            progressDialog.show()
+            videoViewModel.getVideoSignature()
         }
 
     }
@@ -78,6 +64,7 @@ class VideoFragment : Fragment(R.layout.fragment_video) {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.data?.let { data ->
+                        Log.d("jhlee", "Status.SUCCESS")
                         progressDialog.dismiss()
                         video_valid_check_btn.isEnabled = true
                         video_count_info_tv.text = "${data.currentRvCount}/${data.limitedRvCount}"
@@ -96,25 +83,28 @@ class VideoFragment : Fragment(R.layout.fragment_video) {
         videoViewModel.videoSignature.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "success")
-                    it.data?.data?.let {
-                        AdmobAdapter.load(
-                            requireActivity(),
+                    Log.d("jhlee", "videoSignature  ${it.data}")
+                    it.data?.data?.let { signature ->
+                        AdmobAdapter.load(requireActivity(),
                             "ca-app-pub-5672204188980144/9812109243",
                             object : RewardedAdLoadCallback() {
                                 override fun onAdFailedToLoad(error: LoadAdError) {
                                     super.onAdFailedToLoad(error)
-                                    progressDialog.dismiss()
                                 }
 
                                 override fun onAdLoaded(rewardAd: RewardedAd) {
                                     super.onAdLoaded(rewardAd)
                                     progressDialog.dismiss()
-                                    rewardAd.show(requireActivity()) { rewardAd ->
-                                        Log.d(
-                                            "jhlee",
-                                            "reward : ${rewardAd.type}, ${rewardAd.amount}"
-                                        )
+                                    val serverSideVerificationOptions =
+                                        ServerSideVerificationOptions.Builder()
+                                    serverSideVerificationOptions.setUserId(signature.rvId)
+                                    serverSideVerificationOptions.setCustomData(signature.signature)
+
+                                    rewardAd.setServerSideVerificationOptions(
+                                        serverSideVerificationOptions.build()
+                                    )
+                                    rewardAd.show(requireActivity()) {
+
                                     }
                                 }
                             })

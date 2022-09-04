@@ -43,7 +43,7 @@ interface ApiService {
     suspend fun validateAttendCheck(): Result
 
     @GET("getSignature")
-    suspend fun getSignature(): Result
+    suspend fun getSignature(): VideoSignature
 
     @GET("/validate/limitedRv")
     suspend fun validateLimitedRv(): ValidVideoLimitedRv

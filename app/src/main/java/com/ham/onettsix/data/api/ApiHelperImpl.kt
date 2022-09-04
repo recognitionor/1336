@@ -22,7 +22,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun validateLimitedRv(): ValidVideoLimitedRv = apiService.validateLimitedRv()
 
-    override suspend fun getSignature(): Result = apiService.getSignature()
+    override suspend fun getSignature(): VideoSignature = apiService.getSignature()
 
     override suspend fun getRockPaperScissors(): GameResult = apiService.getRockPaperScissors()
 

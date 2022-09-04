@@ -9,6 +9,7 @@ import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.data.model.ValidVideoLimitedRv
+import com.ham.onettsix.data.model.VideoSignature
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.*
 
@@ -20,7 +21,7 @@ class VideoViewModel(
 
     val validateLimitedRvStatus = MutableLiveData<Resource<ValidVideoLimitedRv>>()
 
-    val videoSignature = MutableLiveData<Resource<Result>>()
+    val videoSignature = MutableLiveData<Resource<VideoSignature>>()
 
     fun validateLimitedRv() {
         Log.d("jhlee", "validateLimitedRv")

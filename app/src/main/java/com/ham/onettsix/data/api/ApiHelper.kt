@@ -22,7 +22,7 @@ interface ApiHelper {
 
     suspend fun validateLimitedRv(): ValidVideoLimitedRv
 
-    suspend fun getSignature(): Result
+    suspend fun getSignature(): VideoSignature
 
     suspend fun getRockPaperScissors(): GameResult
 
