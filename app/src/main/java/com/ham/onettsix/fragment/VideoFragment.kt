@@ -83,7 +83,6 @@ class VideoFragment : Fragment(R.layout.fragment_video) {
         videoViewModel.videoSignature.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "videoSignature  ${it.data}")
                     it.data?.data?.let { signature ->
                         AdmobAdapter.load(requireActivity(),
                             "ca-app-pub-5672204188980144/9812109243",

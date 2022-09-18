@@ -17,13 +17,17 @@ class NaverSignInService(private val ctx: Context) : OAuthLoginCallback {
 
     fun signIn(listener: ISocialLoginListener) {
         this.listener = listener
-        NaverIdLoginSDK.initialize(
-            ctx,
-            OAUTH_CLIENT_ID,
-            OAUTH_CLIENT_SECRET,
-            OAUTH_CLIENT_NAME
-        )
-        NaverIdLoginSDK.authenticate(ctx, this)
+        try {
+            NaverIdLoginSDK.initialize(
+                ctx,
+                OAUTH_CLIENT_ID,
+                OAUTH_CLIENT_SECRET,
+                OAUTH_CLIENT_NAME
+            )
+            NaverIdLoginSDK.authenticate(ctx, this)
+        } catch (e: Exception) {
+            listener.onError(ISocialLoginListener.SOCIAL_TYPE_NAVER)
+        }
     }
 
     override fun onError(errorCode: Int, message: String) {

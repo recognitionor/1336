@@ -33,6 +33,9 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getLotteryInfo(type: String): LotteryInfo = apiService.getLotteryInfo(type)
 
+    override suspend fun getLotteryHistory(params: HashMap<String, Any?>): LotteryHistory =
+        apiService.getLotteryHistory(params)
+
     override suspend fun getLottery(params: HashMap<String, Any?>): Result =
         apiService.getLottery(params)
 
@@ -45,5 +48,6 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getHistoryInfo(): HistoryInfo = apiService.getHistoryInfo()
 
+    override suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result = apiService.setFirebaseToken(params)
 
 }

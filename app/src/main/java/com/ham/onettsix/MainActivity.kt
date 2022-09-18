@@ -22,7 +22,9 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.dialog.ProgressDialog
+import com.ham.onettsix.dialog.TwoButtonDialog
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
@@ -134,10 +136,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.action_login -> {
-                myProfileResult.launch(Intent(this, LoginActivity::class.java))
-                true
-            }
             R.id.action_mail -> {
                 val email = Intent(Intent.ACTION_SEND)
                 email.putExtra(Intent.EXTRA_EMAIL, arrayOf("ham.factories@gmail.com"))
@@ -147,12 +145,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
                 startActivity(Intent.createChooser(email, "Choose an Email client :"))
                 true
             }
-            R.id.action_eula -> {
-                myProfileResult.launch(Intent(this, PermissionActivity::class.java))
-                true
-            }
 
             R.id.action_settings -> {
+                myProfileResult.launch(Intent(this, LotteryHistoryActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -48,6 +48,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                 }
 
                 override fun onError(socialType: String) {
+                    Log.d("jhlee", "onError : $socialType");
                 }
             })
         }

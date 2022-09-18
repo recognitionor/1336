@@ -2,6 +2,7 @@ package com.ham.onettsix.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.ham.onettsix.LoginActivity
+import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode
@@ -44,6 +46,9 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
             if (result.resultCode == ActivityResultKey.LOGIN_RESULT_OK) {
                 layout_game_needed_login.visibility = View.GONE
                 rpsGameViewModel.gameLoad()
+                if (this@RPSGameFragment.activity is MainActivity) {
+                    (this@RPSGameFragment.activity as MainActivity).mainViewModel.updateUserInfo()
+                }
             }
         }
 

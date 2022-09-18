@@ -2,7 +2,6 @@ package com.ham.onettsix
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +45,7 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
     }
 
     private fun setupObserver() {
-        splashViewModel.result.observe(this) {
+        splashViewModel.refreshResult.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
                     finish()

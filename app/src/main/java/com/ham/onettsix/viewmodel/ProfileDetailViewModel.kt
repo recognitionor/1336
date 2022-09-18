@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MyProfileViewModel(
+class ProfileDetailViewModel(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
     private val preferenceHelper: PreferencesHelper?
@@ -25,7 +25,18 @@ class MyProfileViewModel(
 
     val historyInfo = MutableLiveData<Resource<HistoryInfo>>()
 
+    fun logout() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            userInfo.postValue(Resource.error("signin error", null))
+        }
 
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                dbHelper.deleteUser()
+                userInfo.postValue(Resource.success(null))
+            }
+        }
+    }
 
     fun getUserInfo() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->

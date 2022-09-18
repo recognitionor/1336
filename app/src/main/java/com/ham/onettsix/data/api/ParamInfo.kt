@@ -40,4 +40,10 @@ object ParamsKeys {
     const val KEY_AUTH_TOKEN = "X-AUTH-TOKEN"
 
     const val KEY_GAME_TYPE = "gameType"
+
+    const val KEY_TYPE = "type"
+
+    const val KEY_TOKEN = "token"
+
+    const val KEY_START_EPISODE = "startEpisode"
 }

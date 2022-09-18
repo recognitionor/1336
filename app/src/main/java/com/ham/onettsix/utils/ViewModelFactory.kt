@@ -1,11 +1,10 @@
 package com.ham.onettsix.utils
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
+import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.viewmodel.*
 
 class ViewModelFactory(
@@ -51,6 +50,14 @@ class ViewModelFactory(
 
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(LotteryHistoryViewModel::class.java)) {
+            return LotteryHistoryViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(ProfileDetailViewModel::class.java)) {
+            return ProfileDetailViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
         throw IllegalArgumentException("Unknown class name")

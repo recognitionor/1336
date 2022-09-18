@@ -1,17 +1,19 @@
 package com.ham.onettsix.fragment
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.MainActivity
+import com.ham.onettsix.ProfileDetailActivity
 import com.ham.onettsix.R
 import com.ham.onettsix.adapter.MyProfileHistoryAdapter
+import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
@@ -39,6 +41,18 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
         )[MyProfileViewModel::class.java]
     }
 
+    private val result =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                ActivityResultKey.LOGOUT_RESULT_OK -> {
+                    (requireActivity() as MainActivity).apply {
+                        selectedItem(0)
+                        mainViewModel.updateUserInfo()
+                    }
+                }
+            }
+        }
+
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog.getInstance(parentFragmentManager)
     }
@@ -57,8 +71,9 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         profile_history_rv.adapter = adapter
         profile_history_rv.layoutManager = LinearLayoutManager(requireContext())
-        profile_user_logout_title.setOnClickListener(this@MyProfileFragment)
-        profile_logout_img.setOnClickListener(this@MyProfileFragment)
+        profile_detail_img.setOnClickListener(this@MyProfileFragment)
+        profile_image_view.setOnClickListener(this@MyProfileFragment)
+        profile_user_name_tv.setOnClickListener(this@MyProfileFragment)
     }
 
     private fun setupObserve() {
@@ -66,8 +81,8 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dismiss()
-                    it.data?.let { historyInfo ->
-                        adapter.setList(historyInfo.data)
+                    it.data?.data?.let { historyInfo ->
+                        adapter.setList(historyInfo)
                     }
                     adapter.notifyDataSetChanged()
                 }
@@ -85,6 +100,7 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     progressDialog.dismiss()
                     if (it.data != null) {
                         profile_user_name_tv.text = it.data.nickName
+                        profile_user_id_tv.text = "#${it.data.id}"
                         profile_image_view.setImageResource(
                             ProfileImageUtil.getImageId(
                                 it.data.profileImageId ?: -1
@@ -117,8 +133,10 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            profile_user_logout_title, profile_logout_img -> {
-                myProfileViewModel.logout()
+            profile_detail_img,
+            profile_image_view,
+            profile_user_name_tv -> {
+                result.launch(Intent(requireContext(), ProfileDetailActivity::class.java))
             }
         }
     }

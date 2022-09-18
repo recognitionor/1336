@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
 @Entity(indices = [Index(value = ["id"], unique = true)])
 data class DBUser(

@@ -32,6 +32,8 @@ interface ApiHelper {
 
     suspend fun getLotteryInfo(type: String): LotteryInfo
 
+    suspend fun getLotteryHistory(params: HashMap<String, Any?>): LotteryHistory
+
     suspend fun getLottery(params: HashMap<String, Any?>): Result
 
     suspend fun requestTicket(params: HashMap<String, Any?>): Result
@@ -41,5 +43,7 @@ interface ApiHelper {
     suspend fun getInstantLottery(): Result
 
     suspend fun getHistoryInfo(): HistoryInfo
+
+    suspend fun setFirebaseToken(params: HashMap<String, Any?>) : Result
 
 }

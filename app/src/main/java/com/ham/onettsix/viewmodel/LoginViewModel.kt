@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
+import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.api.ParamsKeys.KEY_ACCESS_TOKEN
-import com.ham.onettsix.data.api.ParamsKeys.KEY_AUTH_TOKEN
 import com.ham.onettsix.data.api.ParamsKeys.KEY_ENABLE_ALARM
-import com.ham.onettsix.data.api.ParamsKeys.KEY_ENABLE_ALERT
 import com.ham.onettsix.data.api.ParamsKeys.KEY_SOCIAL_TYPE
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
@@ -20,7 +19,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class LoginViewModel(
     private val apiHelper: ApiHelper,
@@ -33,6 +31,7 @@ class LoginViewModel(
     fun signIn(socialType: String, token: String) {
         signIn.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            Log.d("jhlee", "error : ${e.message}")
             signIn.postValue(Resource.error("signin error", null))
         }
 
@@ -63,6 +62,11 @@ class LoginViewModel(
                             it.uid
                         )
                     )
+                    /*로그인 성공 했으니 firebase token 갱신 필요*/
+                    val map = HashMap<String, Any?>()
+                    map[ParamsKeys.KEY_TOKEN] = preferenceHelper?.getFireBaseToken()
+                    apiHelper.setFirebaseToken(map)
+
                     signIn.postValue(Resource.success(result))
                     return@withContext
                 }

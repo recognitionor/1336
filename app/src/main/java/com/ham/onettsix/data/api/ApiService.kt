@@ -69,4 +69,11 @@ interface ApiService {
     @GET("me/history")
     suspend fun getHistoryInfo(): HistoryInfo
 
+    @GET("lotteryHistory")
+    suspend fun getLotteryHistory(@QueryMap params: HashMap<String, Any?>): LotteryHistory
+
+    @POST("firebasetoken")
+    suspend fun setFirebaseToken(@QueryMap params: HashMap<String, Any?>): Result
+
+
 }

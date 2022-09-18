@@ -43,10 +43,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserver()
-        Log.d(
-            "jhlee",
-            "onCreate : ${PreferencesHelper.getInstance(requireActivity()).getFireBaseToken()}"
-        )
     }
 
     private fun setupObserver() {

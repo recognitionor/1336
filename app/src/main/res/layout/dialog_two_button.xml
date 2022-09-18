@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="50dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="30dp"
+    tools:context=".dialog.TwoButtonDialog">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/two_button_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
+        android:lineHeight="48dp"
+        android:textColor="@color/text_black"
+        android:textSize="24dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/two_button_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:lineHeight="48dp"
+        android:textColor="@color/caution_grey"
+        android:textSize="24dp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/two_button_positive"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_color_selector_btn_background"
+            android:lineHeight="48dp"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/two_button_negative"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_color_selector_btn_background"
+            android:lineHeight="48dp"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

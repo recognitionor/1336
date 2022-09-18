@@ -37,6 +37,14 @@
             android:name=".SignUpActivity"
             android:theme="@style/Theme.ham.NoActionBar" />
 
+        <activity
+            android:name=".LotteryHistoryActivity"
+            android:theme="@style/Theme.ham.NoActionBar" />
+
+        <activity
+            android:name=".ProfileDetailActivity"
+            android:theme="@style/Theme.ham.NoActionBar" />
+
         <!-- google -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

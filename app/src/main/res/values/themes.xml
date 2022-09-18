@@ -36,6 +36,9 @@
         <item name="color">@color/main_color</item>
     </style>
 
+    <style name="SwitchCompatTheme" >
+        <item name="colorControlActivated">@color/main_color</item>
+    </style>
 
 
 </resources>

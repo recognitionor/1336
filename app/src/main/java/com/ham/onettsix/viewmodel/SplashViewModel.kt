@@ -1,13 +1,13 @@
 package com.ham.onettsix.viewmodel
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.util.StringUtil
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.ParamsKeys
+import com.ham.onettsix.data.api.ParamsKeys.KEY_TOKEN
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
@@ -23,12 +23,27 @@ class SplashViewModel(
     private val preferenceHelper: PreferencesHelper?
 ) : ViewModel() {
 
-    val result = MutableLiveData<Resource<Result>>()
+    val refreshResult = MutableLiveData<Resource<Result>>()
+
+    private val firebaseTokenResult = MutableLiveData<Resource<Result>>()
+
+    private fun serFirebaseToken() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            firebaseTokenResult.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
+        }
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val map = HashMap<String, Any?>()
+                map[KEY_TOKEN] = preferenceHelper?.getFireBaseToken()
+                apiHelper.setFirebaseToken(map)
+            }
+        }
+    }
 
     fun refreshLogin() {
-        result.postValue(Resource.loading(null))
+        refreshResult.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            result.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
+            refreshResult.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -62,8 +77,11 @@ class SplashViewModel(
                         // 만료되었다고 판단되면 유저 정보는 삭제 해준다.
                         dbHelper.deleteUser()
                     }
+                    if (preferenceHelper?.getFireBaseToken()?.isNotEmpty() == true) {
+                        serFirebaseToken()
+                    }
                 }
-                result.postValue(Resource.success(null))
+                refreshResult.postValue(Resource.success(null))
             }
         }
     }

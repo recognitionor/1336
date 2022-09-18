@@ -3,25 +3,25 @@ package com.ham.onettsix.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
-data class HistoryInfo(
+data class LotteryHistory(
     @SerializedName("description")
-    override val description: String = "",
+    override val description: String,
 
     @SerializedName("pagination")
     override val pagination: Pagination,
 
     @SerializedName("resultCode")
-    override val resultCode: Int = -1,
+    override val resultCode: Int,
 
     @SerializedName("transactionTime")
-    override val transactionTime: String = "",
+    override val transactionTime: String,
 
     @SerializedName("data")
     override val data: ArrayList<Data> = arrayListOf()
-
-) : BasicData<ArrayList<HistoryInfo.Data>>() {
+) : BasicData<ArrayList<LotteryHistory.Data>>() {
     @Parcelize
     data class Data(
         @SerializedName("isWinning")
@@ -42,11 +42,14 @@ data class HistoryInfo(
         @SerializedName("isEnd")
         val isEnd: Boolean,
 
+        @SerializedName("memberCount")
+        val memberCount: Int,
+
         @SerializedName("endDate")
         val endDate: String,
 
         @SerializedName("nickname")
         val nickname: String,
 
-    ) : Parcelable
+        ) : Parcelable
 }

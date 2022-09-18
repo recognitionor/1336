@@ -3,11 +3,13 @@
     <!--common-->
     <string name="must">[필수]</string>
     <string name="confirm">확인</string>
-    <string name="waiting">확인</string>
+    <string name="cancel">취소</string>
+    <string name="waiting">대기</string>
     <string name="unwinnable">미당첨</string>
     <string name="winning">축!당첨!</string>
     <string name="mail">mail</string>
     <string name="count_divide_mark">/</string>
+    <string name="won">원</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
@@ -24,6 +26,14 @@
     <string name="common_error">에러가 발생했습니다. 다시 시도 해주세요</string>
 
     <string name="splash_title">일삼삼뉵</string>
+
+    <!--Lottery_History-->
+    <string name="lottery_history_count">제 %1$s회</string>
+    <string name="lottery_history_title">육뉵이 발표</string>
+    <string name="lottery_history_end_date">(%1$s 추첨)</string>
+    <string name="lottery_history_winning_btn">당첨 포인트 받으러가기 신나게~~~</string>
+    <string name="lottery_history_winning_info_message">당첨 발표 후 7일내 마이페이지를 통해 지급 신청을 해야만 지급이 가능합니다.</string>
+    <string name="lottery_history_list_title">역대 육뉵이</string>
 
     <!--Home-->
     <string name="home_remain_drawing_time_title">당첨까지\n남은 시간</string>
@@ -56,13 +66,17 @@
     <string name="attend_btn">출to the첵</string>
     <string name="attend_done">출첵완료!</string>
     <string name="video_btn">영상보고 티겟얻기</string>
+
     <!--Profile-->
     <string name="profile_toady_attend">오늘의 참여</string>
+    <string name="profile_possessed_ticket_title">보유 티켓</string>
     <string name="profile_toady_attend_divider">/</string>
     <string name="profile_history">History</string>
     <string name="profile_history_item_episode">%1$s 회차</string>
     <string name="profile_history_item_price">%1$s 원</string>
     <string name="profile_history_item_status_wating">%1$s 회차</string>
+    <string name="profile_ticket_info_message">(티겟은 참여 회차의 육뉵이 당첨시까지 유효하며, 미당첨시 다음 회자 당첨시까지로 연장됩니다. 티켓 획득 후 바로 응모를 권장합니다.)</string>
+    <string name="profile_warning_message">당첨 발표 후 7일내 당첨 버튼을 클릭해서 메일을 보내야만 지급이 가능합니다.</string>
 
     <!--Login-->
     <string name="login_info_title">회원가입 / 로그인</string>
@@ -102,7 +116,14 @@
     <string name="winning_result_lose">아쉽게도 %1$s 님은 육뉵이가 아니었습니다.</string>
     <string name="winning_result_win">축하드립니다. 당첨</string>
 
-
+    <!--Detail-->
+    <string name="profile_detail_notice">공지사항</string>
+    <string name="profile_detail_app_push">푸시 수신</string>
+    <string name="profile_detail_event">이벤트 알림 수신</string>
+    <string name="profile_detail_eula">약관&amp;개인 정보 처리방침</string>
+    <string name="profile_detail_version">버전 정보</string>
+    <string name="profile_detail_logout">로그아웃</string>
+    <string name="profile_detail_withdraw">회원 탈퇴하시려면 여기를 눌러주세요</string>
 
 
 
