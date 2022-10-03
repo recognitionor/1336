@@ -18,8 +18,14 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_game"
+        android:id="@+id/nav_get_ticket"
         android:name="com.ham.onettsix.fragment.GameFragment"
+        android:label="@string/menu_get_ticket"
+        tools:layout="@layout/fragment_game" />
+
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.ham.onettsix.fragment.LotteryHistoryFragment"
         android:label="@string/menu_game"
         tools:layout="@layout/fragment_game" />
 

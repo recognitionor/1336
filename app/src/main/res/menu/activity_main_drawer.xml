@@ -9,13 +9,17 @@
             android:icon="@drawable/ic_home"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_get_ticket"
+            android:icon="@drawable/ic_book_online"
+            android:title="@string/menu_get_ticket" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person"
             android:title="@string/menu_profile" />
         <item
-            android:id="@+id/nav_game"
-            android:icon="@drawable/ic_click"
-            android:title="@string/menu_game" />
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_timeline"
+            android:title="@string/menu_history" />
 
     </group>
 </menu>

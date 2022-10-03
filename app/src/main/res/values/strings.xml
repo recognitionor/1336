@@ -18,6 +18,8 @@
     <string name="menu_login">로그인</string>
     <string name="menu_signup">회원가입</string>
     <string name="menu_profile">내 정보</string>
+    <string name="menu_get_ticket">Get 티켓!</string>
+    <string name="menu_history">역대 육뉵이</string>
 
     <string name="eula_item_terms">약관</string>
     <string name="eula_item_privacy_policy">개인정보 처리방침</string>
