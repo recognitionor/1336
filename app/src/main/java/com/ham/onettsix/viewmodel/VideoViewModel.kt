@@ -52,4 +52,8 @@ class VideoViewModel(
             }
         }
     }
+
+    fun addVideoCount() {
+        Log.d("jhlee", "getVideoSignature")
+    }
 }

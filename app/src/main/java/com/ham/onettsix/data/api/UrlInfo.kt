@@ -7,7 +7,7 @@ package com.ham.onettsix.data.api
 object UrlInfo {
 
     var LIVE_URL = "https://api.onettsix.com"
-    var DEV_URL = "https://7bad-106-245-0-178.jp.ngrok.io"
+    var DEV_URL = "https://api.onettsix.com"
 
 
     @JvmStatic

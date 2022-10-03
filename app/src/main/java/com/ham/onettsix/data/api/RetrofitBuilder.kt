@@ -1,6 +1,8 @@
 package com.ham.onettsix.data.api
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -31,11 +33,14 @@ object RetrofitBuilder {
             .addInterceptor(headerInterceptor)
             .addInterceptor(interceptor).build()
 
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
 
         return Retrofit.Builder()
             .baseUrl(UrlInfo.getBaseURL())
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

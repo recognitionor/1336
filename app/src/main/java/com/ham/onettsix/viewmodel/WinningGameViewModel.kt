@@ -23,7 +23,6 @@ class WinningGameViewModel(
     val winningViewModel = MutableLiveData<Resource<Result>>()
 
     fun validateLimitedRv() {
-        Log.d("jhlee", "validateLimitedRv")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             winningViewModel.postValue(Resource.error("", null))
         }

@@ -69,6 +69,7 @@
     <string name="attend_btn">출to the첵</string>
     <string name="attend_done">출첵완료!</string>
     <string name="video_btn">영상보고 티겟얻기</string>
+    <string name="video_load_fail">영상 로드에 실패 했습니다. 잠시 후 시도 해주세요</string>
 
     <!--Profile-->
     <string name="profile_toady_attend">오늘의 참여</string>
@@ -101,7 +102,10 @@
     <string name="game_lose">패배</string>
     <string name="game_draw">무승부</string>
     <string name="game_expire">참여 할수 있는 횟수를 초과 했습니다.</string>
+    <string name="game_try_dialog_title">육뉵이에 도전하시겠습니까?</string>
+    <string name="game_try_dialog_content">소지한 티켓 1개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
     <string name="no_ticket">티켓이 없습니다.</string>
+
     <!--attend-->
     <string name="attend_title">매일 출석 체크</string>
     <string name="attend_sub_title">하루 한번 출첵하면 1개 응모 티겟 지급</string>

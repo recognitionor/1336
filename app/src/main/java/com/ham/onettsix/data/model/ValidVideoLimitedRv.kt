@@ -28,7 +28,7 @@ data class ValidVideoLimitedRv(
         val limitedRvCount: Int,
 
         @SerializedName("currentRvCount")
-        val currentRvCount: Int,
+        var currentRvCount: Int,
 
     ) : Parcelable
 }

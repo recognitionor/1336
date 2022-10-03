@@ -14,6 +14,7 @@ import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.GameResult
 import com.ham.onettsix.data.model.GameTypeInfo
 import com.ham.onettsix.data.model.LotteryInfo
+import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,20 @@ class HomeViewModel(
     }
 
     val lotteryInfo = MutableLiveData<Resource<LotteryInfo>>()
+
+    val winningViewModel = MutableLiveData<Resource<Result>>()
+
+    fun validateLimitedRv() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            winningViewModel.postValue(Resource.error("", null))
+        }
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val result = apiHelper.getInstantLottery()
+                winningViewModel.postValue(Resource.success(result))
+            }
+        }
+    }
 
     fun getLotteryInfo() {
         Log.d("jhlee", "getLotteryInfo")
