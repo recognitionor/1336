@@ -98,6 +98,7 @@
     <string name="game_lose">패배</string>
     <string name="game_draw">무승부</string>
     <string name="game_expire">참여 할수 있는 횟수를 초과 했습니다.</string>
+    <string name="no_ticket">티켓이 없습니다.</string>
     <!--attend-->
     <string name="attend_title">매일 출석 체크</string>
     <string name="attend_sub_title">하루 한번 출첵하면 1개 응모 티겟 지급</string>

@@ -27,14 +27,16 @@ data class SignIn(
         val tokenSet: TokenSet,
         @SerializedName("email")
         val email: String,
+        @SerializedName("profileImageId")
+        val profileImageId: Int,
         @SerializedName("nickName")
         val nickName: String,
         @SerializedName("socialType")
         val socialType: String,
+        @SerializedName("socialAccessToken")
+        val socialAccessToken: String,
         @SerializedName("uid")
         val uid: Int,
-        @SerializedName("profileImageId")
-        val profileImageId: Int,
         @SerializedName("needSignUp")
         val needSignUp: Boolean
     ) : Parcelable

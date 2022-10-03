@@ -55,51 +55,54 @@ class ProfileImageUtil {
                     id = R.drawable.ic_profile_giraffe
                 }
                 14 -> {
-                    id = R.drawable.ic_profile_horse
+                    id = R.drawable.ic_profile_goat
                 }
                 15 -> {
-                    id = R.drawable.ic_profile_kangaroo
+                    id = R.drawable.ic_profile_horse
                 }
                 16 -> {
-                    id = R.drawable.ic_profile_koala
+                    id = R.drawable.ic_profile_kangaroo
                 }
                 17 -> {
-                    id = R.drawable.ic_profile_lion
+                    id = R.drawable.ic_profile_koala
                 }
                 18 -> {
-                    id = R.drawable.ic_profile_monkey
+                    id = R.drawable.ic_profile_lion
                 }
                 19 -> {
-                    id = R.drawable.ic_profile_penguin
+                    id = R.drawable.ic_profile_monkey
                 }
                 20 -> {
-                    id = R.drawable.ic_profile_pig
+                    id = R.drawable.ic_profile_penguin
                 }
                 21 -> {
-                    id = R.drawable.ic_profile_polar_bear
+                    id = R.drawable.ic_profile_pig
                 }
                 22 -> {
-                    id = R.drawable.ic_profile_rabbit
+                    id = R.drawable.ic_profile_polar_bear
                 }
                 23 -> {
-                    id = R.drawable.ic_profile_reindeer
+                    id = R.drawable.ic_profile_rabbit
                 }
                 24 -> {
-                    id = R.drawable.ic_profile_rhino
+                    id = R.drawable.ic_profile_reindeer
                 }
                 25 -> {
-                    id = R.drawable.ic_profile_shark
+                    id = R.drawable.ic_profile_rhino
                 }
                 26 -> {
-                    id = R.drawable.ic_profile_sheep
+                    id = R.drawable.ic_profile_shark
                 }
                 27 -> {
-                    id = R.drawable.ic_profile_turtle
+                    id = R.drawable.ic_profile_sheep
                 }
                 28 -> {
-                    id = R.drawable.ic_profile_wolf
+                    id = R.drawable.ic_profile_turtle
                 }
                 29 -> {
+                    id = R.drawable.ic_profile_wolf
+                }
+                30 -> {
                     id = R.drawable.ic_profile_zebra
                 }
                 else -> {

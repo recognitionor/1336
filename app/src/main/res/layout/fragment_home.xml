@@ -184,7 +184,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_game_go_history_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="20dp"
@@ -198,6 +198,16 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_game_border_view" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/home_game_go_history_forward_img"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_forward"
+                app:layout_constraintLeft_toRightOf="@+id/home_game_go_history_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/home_game_go_history_title"
+                app:layout_constraintBottom_toBottomOf="@+id/home_game_go_history_title"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="130dp"

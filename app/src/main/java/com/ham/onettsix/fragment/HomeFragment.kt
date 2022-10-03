@@ -1,14 +1,19 @@
 package com.ham.onettsix.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
+import com.ham.onettsix.LotteryHistoryActivity
+import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
@@ -20,6 +25,7 @@ import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.HomeViewModel
 import com.ham.onettsix.viewmodel.RPSGameViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_rps_game.*
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
@@ -32,10 +38,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
         )[HomeViewModel::class.java]
     }
 
+    private val activityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+        }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_home, null)
     }
@@ -63,8 +72,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         )
 
                         home_game_now_left_chance.text = getString(
-                            R.string.home_game_now_left_chance,
-                            lotteryInfo.data.remainLotteryCount
+                            R.string.home_game_now_left_chance, lotteryInfo.data.remainLotteryCount
                         )
                     }
                 }
@@ -81,12 +89,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getLotteryInfo()
         home_game_get_ticket_btn.setOnClickListener(this)
+        home_game_go_history_title.setOnClickListener(this)
+        home_game_go_history_forward_img.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v) {
             home_game_get_ticket_btn -> {
                 WinningDialog().show(parentFragmentManager, WinningDialog.TAG)
+            }
+            home_game_go_history_title, home_game_go_history_forward_img -> {
+                activityResult.launch(
+                    Intent(
+                        this.requireActivity(),
+                        LotteryHistoryActivity::class.java
+                    )
+                )
             }
         }
     }

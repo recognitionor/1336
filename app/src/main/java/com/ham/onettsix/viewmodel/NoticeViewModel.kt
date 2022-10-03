@@ -1,50 +1,38 @@
 package com.ham.onettsix.viewmodel
 
-import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
-import com.ham.onettsix.data.api.ParamsKeys
-import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
-import com.ham.onettsix.data.model.GameResult
-import com.ham.onettsix.data.model.GameTypeInfo
-import com.ham.onettsix.data.model.LotteryInfo
+import com.ham.onettsix.data.model.Notice
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(
+class NoticeViewModel(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
     private val preferenceHelper: PreferencesHelper?
 ) : ViewModel() {
 
-    companion object {
-        const val GAME_TYPE_RPC = "RPC"
-    }
+    val notice = MutableLiveData<Resource<Notice>>()
 
-    val lotteryInfo = MutableLiveData<Resource<LotteryInfo>>()
-
-    fun getLotteryInfo() {
-        Log.d("jhlee", "getLotteryInfo")
+    fun getNoticeList() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "${e.message}")
-            lotteryInfo.postValue(Resource.error("signin error", null))
+            Log.d("jhlee", "e : ${e.message}");
         }
 
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                val result = apiHelper.getLotteryInfo("ALL")
-                Log.d("jhlee", "result : $result")
-                lotteryInfo.postValue(Resource.success(result))
+                notice.postValue(Resource.success(apiHelper.getNoticeList()))
             }
         }
     }
+
 }

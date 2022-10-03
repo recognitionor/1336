@@ -39,7 +39,7 @@ class AttendFragment : Fragment(R.layout.fragment_attendance) {
         attendViewModel.attendStatus.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    if (it.data?.resultCode == ResultCode.DUPLICATED_ATTEND) {
+                    if (it.data?.resultCode == ResultCode.SUCCESS_ATTEND || it.data?.resultCode == ResultCode.DUPLICATED_ATTEND) {
                         attendance_btn.isEnabled = false
                         attendance_btn.text = getString(R.string.attend_done)
                     } else {

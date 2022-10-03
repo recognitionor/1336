@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
                 Status.SUCCESS -> {
                     if (it.data != null) {
                         it.data.let { data ->
-                            nav_header_nickname.text = data.nickName
+                            nav_header_nickname.text = "${data.nickName}#${data.id}"
                             nav_header_img.setImageDrawable(
                                 getDrawable(
                                     ProfileImageUtil.getImageId(data.profileImageId ?: -1)
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
             }
 
             R.id.action_settings -> {
-                myProfileResult.launch(Intent(this, LotteryHistoryActivity::class.java))
+                myProfileResult.launch(Intent(this, NoticeActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

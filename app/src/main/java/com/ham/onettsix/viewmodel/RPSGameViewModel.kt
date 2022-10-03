@@ -53,6 +53,7 @@ class RPSGameViewModel(
     }
 
     fun gameLoad() {
+        Log.d("jhlee", "gameLoad ")
         gameTypeInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             gameTypeInfo.postValue(Resource.error("", null))
@@ -64,12 +65,15 @@ class RPSGameViewModel(
                     this[ParamsKeys.KEY_GAME_TYPE] = GAME_TYPE_RPC
                 }
                 val result = apiHelper.getGameCount(params)
+                Log.d("jhlee", "result : $result")
+
                 gameTypeInfo.postValue(Resource.success(result))
             }
         }
     }
 
     fun getRockPaperScissors() {
+        Log.d("jhlee", "getRockPaperScissors ")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             gameResult.postValue(Resource.error("", null))
         }
@@ -77,6 +81,7 @@ class RPSGameViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getRockPaperScissors()
+                Log.d("jhlee", "result :  $result")
                 gameResult.postValue(Resource.success(result))
             }
         }

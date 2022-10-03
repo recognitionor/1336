@@ -44,6 +44,8 @@ interface ApiHelper {
 
     suspend fun getHistoryInfo(): HistoryInfo
 
+    suspend fun getNoticeList(): Notice
+
     suspend fun setFirebaseToken(params: HashMap<String, Any?>) : Result
 
 }

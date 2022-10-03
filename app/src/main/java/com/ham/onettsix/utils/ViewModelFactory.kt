@@ -60,6 +60,10 @@ class ViewModelFactory(
             return ProfileDetailViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
+        if (modelClass.isAssignableFrom(NoticeViewModel::class.java)) {
+            return NoticeViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
         throw IllegalArgumentException("Unknown class name")
     }
 }

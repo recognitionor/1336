@@ -120,6 +120,7 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
                         layout_game_start.visibility = View.VISIBLE
                         game_info_message_img.visibility = View.VISIBLE
                         game_info_message_tv.visibility = View.VISIBLE
+                        game_info_message_tv.setText(R.string.game_expire)
                         game_load_progress.visibility = View.GONE
                     }
                 }
@@ -249,6 +250,14 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
         game_start_btn.visibility = View.VISIBLE
         game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
         when (result) {
+            ResultCode.NO_TICKET -> {
+                layout_game_start.visibility = View.VISIBLE
+                game_info_message_img.visibility = View.VISIBLE
+                game_info_message_tv.visibility = View.VISIBLE
+                game_info_message_tv.setText(R.string.no_ticket)
+                game_load_progress.visibility = View.GONE
+            }
+
             ResultCode.RPC_WIN -> {
                 game_result_tv.visibility = View.VISIBLE
                 game_result_tv.setText(R.string.game_win)

@@ -32,6 +32,7 @@ class VideoViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.validateLimitedRv()
+                Log.d("jhlee", "validateLimitedRv result : $result")
                 validateLimitedRvStatus.postValue(Resource.success(result))
             }
         }
