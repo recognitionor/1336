@@ -20,17 +20,6 @@ import kotlinx.android.synthetic.main.activity_lottery_history.*
 
 class LotteryHistoryActivity : AppCompatActivity(R.layout.activity_lottery_history) {
 
-    private val lotteryHistoryViewModel by lazy {
-        ViewModelProviders.of(
-            this,
-            ViewModelFactory(
-                ApiHelperImpl(RetrofitBuilder.apiService),
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
-                PreferencesHelper.getInstance(applicationContext)
-            )
-        )[LotteryHistoryViewModel::class.java]
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lottery_history_toolbar_back.setOnClickListener {

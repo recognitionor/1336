@@ -19,7 +19,6 @@ import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.LotteryHistoryViewModel
-import kotlinx.android.synthetic.main.activity_lottery_history.*
 import kotlinx.android.synthetic.main.fragment_history.*
 
 class LotteryHistoryFragment : Fragment(R.layout.fragment_history) {
