@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:layout_marginRight="6dp"
         android:contentDescription="@string/app_name"
-        android:fontFamily="@font/montserrat_extra_bold"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
         android:gravity="center"
         android:lineHeight="24dp"
         android:text="@string/menu_login"

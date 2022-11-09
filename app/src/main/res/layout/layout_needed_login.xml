@@ -14,7 +14,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
         android:lineHeight="36dp"
         android:text="@string/needed_login"
         android:textColor="@color/black"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/main_color_selector_btn_background"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:text="@string/login_do"

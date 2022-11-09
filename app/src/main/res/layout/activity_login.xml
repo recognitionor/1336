@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:gravity="center"
             android:text="@string/login_info_title"
             android:textColor="@color/text_black"

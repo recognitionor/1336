@@ -19,7 +19,7 @@
             android:layout_width="70dp"
             android:layout_height="75dp"
             android:background="@drawable/grey_background"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:gravity="center"
             android:lineSpacingExtra="-15sp"
             android:text="@string/home_remain_drawing_time_default"
@@ -29,7 +29,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_remain_drawing_time_days"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
@@ -56,7 +56,7 @@
             android:layout_width="70dp"
             android:layout_height="75dp"
             android:background="@drawable/grey_background"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_remain_drawing_time_default"
             android:gravity="center"
             android:lineSpacingExtra="-15sp"
@@ -66,7 +66,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/gmarket_sans_ttf_medium"
             android:text="@string/home_remain_drawing_time_hours"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
@@ -95,7 +95,7 @@
             android:autoSizeMaxTextSize="50dp"
             android:text="@string/home_remain_drawing_time_default"
             android:background="@drawable/grey_background"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:gravity="center"
             android:lineSpacingExtra="-15sp"
             android:textColor="@color/text_black"
@@ -104,7 +104,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/gmarket_sans_ttf_medium"
             android:text="@string/home_remain_drawing_time_mins"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
@@ -132,7 +132,7 @@
             android:layout_width="70dp"
             android:layout_height="75dp"
             android:background="@drawable/grey_background"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:gravity="center"
             android:text="@string/home_remain_drawing_time_default"
             android:lineSpacingExtra="-15sp"
@@ -142,7 +142,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/gmarket_sans_ttf_medium"
             android:text="@string/home_remain_drawing_time_secs"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
