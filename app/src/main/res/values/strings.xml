@@ -10,6 +10,7 @@
     <string name="mail">mail</string>
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
+    <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
@@ -105,6 +106,8 @@
     <string name="game_try_dialog_title">육뉵이에 도전하시겠습니까?</string>
     <string name="game_try_dialog_content">소지한 티켓 1개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
     <string name="no_ticket">티켓이 없습니다.</string>
+    <string name="no_ticket_title">앗! 응모 가능한 티켓이 없습니다.</string>
+    <string name="no_ticket_msg">확인을 누르면 티켓을 얻을 수 있는 페이지로 이동합니다. 티켓을 모아 육뉵이에 도전해보세요.</string>
 
     <!--attend-->
     <string name="attend_title">매일 출석 체크</string>
@@ -122,7 +125,9 @@
 
     <!--winning game-->
     <string name="winning_result_lose">아쉽게도 %1$s 님은 육뉵이가 아니었습니다.</string>
-    <string name="winning_result_win">축하드립니다. 당첨</string>
+    <string name="winning_result_win">축하합니다! 행운의 육뉵이에 당첨되셨습니다.</string>
+    <string name="winning_result_win_sub">마이페이지에서 당첨 포인트 수령을 위한 정보를 입력해주세요.</string>
+    <string name="winning_result_lose_sub">최대 응모수가 소진되면 100% 당첨이니 티켓을 얻어 다시 도전해보세요!</string>
 
     <!--Detail-->
     <string name="profile_detail_notice">공지사항</string>

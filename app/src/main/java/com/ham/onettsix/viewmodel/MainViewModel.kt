@@ -41,6 +41,7 @@ class MainViewModel(
     }
 
     fun updateUserInfo() {
+        Log.d("jhlee", "updateUserInfo")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             userInfo.postValue(Resource.error("signin error", null))
         }

@@ -56,6 +56,7 @@ class RPSGameViewModel(
         Log.d("jhlee", "gameLoad ")
         gameTypeInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            Log.d("jhlee", "gameLoad Error ${e.message} ")
             gameTypeInfo.postValue(Resource.error("", null))
         }
 

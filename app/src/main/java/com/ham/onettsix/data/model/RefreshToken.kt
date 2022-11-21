@@ -19,5 +19,4 @@ data class RefreshToken(
 
     @SerializedName("data")
     override val data: TokenSet? = null
-) : BasicData<TokenSet?>() {
-}
+) : BasicData<TokenSet?>()

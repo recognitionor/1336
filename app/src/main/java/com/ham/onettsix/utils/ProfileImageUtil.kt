@@ -9,6 +9,8 @@ class ProfileImageUtil {
     북극곰, 토끼, 순록, 코뿔소, 상어, 양, 거북이, 늑대, 얼룩말
     * */
     companion object {
+        const val IMAGE_COUNT = 32
+
         fun getImageId(profileImageId: Int): Int {
             var id = -1
             when (profileImageId) {

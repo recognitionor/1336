@@ -1,13 +1,12 @@
 package com.ham.onettsix.dialog
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.ham.onettsix.R
@@ -37,6 +36,19 @@ class ProgressDialog : AppCompatDialogFragment() {
         val mainView = inflater.inflate(R.layout.dialog_progress, container, true).apply {
         }
         return mainView
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.setOnKeyListener(DialogInterface.OnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                return@OnKeyListener true
+            }
+            return@OnKeyListener false
+        })
+        return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

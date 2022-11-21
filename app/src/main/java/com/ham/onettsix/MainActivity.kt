@@ -92,7 +92,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         nav_view.setupWithNavController(navController)
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-            mainViewModel.updateUserInfo()
+            if (mainViewModel.userInfo.value?.data == null) {
+                Log.d("jhlee", "updateUserInfo call")
+                mainViewModel.updateUserInfo()
+            }
+
             nav_header_img.setOnClickListener(this)
             nav_header_nickname.setOnClickListener(this)
         }
@@ -105,16 +109,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
                 Status.SUCCESS -> {
                     if (it.data != null) {
                         it.data.let { data ->
-                            nav_header_nickname.text = "${data.nickName}#${data.id}"
-                            nav_header_img.setImageDrawable(
+                            nav_header_nickname?.text = "${data.nickName}#${data.id}"
+                            nav_header_img?.setImageDrawable(
                                 getDrawable(
                                     ProfileImageUtil.getImageId(data.profileImageId ?: -1)
                                 )
                             )
                         }
                     } else {
-                        nav_header_nickname.setText(R.string.login_do)
-                        nav_header_img.setImageResource(R.drawable.ic_account_circle)
+                        nav_header_nickname?.setText(R.string.login_do)
+                        nav_header_img?.setImageResource(R.drawable.ic_account_circle)
                     }
                 }
                 Status.ERROR -> {
@@ -138,6 +142,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         return when (item.itemId) {
             R.id.action_mail -> {
                 val email = Intent(Intent.ACTION_SEND)
+                email.putExtra(Intent.EXTRA_USER, arrayOf("ham.factories@gmail.com"))
                 email.putExtra(Intent.EXTRA_EMAIL, arrayOf("ham.factories@gmail.com"))
                 email.putExtra(Intent.EXTRA_SUBJECT, "환급신청")
                 email.putExtra(Intent.EXTRA_TEXT, "메시지")

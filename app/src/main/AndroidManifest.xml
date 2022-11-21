@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.ham.onettsix">
 
     <application
+        android:name=".application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,7 +27,8 @@
             android:theme="@style/Theme.ham.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.ham.NoActionBar" />
+            android:theme="@style/Theme.ham.NoActionBar" >
+        </activity>
         <activity
             android:name=".EulaActivity"
             android:theme="@style/Theme.ham.NoActionBar" />
@@ -47,13 +48,45 @@
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakaod508b76ef17b730d5e4c99875217d6f7" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".NoticeActivity"
             android:theme="@style/Theme.ham.NoActionBar" />
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakaod508b76ef17b730d5e4c99875217d6f7" />
+            </intent-filter>
+        </activity>
 
         <!-- google -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5672204188980144~5165300143"/>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="d508b76ef17b730d5e4c99875217d6f7" />
 
         <service
             android:name=".firebase.FirebaseMessagingService"
@@ -64,6 +97,11 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="d508b76ef17b730d5e4c99875217d6f7" />
+
     </application>
 
 </manifest>

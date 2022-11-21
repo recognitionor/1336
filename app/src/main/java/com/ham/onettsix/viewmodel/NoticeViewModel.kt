@@ -24,12 +24,15 @@ class NoticeViewModel(
     val notice = MutableLiveData<Resource<Notice>>()
 
     fun getNoticeList() {
+        Log.d("jhlee", "getNoticeList : ");
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             Log.d("jhlee", "e : ${e.message}");
         }
 
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
+                val test = apiHelper.getNoticeList()
+                Log.d("jhlee", "test : $test")
                 notice.postValue(Resource.success(apiHelper.getNoticeList()))
             }
         }

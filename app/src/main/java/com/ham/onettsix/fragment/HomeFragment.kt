@@ -2,6 +2,7 @@ package com.ham.onettsix.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.ham.onettsix.LotteryHistoryActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_LOSE
+import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_WIN
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.databinding.DialogOneButtonBinding
+import com.ham.onettsix.dialog.DialogDismissListener
+import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.dialog.TwoButtonDialog
 import com.ham.onettsix.dialog.WinningDialog
 import com.ham.onettsix.utils.Status
@@ -52,7 +58,27 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private fun setupObserver() {
         homeViewModel.winningViewModel.observe(this) {
             when (it.status) {
-                Status.SUCCESS -> {}
+                Status.SUCCESS -> {
+                    Log.d("jhlee", "winningViewModel $it")
+                    when (it.data?.resultCode) {
+                        LOTTERY_FINISHED_WIN, LOTTERY_FINISHED_LOSE -> {
+                            WinningDialog(it.data, object : DialogDismissListener {
+                                override fun onDismissListener() {
+                                    homeViewModel.getLotteryInfo()
+                                }
+                            }).show(parentFragmentManager, WinningDialog.TAG)
+                        }
+                        else -> {
+                            OneButtonDialog(
+                                getString(R.string.no_ticket_title),
+                                getString(R.string.no_ticket_msg)
+                            ) { dialog ->
+                                dialog.dismiss()
+                            }.show(parentFragmentManager, OneButtonDialog.TAG)
+                        }
+                    }
+                }
+                else -> {}
             }
         }
         homeViewModel.lotteryInfo.observe(this) {
@@ -101,7 +127,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     getString(R.string.game_try_dialog_content)
                 ) { isPositive: Boolean, dialog: DialogFragment ->
                     if (isPositive) {
-                        homeViewModel.getLotteryInfo()
+                        homeViewModel.getInstanceLottery()
                     }
                     dialog.dismiss()
                 }.show(parentFragmentManager, TwoButtonDialog.TAG)

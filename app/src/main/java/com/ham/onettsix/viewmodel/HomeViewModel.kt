@@ -35,7 +35,7 @@ class HomeViewModel(
 
     val winningViewModel = MutableLiveData<Resource<Result>>()
 
-    fun validateLimitedRv() {
+    fun getInstanceLottery() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             winningViewModel.postValue(Resource.error("", null))
         }

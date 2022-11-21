@@ -7,28 +7,23 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class VideoSignature(
-    @SerializedName("description")
-    override val description: String,
+    @SerializedName("description") override val description: String,
 
-    @SerializedName("pagination")
-    override val pagination: Pagination,
+    @SerializedName("pagination") override val pagination: Pagination,
 
-    @SerializedName("resultCode")
-    override val resultCode: Int,
+    @SerializedName("resultCode") override val resultCode: Int,
 
-    @SerializedName("transactionTime")
-    override val transactionTime: String,
+    @SerializedName("transactionTime") override val transactionTime: String,
 
-    @SerializedName("data")
-    override val data: Data
+    @SerializedName("data") override val data: Data
 ) : BasicData<VideoSignature.Data>() {
     @Parcelize
     data class Data(
-        @SerializedName("signature")
-        val signature: String,
+        @SerializedName("signature") val signature: String,
 
-        @SerializedName("rvId")
-        val rvId: String
+        @SerializedName("rvId") val rvId: String,
+
+        @SerializedName("rvConfig") val rvConfig: List<RVConfig> = arrayListOf()
 
     ) : Parcelable
 }

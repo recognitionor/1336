@@ -18,10 +18,27 @@ allprojects {
 }
 
 android {
+    signingConfigs {
+        key {
+            storeFile file('/Users/junghee/Desktop/test.jks')
+            storePassword 'ham1336'
+            keyPassword 'ham1336'
+            keyAlias 'key0'
+        }
+    }
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
     dataBinding {
         enabled = true
+    }
+
+    signingConfigs{
+        releaseWithSignedKey {
+            storeFile file("key.jks")
+            storePassword "ham1336"
+            keyAlias "key0"
+            keyPassword "ham1336"
+        }
     }
 
     defaultConfig {
@@ -37,6 +54,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseWithSignedKey
+        }
+        debug {
+            signingConfig signingConfigs.releaseWithSignedKey
         }
     }
     compileOptions {
@@ -81,6 +102,9 @@ dependencies {
 
     // naver
     implementation "com.navercorp.nid:oauth:5.1.1" // jdk 11
+
+    // kakao
+    implementation "com.kakao.sdk:v2-user:2.10.0" // 카카오 로그인
 
     /*room*/
     def room_version = "2.3.0"

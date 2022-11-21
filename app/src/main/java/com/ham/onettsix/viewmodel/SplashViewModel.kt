@@ -55,13 +55,14 @@ class SplashViewModel(
                     !TextUtils.isEmpty(accessToken) &&
                     !TextUtils.isEmpty(refreshToken)
                 ) {
-                    RetrofitBuilder.accessToken = accessToken
                     val params = HashMap<String, Any>().apply {
                         this[ParamsKeys.KEY_REFRESH_TOKEN] = refreshToken
                     }
                     val result = apiHelper.refreshAccessToken(params)
+
                     if (result.data != null) {
                         // refresh 를 했는데 데이터가 널이 아닌 경우 정상이므로 토큰값 업데이트 해준다.
+                        RetrofitBuilder.accessToken = result.data.accessToken
                         dbHelper.updateUser(
                             DBUser(
                                 result.data.accessToken,

@@ -48,5 +48,8 @@ data class HistoryInfo(
         @SerializedName("nickname")
         val nickname: String,
 
+        @SerializedName("isPaid")
+        val isPaid: Boolean,
+
     ) : Parcelable
 }
