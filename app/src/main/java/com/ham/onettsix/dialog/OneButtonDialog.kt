@@ -8,8 +8,8 @@ import com.ham.onettsix.R
 import kotlinx.android.synthetic.main.dialog_one_button.view.*
 
 class OneButtonDialog(
-    private var title: String,
-    private var content: String,
+    private var title: String = "",
+    private var content: String = "",
     private var callback: (dialog: DialogFragment) -> Unit
 ) :
     AppCompatDialogFragment() {

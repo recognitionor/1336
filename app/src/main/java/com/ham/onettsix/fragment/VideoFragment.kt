@@ -134,6 +134,8 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                                                 progressDialog.dismiss()
                                                 val serverSideVerificationOptions =
                                                     ServerSideVerificationOptions.Builder()
+                                                Log.d("jhlee", "onAdLoaded rv id : " + signature.rvId )
+                                                Log.d("jhlee", "onAdLoaded rv signature.signature : " + signature.signature)
                                                 serverSideVerificationOptions.setUserId(signature.rvId)
                                                 serverSideVerificationOptions.setCustomData(
                                                     signature.signature

@@ -10,14 +10,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.ham.onettsix.LoginActivity
 import com.ham.onettsix.LotteryHistoryActivity
+import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_LOSE
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_WIN
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.DialogOneButtonBinding
 import com.ham.onettsix.dialog.DialogDismissListener
 import com.ham.onettsix.dialog.OneButtonDialog
@@ -27,6 +31,10 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
@@ -41,7 +49,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private val activityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
+            if (result.resultCode == ActivityResultKey.LOGIN_RESULT_OK) {
+                (this@HomeFragment.activity as MainActivity).mainViewModel.updateUserInfo()
+            }
         }
 
     override fun onCreateView(
@@ -60,6 +70,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     Log.d("jhlee", "winningViewModel $it")
+                    Log.d("jhlee", "login")
                     when (it.data?.resultCode) {
                         LOTTERY_FINISHED_WIN, LOTTERY_FINISHED_LOSE -> {
                             WinningDialog(it.data, object : DialogDismissListener {
@@ -69,10 +80,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             }).show(parentFragmentManager, WinningDialog.TAG)
                         }
                         else -> {
-                            OneButtonDialog(
-                                getString(R.string.no_ticket_title),
-                                getString(R.string.no_ticket_msg)
-                            ) { dialog ->
+                            OneButtonDialog("", it.data?.description ?: "") { dialog ->
                                 dialog.dismiss()
                             }.show(parentFragmentManager, OneButtonDialog.TAG)
                         }
@@ -98,7 +106,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         )
 
                         home_game_now_left_chance.text = getString(
-                            R.string.home_game_now_left_chance, lotteryInfo.data.remainLotteryCount
+                            R.string.home_game_now_left_chance,
+                            lotteryInfo.data.remainLotteryCount
                         )
                     }
                 }
@@ -122,15 +131,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             home_game_get_ticket_btn -> {
-                TwoButtonDialog(
-                    getString(R.string.game_try_dialog_title),
-                    getString(R.string.game_try_dialog_content)
-                ) { isPositive: Boolean, dialog: DialogFragment ->
-                    if (isPositive) {
-                        homeViewModel.getInstanceLottery()
-                    }
-                    dialog.dismiss()
-                }.show(parentFragmentManager, TwoButtonDialog.TAG)
+                if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
+                    TwoButtonDialog(
+                        getString(R.string.game_try_dialog_title),
+                        getString(R.string.game_try_dialog_content)
+                    ) { isPositive: Boolean, dialog: DialogFragment ->
+                        if (isPositive) {
+                            homeViewModel.getInstanceLottery()
+                        }
+                        dialog.dismiss()
+                    }.show(parentFragmentManager, TwoButtonDialog.TAG)
+                } else {
+                    OneButtonDialog(content = getString(R.string.login_is_required)) { dialog ->
+                        dialog.dismiss()
+                        activityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+                    }.show(parentFragmentManager, OneButtonDialog.TAG)
+                }
             }
             home_game_go_history_title, home_game_go_history_forward_img -> {
                 activityResult.launch(

@@ -28,16 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:lineHeight="48dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@color/text_black"
-        android:textSize="24dp" />
+        android:textSize="18dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/one_button_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/main_color_selector_btn_background"
         android:gravity="center"

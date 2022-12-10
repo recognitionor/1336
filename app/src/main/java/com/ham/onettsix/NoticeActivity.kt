@@ -1,13 +1,11 @@
 package com.ham.onettsix
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ham.onettsix.adapter.LotteryHistoryAdapter
 import com.ham.onettsix.adapter.NoticeAdapter
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
@@ -16,9 +14,7 @@ import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
-import com.ham.onettsix.viewmodel.LotteryHistoryViewModel
 import com.ham.onettsix.viewmodel.NoticeViewModel
-import kotlinx.android.synthetic.main.activity_lottery_history.*
 import kotlinx.android.synthetic.main.activity_notice.*
 
 class NoticeActivity : AppCompatActivity(R.layout.activity_notice),

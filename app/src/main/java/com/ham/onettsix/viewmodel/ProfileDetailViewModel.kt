@@ -33,6 +33,7 @@ class ProfileDetailViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 dbHelper.deleteUser()
+                preferenceHelper?.removeLogin()
                 userInfo.postValue(Resource.success(null))
             }
         }

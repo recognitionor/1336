@@ -14,6 +14,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
 import com.ham.onettsix.data.local.PreferencesHelper
@@ -40,6 +41,17 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         Log.d("jhlee", "onNewToken : $token")
         PreferencesHelper.getInstance(this).setFireBaseToken(token)
 //        sendNotification("테스트 타이틀", "body", "summary", "largeImage", "smallImage", "action")
+    }
+
+    override fun onMessageReceived(message: RemoteMessage) {
+        super.onMessageReceived(message)
+        if (message.notification != null) {
+            val title = message.notification?.title ?: ""
+            val body = message.notification?.body ?: ""
+            sendNotification(title, body, "summary", "largeImage", "smallImage", "action")
+        } else {
+            sendNotification("title"," body", "summary", "largeImage", "smallImage", "action")
+        }
     }
 
     /**
@@ -96,7 +108,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
         val pendingIntent = PendingIntent.getActivity(
             this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         //이미지 온라인 링크를 가져와 비트맵으로 바꾼다.
@@ -108,7 +120,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationBuilder =
             NotificationCompat.Builder(this@FirebaseMessagingService, channelId)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)

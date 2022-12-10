@@ -32,7 +32,7 @@
             android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_remain_drawing_time_days"
             android:textColor="@color/text_black"
-            android:textSize="15dp" />
+            android:textSize="13dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -66,10 +66,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/gmarket_sans_ttf_medium"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_remain_drawing_time_hours"
             android:textColor="@color/text_black"
-            android:textSize="15dp" />
+            android:textSize="13dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -104,10 +104,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/gmarket_sans_ttf_medium"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_remain_drawing_time_mins"
             android:textColor="@color/text_black"
-            android:textSize="15dp" />
+            android:textSize="13dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -142,10 +142,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:fontFamily="@font/gmarket_sans_ttf_medium"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_remain_drawing_time_secs"
             android:textColor="@color/text_black"
-            android:textSize="15dp" />
+            android:textSize="13dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

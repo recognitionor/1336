@@ -1,18 +1,13 @@
 package com.ham.onettsix.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.ham.onettsix.LoginActivity
 import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
-import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
@@ -40,17 +35,6 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
             )
         )[RPSGameViewModel::class.java]
     }
-
-    private val activityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == ActivityResultKey.LOGIN_RESULT_OK) {
-                layout_game_needed_login.visibility = View.GONE
-                rpsGameViewModel.gameLoad()
-                if (this@RPSGameFragment.activity is MainActivity) {
-                    (this@RPSGameFragment.activity as MainActivity).mainViewModel.updateUserInfo()
-                }
-            }
-        }
 
     private var isStopGame = true
     private var serverResult: Int? = null
@@ -166,7 +150,7 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
     override fun onClick(v: View?) {
         when (v) {
             rps_game_login_btn -> {
-                activityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+                (parentFragment as GameFragment).login()
             }
             game_info_message_img -> {
                 rpsGameViewModel.getRockPaperScissors()
@@ -238,6 +222,14 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
                     game_image_view?.setImageResource(selectedImage)
                 }
             }
+        }
+    }
+
+    fun loginUpdate() {
+        layout_game_needed_login.visibility = View.GONE
+        rpsGameViewModel.gameLoad()
+        if (this@RPSGameFragment.activity is MainActivity) {
+            (this@RPSGameFragment.activity as MainActivity).mainViewModel.updateUserInfo()
         }
     }
 

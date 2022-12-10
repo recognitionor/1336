@@ -6,7 +6,6 @@ import com.ham.onettsix.data.local.entity.DBUser
 
 interface DatabaseHelper {
 
-
     suspend fun deleteTest(test: DBTest)
 
     suspend fun insertSearchKeyword(searchKeyword: DBSearch)

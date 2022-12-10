@@ -9,7 +9,6 @@ object UrlInfo {
     var LIVE_URL = "https://api.onettsix.com"
     var DEV_URL = "https://api.onettsix.com"
 
-
     @JvmStatic
     fun getBaseURL(): String {
         return DEV_URL

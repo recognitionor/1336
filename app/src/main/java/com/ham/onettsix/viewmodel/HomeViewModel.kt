@@ -1,25 +1,17 @@
 package com.ham.onettsix.viewmodel
 
-import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
-import com.ham.onettsix.data.api.ParamsKeys
-import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.data.local.entity.DBUser
-import com.ham.onettsix.data.model.GameResult
-import com.ham.onettsix.data.model.GameTypeInfo
 import com.ham.onettsix.data.model.LotteryInfo
 import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import okhttp3.internal.wait
 
 class HomeViewModel(
     private val apiHelper: ApiHelper,
@@ -36,7 +28,7 @@ class HomeViewModel(
     val winningViewModel = MutableLiveData<Resource<Result>>()
 
     fun getInstanceLottery() {
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
             winningViewModel.postValue(Resource.error("", null))
         }
         viewModelScope.launch(exceptionHandler) {
@@ -45,6 +37,22 @@ class HomeViewModel(
                 winningViewModel.postValue(Resource.success(result))
             }
         }
+    }
+
+    fun isLogin(): Boolean {
+        var test = false
+        val job = CoroutineScope(Dispatchers.Main).launch {
+            Log.d("jhlee", "1 : ${Thread.currentThread().name}")
+
+            val isLogin = async(Dispatchers.Default) {
+                Log.d("jhlee", "2 : ${Thread.currentThread().name} ---- ${dbHelper.getUser()}")
+                return@async (dbHelper.getUser()?.uid ?: -1) > 0
+            }.await()
+            test = isLogin
+            Log.d("jhlee", "3 : ${Thread.currentThread().name} ---- $isLogin")
+        }
+        Log.d("jhlee", "4 : $test")
+        return test
     }
 
     fun getLotteryInfo() {

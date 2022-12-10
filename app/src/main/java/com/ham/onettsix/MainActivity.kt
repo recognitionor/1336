@@ -22,9 +22,7 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.dialog.ProgressDialog
-import com.ham.onettsix.dialog.TwoButtonDialog
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory

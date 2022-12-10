@@ -29,14 +29,14 @@ class LotteryHistoryAdapter :
         parent: ViewGroup,
         viewType: Int
     ): LotteryHistoryViewHolder {
-        return LotteryHistoryAdapter.LotteryHistoryViewHolder(
+        return LotteryHistoryViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.rv_item_lottery_history, parent, false)
         )
     }
 
     override fun onBindViewHolder(
-        holder: LotteryHistoryAdapter.LotteryHistoryViewHolder,
+        holder: LotteryHistoryViewHolder,
         position: Int
     ) {
         return holder.bind(list[position])

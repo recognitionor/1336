@@ -63,6 +63,7 @@
 
 
     <!--티켓참여-->
+    <string name="my_ticket">내 티켓</string>
     <string name="game_daily_title">티켓 득템하러 가기</string>
     <string name="game_daily_title_info">참여하면 100% 1 티켓 바로 응모</string>
     <string name="game_rv_title">동영상 보고 티켓 얻기</string>
@@ -90,6 +91,7 @@
     <string name="login_naver">네이버로 로그인</string>
     <string name="login_apple">Apple로 로그인</string>
     <string name="login_do">로그인 하세요.</string>
+    <string name="login_is_required">로그인이 필요합니다.</string>
     <string name="login_next_signin">다음에 가입하기 ></string>
     <string name="login_error">%1$s 소셜 로그인에 실패 했습니다.</string>
     <string name="naver_login_required_agreement">네이버 로그인시 필수 약관에 동의해주세요.</string>

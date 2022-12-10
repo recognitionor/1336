@@ -8,6 +8,8 @@ class PreferencesHelper private constructor(ctx: Context, val name: String) {
 
     companion object {
         const val KEY_FIREBASE_TOKEN = "KEY_FIREBASE_TOKEN"
+        const val KEY_USER_ID = "KEY_USER_ID"
+
         private var instance: PreferencesHelper? = null
 
         fun getInstance(ctx: Context): PreferencesHelper {
@@ -31,5 +33,18 @@ class PreferencesHelper private constructor(ctx: Context, val name: String) {
         return pref.getString(KEY_FIREBASE_TOKEN, "") ?: ""
     }
 
+    fun setLogin(uid: Int) {
+        saver.putInt(KEY_USER_ID, uid)
+        saver.commit()
+    }
+
+    fun removeLogin() {
+        saver.remove(KEY_USER_ID)
+        saver.commit()
+    }
+
+    fun isLogin(): Boolean {
+        return pref.getInt(KEY_USER_ID, -1) > 0
+    }
 }
 

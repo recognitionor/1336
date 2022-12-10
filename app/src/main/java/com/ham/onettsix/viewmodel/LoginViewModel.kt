@@ -65,6 +65,9 @@ class LoginViewModel(
                             it.uid
                         )
                     )
+                    // 로그인 했으니 로그인 uid preference 에 저장
+                    preferenceHelper?.setLogin(it.uid)
+
                     /*로그인 성공 했으니 firebase token 갱신 필요*/
                     val map = HashMap<String, Any?>()
                     map[ParamsKeys.KEY_TOKEN] = preferenceHelper?.getFireBaseToken()
