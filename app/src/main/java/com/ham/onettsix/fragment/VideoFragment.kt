@@ -134,8 +134,6 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                                                 progressDialog.dismiss()
                                                 val serverSideVerificationOptions =
                                                     ServerSideVerificationOptions.Builder()
-                                                Log.d("jhlee", "onAdLoaded rv id : " + signature.rvId )
-                                                Log.d("jhlee", "onAdLoaded rv signature.signature : " + signature.signature)
                                                 serverSideVerificationOptions.setUserId(signature.rvId)
                                                 serverSideVerificationOptions.setCustomData(
                                                     signature.signature
@@ -144,12 +142,11 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                                                 rewardAd.setServerSideVerificationOptions(
                                                     serverSideVerificationOptions.build()
                                                 )
-                                                rewardAd.show(requireActivity()) { rewardItem ->
-                                                    if (rewardItem.amount > 0) {
-                                                        videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
-                                                            video_count_info_tv.text =
-                                                                "${data.currentRvCount++}/${data.limitedRvCount}"
-                                                        }
+                                                rewardAd.show(requireActivity()) { _ ->
+                                                    (parentFragment as GameFragment).updateMyTicket()
+                                                    videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
+                                                        video_count_info_tv.text =
+                                                            "${++data.currentRvCount}/${data.limitedRvCount}"
                                                     }
                                                 }
                                             }
@@ -158,7 +155,6 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                             }
                         }
                     }
-                    Log.d("jhlee", "success : ${it.data?.data}")
                 }
                 Status.ERROR -> {
                     progressDialog.dismiss()

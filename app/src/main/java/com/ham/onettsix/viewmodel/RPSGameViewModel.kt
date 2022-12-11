@@ -29,14 +29,14 @@ class RPSGameViewModel(
         const val GAME_TYPE_RPC = "RPC"
     }
 
-    val gameTypeInfo = MutableLiveData<Resource<GameTypeInfo>>()
+
 
     val gameResult = MutableLiveData<Resource<GameResult>>()
 
     val userInfo = MutableLiveData<Resource<DBUser>>()
 
     fun updateUserInfo() {
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
             userInfo.postValue(Resource.error("signin error", null))
         }
 
@@ -52,29 +52,7 @@ class RPSGameViewModel(
         }
     }
 
-    fun gameLoad() {
-        Log.d("jhlee", "gameLoad ")
-        gameTypeInfo.postValue(Resource.loading(null))
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "gameLoad Error ${e.message} ")
-            gameTypeInfo.postValue(Resource.error("", null))
-        }
-
-        viewModelScope.launch(exceptionHandler) {
-            withContext(Dispatchers.IO) {
-                val params = HashMap<String, Any?>().apply {
-                    this[ParamsKeys.KEY_GAME_TYPE] = GAME_TYPE_RPC
-                }
-                val result = apiHelper.getGameCount(params)
-                Log.d("jhlee", "result : $result")
-
-                gameTypeInfo.postValue(Resource.success(result))
-            }
-        }
-    }
-
     fun getRockPaperScissors() {
-        Log.d("jhlee", "getRockPaperScissors ")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             gameResult.postValue(Resource.error("", null))
         }
@@ -82,7 +60,6 @@ class RPSGameViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getRockPaperScissors()
-                Log.d("jhlee", "result :  $result")
                 gameResult.postValue(Resource.success(result))
             }
         }

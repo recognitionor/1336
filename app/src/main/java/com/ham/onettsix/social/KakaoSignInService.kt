@@ -22,9 +22,6 @@ class KakaoSignInService(private val ctx: Context) {
     }
 
     fun signIn(listener: ISocialLoginListener) {
-        Log.d("jhlee", Utility.getKeyHash((ctx)))
-
-
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(ctx)) {
             UserApiClient.instance.loginWithKakaoTalk(ctx) { token, error ->
                 loginCallBack(token, error, listener)

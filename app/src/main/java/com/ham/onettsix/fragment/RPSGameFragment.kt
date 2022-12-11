@@ -21,13 +21,9 @@ import kotlinx.android.synthetic.main.fragment_rps_game.layout_game_needed_login
 import kotlinx.android.synthetic.main.layout_needed_login.*
 import kotlinx.coroutines.*
 
-class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
-    View.OnClickListener {
+class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListener {
 
-    private var maxCount: Int = 0
-    private var gameCount: Int = 0
-
-    private val rpsGameViewModel by lazy {
+    val rpsGameViewModel by lazy {
         ViewModelProviders.of(
             this, ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
@@ -63,7 +59,6 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
             when (it.status) {
                 Status.SUCCESS -> {
                     layout_game_needed_login.visibility = View.GONE
-                    rpsGameViewModel.gameLoad()
                 }
                 else -> {
                     layout_game_needed_login.visibility = View.VISIBLE
@@ -83,47 +78,14 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
                         onGameStop(resultCode)
                     }
                 }
+                else -> {}
             }
         }
 
-        rpsGameViewModel.gameTypeInfo.observe(viewLifecycleOwner) {
-            when (it?.status) {
-                Status.SUCCESS -> {
-                    gameCount = it.data?.data?.gameCount ?: 0
-                    maxCount = it.data?.data?.maxCount ?: 0
-                    game_count_tv.text =
-                        "$gameCount${getString(R.string.count_divide_mark, "d")}$maxCount"
-                    if (gameCount < maxCount) {
-                        // 참여가능
-                        layout_game_start.visibility = View.GONE
-                        game_info_message_img.visibility = View.GONE
-                        game_info_message_tv.visibility = View.GONE
-                        game_load_progress.visibility = View.GONE
-                    } else {
-                        // 참여불가능
-                        layout_game_start.visibility = View.VISIBLE
-                        game_info_message_img.visibility = View.VISIBLE
-                        game_info_message_tv.visibility = View.VISIBLE
-                        game_info_message_tv.setText(R.string.game_expire)
-                        game_load_progress.visibility = View.GONE
-                    }
-                }
-                Status.LOADING -> {
-                    game_load_progress.visibility = View.VISIBLE
-                }
-                Status.ERROR -> {
-                    game_load_progress.visibility = View.GONE
-                    game_info_message_img.visibility = View.VISIBLE
-                    game_info_message_tv.visibility = View.VISIBLE
-                }
-            }
-        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_rps_game, null)
     }
@@ -133,7 +95,6 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
         coroutineScope?.cancel()
         viewModelStore.clear()
         rpsGameViewModel.gameResult.removeObservers(viewLifecycleOwner)
-        rpsGameViewModel.gameTypeInfo.removeObservers(viewLifecycleOwner)
     }
 
     private fun requestGame() {
@@ -227,15 +188,12 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
 
     fun loginUpdate() {
         layout_game_needed_login.visibility = View.GONE
-        rpsGameViewModel.gameLoad()
-        if (this@RPSGameFragment.activity is MainActivity) {
-            (this@RPSGameFragment.activity as MainActivity).mainViewModel.updateUserInfo()
-        }
+        (requireParentFragment() as GameFragment).updateMyTicket()
+        (this@RPSGameFragment.activity as MainActivity).mainViewModel.updateUserInfo()
     }
 
     private fun onGameStop(result: Int, isError: Boolean = false) {
-        gameCount++;
-        game_count_tv.text = "$gameCount/$maxCount"
+        (parentFragment as GameFragment).updateMyTicket()
         coroutineScope?.cancel()
         isStopGame = true
         game_result_tv.visibility = View.VISIBLE
@@ -300,5 +258,10 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game),
             }
         }
         game_image_view.setImageResource(selectedImage)
+    }
+
+    fun updateCountText(gameCount: Int, maxCount: Int) {
+        game_count_tv.text =
+            "$gameCount${getString(R.string.count_divide_mark, "d")}$maxCount"
     }
 }

@@ -60,6 +60,11 @@ class ViewModelFactory(
             return NoticeViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
+        if (modelClass.isAssignableFrom(GameViewModel::class.java)) {
+            return GameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+
         throw IllegalArgumentException("Unknown class name")
     }
 }
