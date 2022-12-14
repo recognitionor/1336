@@ -23,7 +23,7 @@ import kotlinx.coroutines.*
 
 class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListener {
 
-    val rpsGameViewModel by lazy {
+    private val rpsGameViewModel by lazy {
         ViewModelProviders.of(
             this, ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),

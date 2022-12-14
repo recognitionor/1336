@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/gmarket_sans_ttf_bold"
         android:lineHeight="36dp"
-        android:text="@string/needed_login"
+        android:text="@string/login_is_required"
         android:textColor="@color/black"
         android:textSize="24dp" />
 

@@ -45,21 +45,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
 
     val mainViewModel by lazy {
         ViewModelProviders.of(
-            this,
-            ViewModelFactory(
+            this, ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
                 PreferencesHelper.getInstance(applicationContext)
             )
         )[MainViewModel::class.java]
     }
-    private val result =
+
+    private val loginResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            when (result.resultCode) {
-                LOGIN_RESULT_OK -> {
-                    mainViewModel.updateUserInfo()
-                }
-            }
+            mainViewModel.updateUserInfo()
+            selectedItem(0)
         }
 
     private val myProfileResult =
@@ -166,12 +163,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         when (item.itemId) {
             R.id.nav_profile -> {
                 if (!mainViewModel.isLogin()) {
-                    myProfileResult.launch(
-                        Intent(
-                            this@MainActivity,
-                            LoginActivity::class.java
-                        )
-                    )
+                    login()
                     return false
                 }
             }
@@ -186,12 +178,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         when (v) {
             nav_header_img, nav_header_nickname -> {
                 if (!mainViewModel.isLogin()) {
-                    result.launch(
-                        Intent(
-                            this@MainActivity,
-                            LoginActivity::class.java
-                        )
-                    )
+                    login()
                 }
             }
         }
@@ -205,5 +192,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
         if (doClose) {
             drawer.closeDrawer(GravityCompat.START)
         }
+    }
+
+    fun login() {
+        loginResult.launch(
+            Intent(
+                this@MainActivity, LoginActivity::class.java
+            )
+        )
     }
 }

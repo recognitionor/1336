@@ -1,20 +1,12 @@
 package com.ham.onettsix.fragment
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.OnUserEarnedRewardListener
-import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions
@@ -25,8 +17,8 @@ import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.dialog.ProgressDialog
-import com.ham.onettsix.utils.Resource
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.VideoViewModel
@@ -52,7 +44,16 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserve()
+
+        if (PreferencesHelper.getInstance(requireContext()).isLogin()) {
+            video_fragment_layout.visibility = View.VISIBLE
+            layout_video_needed_login.visibility = View.GONE
+        } else {
+            video_fragment_layout.visibility = View.GONE
+            layout_video_needed_login.visibility = View.VISIBLE
+        }
         videoViewModel.validateLimitedRv()
+        layout_video_needed_login.setOnClickListener(this)
         video_valid_check_btn.setOnClickListener(this)
         video_layout_img.setOnClickListener(this)
 
@@ -71,12 +72,8 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                 Status.SUCCESS -> {
                     progressDialog.dismiss()
                     if (it.data?.resultCode == ResultCode.EXCEED_VIDEO_FREQUENCY) {
-                        exceed_video_layout.visibility = View.VISIBLE
-                        video_fragment_layout.visibility = View.GONE
                         exceed_video_tv.text = it.data.description
                     } else {
-                        exceed_video_layout.visibility = View.GONE
-                        video_fragment_layout.visibility = View.VISIBLE
                         it.data?.data?.let { data ->
                             video_valid_check_btn.isEnabled = true
                             video_count_info_tv.text =
@@ -171,6 +168,20 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
             video_layout_img, video_valid_check_btn -> {
                 videoViewModel.getVideoSignature()
             }
+            layout_video_needed_login -> {
+                (parentFragment as GameFragment).login()
+            }
+
+        }
+    }
+
+    fun loginUpdate() {
+        if (PreferencesHelper.getInstance(requireContext()).isLogin()) {
+            video_fragment_layout.visibility = View.VISIBLE
+            layout_video_needed_login.visibility = View.GONE
+        } else {
+            video_fragment_layout.visibility = View.GONE
+            layout_video_needed_login.visibility = View.VISIBLE
         }
     }
 }
