@@ -19,7 +19,7 @@ import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.RPSGameViewModel
 import kotlinx.coroutines.*
 
-class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListener {
+class RPSGameFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentRpsGameBinding
 
@@ -38,11 +38,6 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
     private var coroutineScope: CoroutineScope? = null
     private var selectedItem: Int = 0
     private var selectedImage: Int = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = FragmentRpsGameBinding.inflate(layoutInflater)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,8 +86,9 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_rps_game, null)
+    ): View {
+        binding = FragmentRpsGameBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onDestroyView() {

@@ -64,7 +64,6 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentProfileBinding.inflate(layoutInflater)
         setupObserve()
         adapter = MyProfileHistoryAdapter(requireContext())
         myProfileViewModel.getUserInfo()
@@ -134,7 +133,8 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_profile, null)
+        binding = FragmentProfileBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onClick(v: View?) {

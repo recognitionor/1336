@@ -2,6 +2,7 @@ package com.ham.onettsix.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.ham.onettsix.R
@@ -39,7 +40,9 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
     fun setStartTime(limitedDate: Long = Long.MAX_VALUE) {
         CoroutineScope(Dispatchers.Default).launch {
             this@RemainTimeView.coroutineScope = this
+            Log.d("jhlee", "defaultTime 1 : ")
             if (limitedDate <= System.currentTimeMillis()) {
+                Log.d("jhlee", "defaultTime 2 :")
                 val defaultTime = resources.getText(R.string.home_remain_drawing_time_default)
 
                 binding.remainTimeDaysTv.post {
@@ -63,6 +66,7 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                     val hour = (totalSec % (60 * 60 * 24)) / (60 * 60)
                     val min = (totalSec % (60 * 60)) / (60)
                     val sec = totalSec % (60)
+
                     binding.remainTimeDaysTv.post {
                         binding.remainTimeDaysTv.text = day.toString()
                     }

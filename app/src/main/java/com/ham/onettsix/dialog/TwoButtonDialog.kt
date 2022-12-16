@@ -25,9 +25,8 @@ class TwoButtonDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogTwoButtonBinding.inflate(layoutInflater)
-        val view = inflater.inflate(R.layout.dialog_two_button, container, true)
         binding.twoButtonTitle.text = title
         binding.twoButtonContent.text = content
         binding.twoButtonPositive.setOnClickListener {
@@ -36,6 +35,6 @@ class TwoButtonDialog(
         binding.twoButtonNegative.setOnClickListener {
             callback.invoke(false, this@TwoButtonDialog)
         }
-        return view
+        return binding.root
     }
 }

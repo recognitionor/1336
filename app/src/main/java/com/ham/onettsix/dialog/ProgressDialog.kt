@@ -10,11 +10,16 @@ import android.view.*
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.ham.onettsix.R
+import com.ham.onettsix.databinding.DialogProgressBinding
+import com.ham.onettsix.databinding.FragmentEulaBinding
 import java.lang.Exception
 
 class ProgressDialog : AppCompatDialogFragment() {
 
     var ctx: Context? = null
+
+    private lateinit var binding: DialogProgressBinding
+
 
     companion object {
 
@@ -32,10 +37,9 @@ class ProgressDialog : AppCompatDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val mainView = inflater.inflate(R.layout.dialog_progress, container, true).apply {
-        }
-        return mainView
+    ): View {
+        binding = DialogProgressBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

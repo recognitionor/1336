@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
+
     private lateinit var navHeaderBinding: NavHeaderMainBinding
 
     private lateinit var navController: NavController
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         navHeaderBinding = NavHeaderMainBinding.inflate(layoutInflater)
+        binding.navView.addHeaderView(navHeaderBinding.root)
         setContentView(binding.root)
 
         progressDialog.show()
@@ -95,13 +97,11 @@ class MainActivity : AppCompatActivity(),
         binding.navView.setNavigationItemSelectedListener(this)
         binding.navView.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             if (mainViewModel.userInfo.value?.data == null) {
-                Log.d("jhlee", "updateUserInfo call")
                 mainViewModel.updateUserInfo()
             }
-
-            navHeaderBinding.navHeaderImg.setOnClickListener(this)
-            navHeaderBinding.navHeaderNickname.setOnClickListener(this)
         }
+        navHeaderBinding.navHeaderImg.setOnClickListener(this)
+        navHeaderBinding.navHeaderNickname.setOnClickListener(this)
     }
 
     private fun setupObserve() {
@@ -184,6 +184,7 @@ class MainActivity : AppCompatActivity(),
     override fun onClick(v: View?) {
         when (v) {
             navHeaderBinding.navHeaderImg, navHeaderBinding.navHeaderNickname -> {
+                Log.d("jhlee", "navHeaderImg")
                 if (!mainViewModel.isLogin()) {
                     login()
                 }

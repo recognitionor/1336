@@ -27,10 +27,9 @@ class OneButtonDialog(
         savedInstanceState: Bundle?
     ): View? {
         binding = DialogOneButtonBinding.inflate(layoutInflater)
-        val view = inflater.inflate(R.layout.dialog_one_button, container, true)
         binding.oneButtonTitle.text = title
         binding.oneButtonContent.text = content
         binding.oneButtonBtn.setOnClickListener { callback.invoke(this@OneButtonDialog) }
-        return view
+        return binding.root
     }
 }

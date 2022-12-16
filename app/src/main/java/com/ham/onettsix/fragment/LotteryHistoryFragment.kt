@@ -46,7 +46,7 @@ class LotteryHistoryFragment : Fragment(R.layout.fragment_history) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentHistoryBinding.inflate(layoutInflater)
+
         lotteryHistoryAdapter = LotteryHistoryAdapter()
     }
 
@@ -87,7 +87,8 @@ class LotteryHistoryFragment : Fragment(R.layout.fragment_history) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_history, null)
+    ): View {
+        binding = FragmentHistoryBinding.inflate(layoutInflater)
+        return binding.root
     }
 }

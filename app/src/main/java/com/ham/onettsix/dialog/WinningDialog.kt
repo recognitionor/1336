@@ -35,7 +35,6 @@ class WinningDialog(private val data: Result, private val onDismissListener: Dia
 
     private lateinit var binding: DialogWinningBinding
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         binding = DialogWinningBinding.inflate(layoutInflater)
@@ -52,8 +51,9 @@ class WinningDialog(private val data: Result, private val onDismissListener: Dia
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_winning, container, true)
+    ): View {
+        binding = DialogWinningBinding.inflate(layoutInflater)
+        return binding.root
     }
 
 
@@ -71,7 +71,6 @@ class WinningDialog(private val data: Result, private val onDismissListener: Dia
         binding.layoutWinningResultDescription.visibility = View.VISIBLE
         when (data.resultCode) {
             LOTTERY_FINISHED_WIN -> {
-                Log.d("jhlee", "당첨")
                 // 당첨
                 selectedImage1 = ProfileImageUtil.getImageId(-1)
                 selectedImage2 = ProfileImageUtil.getImageId(-1)

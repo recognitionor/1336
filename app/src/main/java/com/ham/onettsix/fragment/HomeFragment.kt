@@ -54,21 +54,19 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, null)
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserver()
-        binding = FragmentHomeBinding.inflate(layoutInflater)
     }
 
     private fun setupObserver() {
         homeViewModel.winningViewModel.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "winningViewModel $it")
-                    Log.d("jhlee", "login")
                     when (it.data?.resultCode) {
                         LOTTERY_FINISHED_WIN, LOTTERY_FINISHED_LOSE -> {
                             WinningDialog(it.data, object : DialogDismissListener {
@@ -91,6 +89,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
+
+                        Log.d("jhlee", "lotteryInfo.data.limitedDate : ${lotteryInfo.data.limitedDate}")
 
                         binding.homeRemainTimeView.setStartTime(lotteryInfo.data.limitedDate)
                         binding.homeGameInfo.text =
