@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ham.onettsix.R
-import kotlinx.android.synthetic.main.fragment_eula.*
+import com.ham.onettsix.databinding.FragmentEulaBinding
 import kotlin.math.abs
 
 
@@ -14,21 +14,28 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
 
     private var isReadDone = false
 
+    private lateinit var binding: FragmentEulaBinding
+
     interface OnEulaReadListener {
         fun onFinishRead(sectionNumber: Int)
         fun getCheckState(sectionNumber: Int): Boolean
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentEulaBinding.inflate(layoutInflater)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        webview_eula.loadUrl("file:///android_res/raw/eula.html")
+        binding.webviewEula.loadUrl("file:///android_res/raw/eula.html")
         isReadDone = listener.getCheckState(sectionNumber)
-        webview_eula.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            val standardValue = webview_eula.contentHeight * webview_eula.scale
+        binding.webviewEula.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            val standardValue = binding.webviewEula.contentHeight * binding.webviewEula.scale
             val offset: Float = standardValue / 10
 
-            val currentScroll = webview_eula.height + scrollY
+            val currentScroll = binding.webviewEula.height + scrollY
             if (abs(currentScroll - standardValue) <= offset) {
                 if (!isReadDone) {
                     isReadDone = true

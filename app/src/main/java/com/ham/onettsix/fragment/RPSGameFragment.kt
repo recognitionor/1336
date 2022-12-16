@@ -13,15 +13,15 @@ import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.databinding.FragmentRpsGameBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.RPSGameViewModel
-import kotlinx.android.synthetic.main.fragment_rps_game.*
-import kotlinx.android.synthetic.main.fragment_rps_game.layout_game_needed_login
-import kotlinx.android.synthetic.main.layout_needed_login.*
 import kotlinx.coroutines.*
 
 class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListener {
+
+    private lateinit var binding: FragmentRpsGameBinding
 
     private val rpsGameViewModel by lazy {
         ViewModelProviders.of(
@@ -39,18 +39,23 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
     private var selectedItem: Int = 0
     private var selectedImage: Int = 0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentRpsGameBinding.inflate(layoutInflater)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupObserve()
         rpsGameViewModel.updateUserInfo()
 
-        game_image_rock.setOnClickListener(this@RPSGameFragment)
-        game_image_scissors.setOnClickListener(this@RPSGameFragment)
-        game_image_paper.setOnClickListener(this@RPSGameFragment)
-        game_start_btn.setOnClickListener(this@RPSGameFragment)
-        game_info_message_img.setOnClickListener(this@RPSGameFragment)
-        rps_game_login_btn.setOnClickListener(this@RPSGameFragment)
+        binding.gameImageRock.setOnClickListener(this@RPSGameFragment)
+        binding.gameImageScissors.setOnClickListener(this@RPSGameFragment)
+        binding.gameImagePaper.setOnClickListener(this@RPSGameFragment)
+        binding.gameStartBtn.setOnClickListener(this@RPSGameFragment)
+        binding.gameInfoMessageImg.setOnClickListener(this@RPSGameFragment)
+        binding.layoutGameNeededLogin.rpsGameLoginBtn.setOnClickListener(this@RPSGameFragment)
 
     }
 
@@ -58,10 +63,10 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
         rpsGameViewModel.userInfo.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    layout_game_needed_login.visibility = View.GONE
+                    binding.layoutGameNeededLogin.layoutGameNeededLogin.visibility  = View.GONE
                 }
                 else -> {
-                    layout_game_needed_login.visibility = View.VISIBLE
+                    binding.layoutGameNeededLogin.layoutGameNeededLogin.visibility = View.VISIBLE
                 }
             }
         }
@@ -110,45 +115,48 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
 
     override fun onClick(v: View?) {
         when (v) {
-            rps_game_login_btn -> {
+
+            binding.layoutGameNeededLogin.rpsGameLoginBtn -> {
                 (parentFragment as GameFragment).login()
             }
-            game_info_message_img -> {
+
+            binding.gameInfoMessageImg -> {
                 rpsGameViewModel.getRockPaperScissors()
             }
-            game_image_rock -> {
+
+            binding.gameImageRock -> {
                 if (!isStopGame) {
-                    game_image_scissors.visibility = View.INVISIBLE
-                    game_image_paper.visibility = View.INVISIBLE
+                    binding.gameImageScissors.visibility = View.INVISIBLE
+                    binding.gameImagePaper.visibility = View.INVISIBLE
                     selectedItem = 0
                     requestGame()
                 }
                 return
             }
-            game_image_scissors -> {
+            binding.gameImageScissors -> {
                 if (!isStopGame) {
-                    game_image_rock.visibility = View.INVISIBLE
-                    game_image_paper.visibility = View.INVISIBLE
+                    binding.gameImageRock.visibility = View.INVISIBLE
+                    binding.gameImagePaper.visibility = View.INVISIBLE
                     selectedItem = 1
                     requestGame()
                 }
                 return
             }
-            game_image_paper -> {
+            binding.gameImagePaper -> {
                 if (!isStopGame) {
-                    game_image_rock.visibility = View.INVISIBLE
-                    game_image_scissors.visibility = View.INVISIBLE
+                    binding.gameImageRock.visibility = View.INVISIBLE
+                    binding.gameImageScissors.visibility = View.INVISIBLE
                     selectedItem = 2
                     requestGame()
                 }
                 return
             }
-            game_start_btn -> {
+            binding.gameStartBtn -> {
                 if (isStopGame) {
-                    game_image_rock.visibility = View.VISIBLE
-                    game_image_scissors.visibility = View.VISIBLE
-                    game_image_paper.visibility = View.VISIBLE
-                    game_start_btn.visibility = View.GONE
+                    binding.gameImageRock.visibility = View.VISIBLE
+                    binding.gameImageScissors.visibility = View.VISIBLE
+                    binding.gameImagePaper.visibility = View.VISIBLE
+                    binding.gameStartBtn.visibility = View.GONE
                     animationDelay = 50
                     gameStart()
                 }
@@ -158,8 +166,8 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
 
 
     private fun gameStart() {
-        game_result_tv.visibility = View.GONE
-        game_result_tv.text = ""
+        binding.gameResultTv.visibility = View.GONE
+        binding.gameResultTv.text = ""
         CoroutineScope(Dispatchers.Default).launch {
             coroutineScope = this
             isStopGame = false
@@ -179,15 +187,16 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
                 }
                 count++
                 delay(animationDelay)
-                game_image_view?.post {
-                    game_image_view?.setImageResource(selectedImage)
+
+                binding.gameImageView.post {
+                    binding.gameImageView.setImageResource(selectedImage)
                 }
             }
         }
     }
 
     fun loginUpdate() {
-        layout_game_needed_login.visibility = View.GONE
+        binding.layoutGameNeededLogin.layoutGameNeededLogin.visibility = View.GONE
         (requireParentFragment() as GameFragment).updateMyTicket()
         (this@RPSGameFragment.activity as MainActivity).mainViewModel.updateUserInfo()
     }
@@ -196,22 +205,22 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
         (parentFragment as GameFragment).updateMyTicket()
         coroutineScope?.cancel()
         isStopGame = true
-        game_result_tv.visibility = View.VISIBLE
-        game_start_btn.visibility = View.VISIBLE
-        game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
+        binding.gameResultTv.visibility = View.VISIBLE
+        binding.gameStartBtn.visibility = View.VISIBLE
+        binding.gameStartBtn.setText(R.string.game_rock_scissors_paper_restart)
         when (result) {
             ResultCode.NO_TICKET -> {
-                layout_game_start.visibility = View.VISIBLE
-                game_info_message_img.visibility = View.VISIBLE
-                game_info_message_tv.visibility = View.VISIBLE
-                game_info_message_tv.setText(R.string.no_ticket)
-                game_load_progress.visibility = View.GONE
+                binding.gameStartBtn.visibility = View.VISIBLE
+                binding.gameInfoMessageImg.visibility = View.VISIBLE
+                binding.gameInfoMessageImg.visibility = View.VISIBLE
+                binding.gameInfoMessageTv.setText(R.string.no_ticket)
+                binding.gameLoadProgress.visibility = View.GONE
             }
 
             ResultCode.RPC_WIN -> {
-                game_result_tv.visibility = View.VISIBLE
-                game_result_tv.setText(R.string.game_win)
-                game_start_btn.setText(R.string.game_rock_scissors_paper_restart)
+                binding.gameResultTv.visibility = View.VISIBLE
+                binding.gameResultTv.setText(R.string.game_win)
+                binding.gameStartBtn.setText(R.string.game_rock_scissors_paper_restart)
                 selectedImage = when (selectedItem) {
                     0 -> {
                         R.mipmap.ic_scissors
@@ -228,7 +237,7 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
                 val random = (0..1).random()
                 if (random == 0) {
                     // 무승부 케이스
-                    game_result_tv.setText(R.string.game_draw)
+                    binding.gameResultTv.setText(R.string.game_draw)
                     selectedImage = when (selectedItem) {
                         0 -> {
                             R.mipmap.ic_rock
@@ -242,7 +251,7 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
                     }
                 } else {
                     // 패배의 경우
-                    game_result_tv.setText(R.string.game_lose)
+                    binding.gameResultTv.setText(R.string.game_lose)
                     selectedImage = when (selectedItem) {
                         0 -> {
                             R.mipmap.ic_paper
@@ -257,11 +266,11 @@ class RPSGameFragment : Fragment(R.layout.fragment_rps_game), View.OnClickListen
                 }
             }
         }
-        game_image_view.setImageResource(selectedImage)
+        binding.gameImageView.setImageResource(selectedImage)
     }
 
     fun updateCountText(gameCount: Int, maxCount: Int) {
-        game_count_tv.text =
+        binding.gameCountTv.text =
             "$gameCount${getString(R.string.count_divide_mark, "d")}$maxCount"
     }
 }

@@ -12,17 +12,16 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.ActivityProfileDetailBinding
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
-import com.ham.onettsix.viewmodel.LoginViewModel
-import com.ham.onettsix.viewmodel.MyProfileViewModel
 import com.ham.onettsix.viewmodel.ProfileDetailViewModel
-import kotlinx.android.synthetic.main.activity_profile_detail.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileDetailActivity : AppCompatActivity(R.layout.activity_profile_detail),
     View.OnClickListener {
+
+    private lateinit var binding: ActivityProfileDetailBinding
 
     private val profileDetailViewModel by lazy {
         ViewModelProviders.of(
@@ -44,13 +43,17 @@ class ProfileDetailActivity : AppCompatActivity(R.layout.activity_profile_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityProfileDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         profileDetailViewModel.getUserInfo()
         setupObserver()
-        login_toolbar_back.setOnClickListener(this)
-        profile_detail_eula.setOnClickListener(this)
-        profile_detail_eula_forward_img.setOnClickListener(this)
-        profile_detail_logout.setOnClickListener(this)
-        profile_detail_logout_img.setOnClickListener(this)
+
+        binding.loginToolbarBack.setOnClickListener(this)
+        binding.profileDetailEula.setOnClickListener(this)
+        binding.profileDetailEulaForwardImg.setOnClickListener(this)
+        binding.profileDetailLogout.setOnClickListener(this)
+        binding.profileDetailLogoutImg.setOnClickListener(this)
     }
 
     private fun setupObserver() {
@@ -58,10 +61,11 @@ class ProfileDetailActivity : AppCompatActivity(R.layout.activity_profile_detail
             when (it.status) {
                 Status.SUCCESS -> {
                     if (it.data != null) {
-                        profile_detail_version.text = BuildConfig.VERSION_NAME
-                        profile_detail_user_name_tv.text = it.data.nickName
-                        profile_detail_user_id_tv.text = "#${it.data.id}"
-                        profile_detail_image_view.setImageResource(
+
+                        binding.profileDetailVersion.text = BuildConfig.VERSION_NAME
+                        binding.profileDetailUserNameTv.text = it.data.nickName
+                        binding.profileDetailUserIdTv.text = "#${it.data.id}"
+                        binding.profileDetailImageView.setImageResource(
                             ProfileImageUtil.getImageId(
                                 it.data.profileImageId ?: -1
                             )
@@ -83,16 +87,15 @@ class ProfileDetailActivity : AppCompatActivity(R.layout.activity_profile_detail
 
     override fun onClick(view: View) {
         when (view) {
-            login_toolbar_back -> {
+            binding.loginToolbarBack -> {
                 finish()
             }
-            profile_detail_eula,
-            profile_detail_eula_forward_img -> {
+            binding.profileDetailEula,
+            binding.profileDetailEulaForwardImg -> {
                 activityResult.launch(Intent(this, EulaActivity::class.java))
             }
-
-            profile_detail_logout,
-            profile_detail_logout_img -> {
+            binding.profileDetailLogout,
+            binding.profileDetailLogoutImg -> {
                 profileDetailViewModel.logout()
             }
         }

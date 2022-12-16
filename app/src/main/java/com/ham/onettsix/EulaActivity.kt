@@ -8,10 +8,12 @@ import com.google.android.material.tabs.TabLayout
 import com.ham.onettsix.adapter.SectionsPagerAdapter
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ExtraKey
+import com.ham.onettsix.databinding.ActivityEulaBinding
 import com.ham.onettsix.fragment.EulaFragment
-import kotlinx.android.synthetic.main.activity_eula.*
 
-class EulaActivity : AppCompatActivity(R.layout.activity_eula) {
+class EulaActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityEulaBinding
 
     private var checkTerms: Boolean = false
 
@@ -26,6 +28,9 @@ class EulaActivity : AppCompatActivity(R.layout.activity_eula) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityEulaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         selectedSection = intent.getIntExtra(ExtraKey.PERMISSION_CLICK_SECTION, 0)
         checkTerms = intent.getBooleanExtra(ExtraKey.PERMISSION_CHECKED_TERMS, false)
         checkPrivacyPolicy = intent.getBooleanExtra(ExtraKey.PERMISSION_PRIVACY_POLICY, false)
@@ -64,10 +69,9 @@ class EulaActivity : AppCompatActivity(R.layout.activity_eula) {
                     return false
                 }
             })
-
-        val viewPager: ViewPager = vp_eula
+        val viewPager: ViewPager = binding.vpEula
         viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = tab_eula
+        val tabs: TabLayout = binding.tabEula
         tabs.setupWithViewPager(viewPager)
         tabs.selectTab(tabs.getTabAt(selectedSection))
     }

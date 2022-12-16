@@ -2,10 +2,11 @@ package com.ham.onettsix.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
+import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.ham.onettsix.R
-import kotlinx.android.synthetic.main.view_remain_drawing_time.view.*
+import com.ham.onettsix.databinding.ToolbarLayoutBinding
+import com.ham.onettsix.databinding.ViewRemainDrawingTimeBinding
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -14,6 +15,8 @@ import java.util.*
 
 
 class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+
+    private lateinit var binding: ViewRemainDrawingTimeBinding
 
     private var days: Int = 0
 
@@ -28,8 +31,9 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
 
     init {
         val view = inflate(context, R.layout.view_remain_drawing_time, null)
+        binding =  ViewRemainDrawingTimeBinding.inflate(LayoutInflater.from(context))
         view.apply {}
-        addView(view)
+        addView(binding.root)
     }
 
     fun setStartTime(limitedDate: Long = Long.MAX_VALUE) {
@@ -37,17 +41,18 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
             this@RemainTimeView.coroutineScope = this
             if (limitedDate <= System.currentTimeMillis()) {
                 val defaultTime = resources.getText(R.string.home_remain_drawing_time_default)
-                remain_time_days_tv.post {
-                    remain_time_days_tv.text = defaultTime
+
+                binding.remainTimeDaysTv.post {
+                    binding.remainTimeDaysTv.text = defaultTime
                 }
-                remain_time_hour_tv.post {
-                    remain_time_hour_tv.text = defaultTime
+                binding.remainTimeHourTv.post {
+                    binding.remainTimeHourTv.text = defaultTime
                 }
-                remain_time_mins_tv.post {
-                    remain_time_mins_tv.text = defaultTime
+                binding.remainTimeMinsTv.post {
+                    binding.remainTimeMinsTv.text = defaultTime
                 }
-                remain_time_secs_tv.post {
-                    remain_time_secs_tv.text = defaultTime
+                binding.remainTimeSecsTv.post {
+                    binding.remainTimeSecsTv.text = defaultTime
                 }
             } else {
                 while (true) {
@@ -58,18 +63,18 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                     val hour = (totalSec % (60 * 60 * 24)) / (60 * 60)
                     val min = (totalSec % (60 * 60)) / (60)
                     val sec = totalSec % (60)
-                    remain_time_days_tv.post {
-                        remain_time_days_tv.text = day.toString()
+                    binding.remainTimeDaysTv.post {
+                        binding.remainTimeDaysTv.text = day.toString()
                     }
-                    remain_time_hour_tv.post {
-                        remain_time_hour_tv.text = hour.toString()
+                    binding.remainTimeHourTv.post {
+                        binding.remainTimeHourTv.text = hour.toString()
                     }
-                    remain_time_mins_tv.post {
-                        remain_time_mins_tv.text = min.toString()
+                    binding.remainTimeMinsTv.post {
+                        binding.remainTimeMinsTv.text = min.toString()
                     }
 
-                    remain_time_secs_tv.post {
-                        remain_time_secs_tv.text = sec.toString()
+                    binding.remainTimeSecsTv.post {
+                        binding.remainTimeSecsTv.text = sec.toString()
                     }
                     delay(1000)
                 }

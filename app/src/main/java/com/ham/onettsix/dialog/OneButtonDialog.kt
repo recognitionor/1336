@@ -5,7 +5,8 @@ import android.view.*
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import com.ham.onettsix.R
-import kotlinx.android.synthetic.main.dialog_one_button.view.*
+import com.ham.onettsix.databinding.ActivityProfileDetailBinding
+import com.ham.onettsix.databinding.DialogOneButtonBinding
 
 class OneButtonDialog(
     private var title: String = "",
@@ -13,6 +14,8 @@ class OneButtonDialog(
     private var callback: (dialog: DialogFragment) -> Unit
 ) :
     AppCompatDialogFragment() {
+
+    private lateinit var binding: DialogOneButtonBinding
 
     companion object {
         val TAG: String = OneButtonDialog::class.java.simpleName
@@ -23,10 +26,11 @@ class OneButtonDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = DialogOneButtonBinding.inflate(layoutInflater)
         val view = inflater.inflate(R.layout.dialog_one_button, container, true)
-        view.one_button_title.text = title
-        view.one_button_content.text = content
-        view.one_button_btn.setOnClickListener { callback.invoke(this@OneButtonDialog) }
+        binding.oneButtonTitle.text = title
+        binding.oneButtonContent.text = content
+        binding.oneButtonBtn.setOnClickListener { callback.invoke(this@OneButtonDialog) }
         return view
     }
 }

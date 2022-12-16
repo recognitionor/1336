@@ -16,12 +16,14 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.FragmentHistoryBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.LotteryHistoryViewModel
-import kotlinx.android.synthetic.main.fragment_history.*
 
 class LotteryHistoryFragment : Fragment(R.layout.fragment_history) {
+
+    private lateinit var binding: FragmentHistoryBinding
 
     private val lotteryHistoryViewModel by lazy {
         ViewModelProviders.of(
@@ -44,14 +46,16 @@ class LotteryHistoryFragment : Fragment(R.layout.fragment_history) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentHistoryBinding.inflate(layoutInflater)
         lotteryHistoryAdapter = LotteryHistoryAdapter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
-        lottery_history_winner_rv.layoutManager = LinearLayoutManager(requireContext())
-        lottery_history_winner_rv.adapter = lotteryHistoryAdapter
+
+        binding.lotteryHistoryWinnerRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.lotteryHistoryWinnerRv.adapter = lotteryHistoryAdapter
         lotteryHistoryViewModel.getLotteryHistoryList("ALL", 1)
     }
 

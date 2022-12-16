@@ -22,18 +22,21 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.ActivityMainBinding
+import com.ham.onettsix.databinding.AppBarMainBinding
+import com.ham.onettsix.databinding.NavHeaderMainBinding
 import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 
 
-class MainActivity : AppCompatActivity(R.layout.activity_main),
+class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navHeaderBinding: NavHeaderMainBinding
 
     private lateinit var navController: NavController
 
@@ -71,29 +74,33 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        navHeaderBinding = NavHeaderMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         progressDialog.show()
 
         setupObserve()
-        app_bar_main.toolbar.setTitleTextColor(Color.TRANSPARENT)
-        setSupportActionBar(app_bar_main.toolbar)
+        binding.appBarMain.toolbar.setTitleTextColor(Color.TRANSPARENT)
+        setSupportActionBar(binding.appBarMain.toolbar)
 
         navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_get_ticket, R.id.nav_history
-            ), drawer_layout
+            ), binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        nav_view.setupWithNavController(navController)
-        nav_view.setNavigationItemSelectedListener(this)
-        nav_view.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+        binding.navView.setupWithNavController(navController)
+        binding.navView.setNavigationItemSelectedListener(this)
+        binding.navView.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             if (mainViewModel.userInfo.value?.data == null) {
                 Log.d("jhlee", "updateUserInfo call")
                 mainViewModel.updateUserInfo()
             }
 
-            nav_header_img.setOnClickListener(this)
-            nav_header_nickname.setOnClickListener(this)
+            navHeaderBinding.navHeaderImg.setOnClickListener(this)
+            navHeaderBinding.navHeaderNickname.setOnClickListener(this)
         }
     }
 
@@ -104,16 +111,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
                 Status.SUCCESS -> {
                     if (it.data != null) {
                         it.data.let { data ->
-                            nav_header_nickname?.text = "${data.nickName}#${data.id}"
-                            nav_header_img?.setImageDrawable(
+                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.id}"
+                            navHeaderBinding.navHeaderImg.setImageDrawable(
                                 getDrawable(
                                     ProfileImageUtil.getImageId(data.profileImageId ?: -1)
                                 )
                             )
                         }
                     } else {
-                        nav_header_nickname?.setText(R.string.login_do)
-                        nav_header_img?.setImageResource(R.drawable.ic_account_circle)
+                        navHeaderBinding.navHeaderNickname.setText(R.string.login_do)
+                        navHeaderBinding.navHeaderImg.setImageResource(R.drawable.ic_account_circle)
                     }
                 }
                 Status.ERROR -> {
@@ -176,7 +183,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
 
     override fun onClick(v: View?) {
         when (v) {
-            nav_header_img, nav_header_nickname -> {
+            navHeaderBinding.navHeaderImg, navHeaderBinding.navHeaderNickname -> {
                 if (!mainViewModel.isLogin()) {
                     login()
                 }
@@ -185,7 +192,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
     }
 
     fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
-        val menu = nav_view.menu.getItem(selectedIndex)
+
+        val menu = binding.navView.menu.getItem(selectedIndex)
         menu.isChecked = true
         NavigationUI.onNavDestinationSelected(menu, navController)
         val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout

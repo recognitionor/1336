@@ -18,15 +18,18 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.FragmentAttendanceBinding
+import com.ham.onettsix.databinding.FragmentVideoBinding
 import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.VideoViewModel
-import kotlinx.android.synthetic.main.fragment_video.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
+
+    private lateinit var binding: FragmentVideoBinding
 
     private val videoViewModel by lazy {
         ViewModelProviders.of(
@@ -41,21 +44,26 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
         ProgressDialog.getInstance(parentFragmentManager)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentVideoBinding.inflate(layoutInflater)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserve()
 
         if (PreferencesHelper.getInstance(requireContext()).isLogin()) {
-            video_fragment_layout.visibility = View.VISIBLE
-            layout_video_needed_login.visibility = View.GONE
+            binding.videoFragmentLayout.visibility = View.VISIBLE
+            binding.layoutVideoNeededLogin.layoutGameNeededLogin.visibility = View.GONE
         } else {
-            video_fragment_layout.visibility = View.GONE
-            layout_video_needed_login.visibility = View.VISIBLE
+            binding.videoFragmentLayout.visibility = View.GONE
+            binding.layoutVideoNeededLogin.layoutGameNeededLogin.visibility = View.VISIBLE
         }
         videoViewModel.validateLimitedRv()
-        layout_video_needed_login.setOnClickListener(this)
-        video_valid_check_btn.setOnClickListener(this)
-        video_layout_img.setOnClickListener(this)
+        binding.layoutVideoNeededLogin.layoutGameNeededLogin.setOnClickListener(this)
+        binding.videoValidCheckBtn.setOnClickListener(this)
+        binding.videoLayoutImg.setOnClickListener(this)
 
     }
 
@@ -72,17 +80,17 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                 Status.SUCCESS -> {
                     progressDialog.dismiss()
                     if (it.data?.resultCode == ResultCode.EXCEED_VIDEO_FREQUENCY) {
-                        exceed_video_tv.text = it.data.description
+                        binding.exceedVideoTv.text = it.data.description
                     } else {
                         it.data?.data?.let { data ->
-                            video_valid_check_btn.isEnabled = true
-                            video_count_info_tv.text =
+                            binding.videoValidCheckBtn.isEnabled = true
+                            binding.videoCountInfoTv.text =
                                 "${data.currentRvCount}/${data.limitedRvCount}"
                         }
                     }
                 }
                 Status.ERROR -> {
-                    video_valid_check_btn.isEnabled = false
+                    binding.videoValidCheckBtn.isEnabled = false
                     progressDialog.dismiss()
                 }
                 Status.LOADING -> {
@@ -142,7 +150,7 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
                                                 rewardAd.show(requireActivity()) { _ ->
                                                     (parentFragment as GameFragment).updateMyTicket()
                                                     videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
-                                                        video_count_info_tv.text =
+                                                        binding.videoCountInfoTv.text =
                                                             "${++data.currentRvCount}/${data.limitedRvCount}"
                                                     }
                                                 }
@@ -165,10 +173,11 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            video_layout_img, video_valid_check_btn -> {
+
+            binding.videoLayoutImg, binding.videoValidCheckBtn -> {
                 videoViewModel.getVideoSignature()
             }
-            layout_video_needed_login -> {
+            binding.layoutVideoNeededLogin.layoutGameNeededLogin -> {
                 (parentFragment as GameFragment).login()
             }
 
@@ -177,11 +186,11 @@ class VideoFragment : Fragment(R.layout.fragment_video), View.OnClickListener {
 
     fun loginUpdate() {
         if (PreferencesHelper.getInstance(requireContext()).isLogin()) {
-            video_fragment_layout.visibility = View.VISIBLE
-            layout_video_needed_login.visibility = View.GONE
+            binding.videoFragmentLayout.visibility = View.VISIBLE
+            binding.layoutVideoNeededLogin.layoutGameNeededLogin.visibility = View.GONE
         } else {
-            video_fragment_layout.visibility = View.GONE
-            layout_video_needed_login.visibility = View.VISIBLE
+            binding.videoFragmentLayout.visibility = View.GONE
+            binding.layoutVideoNeededLogin.layoutGameNeededLogin.visibility = View.VISIBLE
         }
     }
 }

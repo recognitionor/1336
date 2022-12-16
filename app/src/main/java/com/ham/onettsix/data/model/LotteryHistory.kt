@@ -2,8 +2,8 @@ package com.ham.onettsix.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LotteryHistory(
@@ -22,6 +22,7 @@ data class LotteryHistory(
     @SerializedName("data")
     override val data: ArrayList<Data> = arrayListOf()
 ) : BasicData<ArrayList<LotteryHistory.Data>>() {
+
     @Parcelize
     data class Data(
         @SerializedName("isWinning")

@@ -11,16 +11,17 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.ActivityLoginBinding
 import com.ham.onettsix.social.ISocialLoginListener
 import com.ham.onettsix.social.KakaoSignInService
 import com.ham.onettsix.social.NaverSignInService
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.toolbar_layout.view.*
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
+
+    private lateinit var binding: ActivityLoginBinding
 
     private val loginViewModel by lazy {
         ViewModelProviders.of(
@@ -35,12 +36,14 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupObserve()
-        login_toolbar_back.back_btn.setOnClickListener {
+        binding.loginToolbarBack.setOnClickListener {
             finish()
         }
-        btn_login_kakao.setOnClickListener {
+        binding.btnLoginKakao.setOnClickListener {
             val kakaoService = KakaoSignInService(this)
             kakaoService.signIn(object : ISocialLoginListener {
                 override fun getToken(socialType: String, token: String) {
@@ -56,7 +59,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
         }
 
-        btn_login_kakao.setOnClickListener {
+       binding.btnLoginKakao.setOnClickListener {
             val kakaoService = KakaoSignInService(this@LoginActivity)
             kakaoService.signIn(object : ISocialLoginListener {
                 override fun getToken(socialType: String, token: String) {
@@ -70,7 +73,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         }
 
 
-        btn_login_naver.setOnClickListener {
+        binding.btnLoginNaver.setOnClickListener {
             val naverService = NaverSignInService(this)
             naverService.signIn(object : ISocialLoginListener {
                 override fun getToken(socialType: String, token: String) {

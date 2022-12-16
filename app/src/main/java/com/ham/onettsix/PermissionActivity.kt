@@ -7,12 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ExtraKey
+import com.ham.onettsix.databinding.ActivityPermissionBinding
 import com.ham.onettsix.fragment.EulaFragment
-import kotlinx.android.synthetic.main.activity_permission.*
-import kotlinx.android.synthetic.main.toolbar_layout.view.*
 
 class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View.OnClickListener {
 
+    private lateinit var binding: ActivityPermissionBinding
 //    private val permissionViewModel by lazy {
 //        ViewModelProviders.of(
 //            this,
@@ -29,12 +29,14 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View
             when (result.resultCode) {
                 ActivityResultKey.EULA_RESULT -> {
                     result.data?.let {
-                        checkbox_terms.isChecked =
+
+                        binding.checkboxTerms.isChecked =
                             it.getBooleanExtra(EulaActivity.RESULT_KEY_CHECK_TERMS, false)
-                        checkbox_privacy_policy.isChecked =
+
+                        binding.checkboxPrivacyPolicy.isChecked =
                             it.getBooleanExtra(EulaActivity.RESULT_KEY_PRIVACY_POLICY, false)
-                        btn_permission_confirm.isEnabled =
-                            (checkbox_terms.isChecked && checkbox_privacy_policy.isChecked)
+                        binding.btnPermissionConfirm.isEnabled =
+                            (binding.checkboxTerms.isChecked && binding.checkboxPrivacyPolicy.isChecked)
                     }
                 }
             }
@@ -42,9 +44,10 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        view_eula_item_terms.setOnClickListener(this)
-        permission_toolbar_back.back_btn.setOnClickListener(this)
-        btn_permission_confirm.setOnClickListener(this)
+        binding = ActivityPermissionBinding.inflate(layoutInflater)
+        binding.viewEulaItemTerms.setOnClickListener(this)
+        binding.permissionToolbarBack.setOnClickListener(this)
+        binding.btnPermissionConfirm.setOnClickListener(this)
         setupObserver()
     }
 
@@ -54,17 +57,20 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View
     override fun onClick(view: View) {
         var clickedSection = EulaFragment.SECTION_NUMBER_0
         when (view) {
-            view_eula_item_terms -> {
+            binding.viewEulaItemTerms -> {
                 clickedSection = EulaFragment.SECTION_NUMBER_0
             }
-            view_eula_item_privacy_policy -> {
+
+            binding.viewEulaItemPrivacyPolicy -> {
                 clickedSection = EulaFragment.SECTION_NUMBER_1
             }
-            permission_toolbar_back.back_btn -> {
+
+            binding.permissionToolbarBack -> {
                 finish()
                 return
             }
-            btn_permission_confirm -> {
+
+            binding.btnPermissionConfirm -> {
                 Intent(this@PermissionActivity, SignUpActivity::class.java).apply {
                     activityResult.launch(this)
                 }
@@ -73,10 +79,10 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View
         }
         Intent(this@PermissionActivity, EulaActivity::class.java).apply {
             this.putExtra(ExtraKey.PERMISSION_CLICK_SECTION, clickedSection)
-            this.putExtra(ExtraKey.PERMISSION_CHECKED_TERMS, checkbox_terms.isChecked)
+            this.putExtra(ExtraKey.PERMISSION_CHECKED_TERMS, binding.checkboxTerms.isChecked)
             this.putExtra(
                 ExtraKey.PERMISSION_PRIVACY_POLICY,
-                checkbox_privacy_policy.isChecked
+                binding.checkboxPrivacyPolicy.isChecked
             )
             activityResult.launch(this)
         }

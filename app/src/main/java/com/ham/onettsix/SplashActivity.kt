@@ -11,12 +11,15 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.ActivitySignUpBinding
+import com.ham.onettsix.databinding.ActivitySplashBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.SplashViewModel
-import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
+
+    private lateinit var binding: ActivitySplashBinding
 
     private val splashViewModel by lazy {
         ViewModelProviders.of(
@@ -37,9 +40,10 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
         setupObserver()
         splashViewModel.refreshLogin()
-        splash_error_btn.setOnClickListener {
+        binding.splashErrorBtn.setOnClickListener {
             splashViewModel.refreshLogin()
         }
     }
@@ -52,12 +56,13 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
                     activityResult.launch(Intent(this, MainActivity::class.java))
                 }
                 Status.LOADING -> {
-                    splash_progress.visibility = View.VISIBLE
-                    splash_error_btn.visibility = View.GONE
+
+                    binding.splashProgress.visibility = View.VISIBLE
+                    binding.splashErrorBtn.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    splash_progress.visibility = View.GONE
-                    splash_error_btn.visibility = View.VISIBLE
+                    binding.splashProgress.visibility = View.GONE
+                    binding.splashErrorBtn.visibility = View.VISIBLE
                 }
             }
         }

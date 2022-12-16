@@ -15,7 +15,6 @@ import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.GameViewModel
-import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment(R.layout.fragment_game) {
 

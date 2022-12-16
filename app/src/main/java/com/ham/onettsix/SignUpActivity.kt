@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import com.ham.onettsix.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity(R.layout.activity_sign_up), View.OnClickListener {
+
+    private lateinit var binding: ActivitySignUpBinding
 
 //    private val permissionViewModel by lazy {
 //        ViewModelProviders.of(
@@ -27,8 +29,10 @@ class SignUpActivity : AppCompatActivity(R.layout.activity_sign_up), View.OnClic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupObserver()
-        signup_toolbar_back.setOnClickListener {
+        binding.signupToolbarBack.setOnClickListener {
             finish()
         }
     }

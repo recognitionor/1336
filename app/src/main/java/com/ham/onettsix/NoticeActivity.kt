@@ -12,13 +12,15 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.databinding.ActivityNoticeBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.NoticeViewModel
-import kotlinx.android.synthetic.main.activity_notice.*
 
 class NoticeActivity : AppCompatActivity(R.layout.activity_notice),
     View.OnClickListener {
+
+    private lateinit var binding: ActivityNoticeBinding
 
     private val noticeViewModel by lazy {
         ViewModelProviders.of(
@@ -41,12 +43,15 @@ class NoticeActivity : AppCompatActivity(R.layout.activity_notice),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityNoticeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupObserver()
         noticeViewModel.getNoticeList()
-        notice_toolbar_back.setOnClickListener { finish() }
+
+        binding.noticeToolbarBack.setOnClickListener { finish() }
         noticeAdapter = NoticeAdapter()
-        notice_rv.layoutManager = LinearLayoutManager(this)
-        notice_rv.adapter = noticeAdapter
+        binding.noticeRv.layoutManager = LinearLayoutManager(this)
+        binding.noticeRv.adapter = noticeAdapter
     }
 
     private fun setupObserver() {

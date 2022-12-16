@@ -1,27 +1,24 @@
 package com.ham.onettsix.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ham.onettsix.R
-import com.ham.onettsix.data.model.HistoryInfo
 import com.ham.onettsix.data.model.LotteryHistory
-import kotlinx.android.synthetic.main.rv_item_lottery_history.view.*
+import com.ham.onettsix.databinding.RvItemLotteryHistoryBinding
 
 class LotteryHistoryAdapter :
     RecyclerView.Adapter<LotteryHistoryAdapter.LotteryHistoryViewHolder>() {
 
     private var list: ArrayList<LotteryHistory.Data> = ArrayList()
 
-    class LotteryHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class LotteryHistoryViewHolder(private val binding: RvItemLotteryHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: LotteryHistory.Data) {
-            itemView.rv_item_lottery_history_day_str.text = item.endDate
-            itemView.rv_item_lottery_history_winner_userid.text = item.userId.toString()
-            itemView.rv_item_lottery_history_total_price.text = item.winningAmount.toString()
-            itemView.rv_item_lottery_history_total_participation_count.text = item.memberCount.toString()
-            itemView.rv_item_lottery_history_winner_name.text = item.nickname
+            binding.rvItemLotteryHistoryDayStr.text = item.endDate
+            binding.rvItemLotteryHistoryWinnerUserid.text = item.userId.toString()
+            binding.rvItemLotteryHistoryTotalPrice.text = item.winningAmount.toString()
+            binding.rvItemLotteryHistoryTotalParticipationCount.text = item.memberCount.toString()
+            binding.rvItemLotteryHistoryWinnerName.text = item.nickname
         }
     }
 
@@ -29,10 +26,8 @@ class LotteryHistoryAdapter :
         parent: ViewGroup,
         viewType: Int
     ): LotteryHistoryViewHolder {
-        return LotteryHistoryViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_item_lottery_history, parent, false)
-        )
+        val binding = RvItemLotteryHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return LotteryHistoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(

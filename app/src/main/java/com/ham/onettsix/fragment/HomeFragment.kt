@@ -22,7 +22,7 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.databinding.DialogOneButtonBinding
+import com.ham.onettsix.databinding.FragmentHomeBinding
 import com.ham.onettsix.dialog.DialogDismissListener
 import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.dialog.TwoButtonDialog
@@ -30,13 +30,10 @@ import com.ham.onettsix.dialog.WinningDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), View.OnClickListener {
+
+    private lateinit var binding: FragmentHomeBinding
 
     private val homeViewModel by lazy {
         ViewModelProviders.of(
@@ -63,6 +60,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserver()
+        binding = FragmentHomeBinding.inflate(layoutInflater)
     }
 
     private fun setupObserver() {
@@ -93,19 +91,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
-                        home_remain_time_view.setStartTime(lotteryInfo.data.limitedDate)
-                        home_game_info.text =
-                            getString(R.string.home_game_info, lotteryInfo.data.episode)
-                        home_game_price.text =
-                            getString(R.string.home_game_price, lotteryInfo.data.winningAmount)
 
-                        home_game_ticket_info.text = getString(
+                        binding.homeRemainTimeView.setStartTime(lotteryInfo.data.limitedDate)
+                        binding.homeGameInfo.text =
+                            getString(R.string.home_game_info, lotteryInfo.data.episode)
+                        binding.homeGamePrice.text =
+                            getString(R.string.home_game_price, lotteryInfo.data.winningAmount)
+                        binding.homeGameTicketInfo.text = getString(
                             R.string.home_game_ticket_info,
                             lotteryInfo.data.joinUserCount,
                             lotteryInfo.data.totalJoinCount
                         )
-
-                        home_game_now_left_chance.text = getString(
+                        binding.homeGameNowLeftChance.text = getString(
                             R.string.home_game_now_left_chance,
                             lotteryInfo.data.remainLotteryCount
                         )
@@ -123,14 +120,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getLotteryInfo()
-        home_game_get_ticket_btn.setOnClickListener(this)
-        home_game_go_history_title.setOnClickListener(this)
-        home_game_go_history_forward_img.setOnClickListener(this)
+
+        binding.homeGameGetTicketBtn.setOnClickListener(this)
+        binding.homeGameGoHistoryTitle.setOnClickListener(this)
+        binding.homeGameGoHistoryForwardImg.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            home_game_get_ticket_btn -> {
+
+            binding.homeGameGetTicketBtn -> {
                 if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
                     TwoButtonDialog(
                         getString(R.string.game_try_dialog_title),
@@ -148,7 +147,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     }.show(parentFragmentManager, OneButtonDialog.TAG)
                 }
             }
-            home_game_go_history_title, home_game_go_history_forward_img -> {
+
+            binding.homeGameGoHistoryTitle, binding.homeGameGoHistoryForwardImg -> {
                 activityResult.launch(
                     Intent(
                         this.requireActivity(), LotteryHistoryActivity::class.java

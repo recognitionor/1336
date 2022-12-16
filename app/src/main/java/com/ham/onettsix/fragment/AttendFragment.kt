@@ -10,12 +10,15 @@ import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.databinding.FragmentAttendanceBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.AttendViewModel
-import kotlinx.android.synthetic.main.fragment_attendance.*
 
-class AttendFragment : Fragment(R.layout.fragment_attendance) {
+class AttendFragment : Fragment() {
+
+    private lateinit var binding: FragmentAttendanceBinding
+
     private val attendViewModel by lazy {
         ViewModelProviders.of(
             this, ViewModelFactory(
@@ -25,12 +28,17 @@ class AttendFragment : Fragment(R.layout.fragment_attendance) {
         )[AttendViewModel::class.java]
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentAttendanceBinding.inflate(layoutInflater)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserve()
         attendViewModel.attendStatusLoad()
 
-        attendance_btn.setOnClickListener {
+        binding.attendanceBtn.setOnClickListener {
             attendViewModel.attendCheck()
         }
     }
@@ -40,22 +48,22 @@ class AttendFragment : Fragment(R.layout.fragment_attendance) {
             when (it.status) {
                 Status.SUCCESS -> {
                     if (it.data?.resultCode == ResultCode.SUCCESS_ATTEND || it.data?.resultCode == ResultCode.DUPLICATED_ATTEND) {
-                        attendance_btn.isEnabled = false
-                        attendance_btn.text = getString(R.string.attend_done)
+                        binding.attendanceBtn.isEnabled = false
+                        binding.attendanceBtn.text = getString(R.string.attend_done)
                     } else {
-                        attendance_btn.isEnabled = true
-                        attendance_btn.setText(R.string.attend_btn)
+                        binding.attendanceBtn.isEnabled = true
+                        binding.attendanceBtn.setText(R.string.attend_btn)
                     }
-                    attendance_progress.visibility = View.GONE
-                    attendance_btn.visibility = View.VISIBLE
+                    binding.attendanceProgress.visibility = View.GONE
+                    binding.attendanceBtn.visibility = View.VISIBLE
                 }
                 Status.LOADING -> {
-                    attendance_progress.visibility = View.VISIBLE
-                    attendance_btn.visibility = View.GONE
+                    binding.attendanceProgress.visibility = View.VISIBLE
+                    binding.attendanceBtn.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    attendance_progress.visibility = View.GONE
-                    attendance_btn.visibility = View.GONE
+                    binding.attendanceProgress.visibility = View.GONE
+                    binding.attendanceBtn.visibility = View.GONE
                 }
             }
         }

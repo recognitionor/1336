@@ -18,14 +18,17 @@ import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.databinding.FragmentHistoryBinding
+import com.ham.onettsix.databinding.FragmentProfileBinding
 import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.MyProfileViewModel
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class MyProfileFragment : Fragment(), View.OnClickListener {
+
+    private lateinit var binding: FragmentProfileBinding
 
     companion object {
         const val TAG = "MyProfileFragment"
@@ -61,6 +64,7 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentProfileBinding.inflate(layoutInflater)
         setupObserve()
         adapter = MyProfileHistoryAdapter(requireContext())
         myProfileViewModel.getUserInfo()
@@ -69,11 +73,13 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profile_history_rv.adapter = adapter
-        profile_history_rv.layoutManager = LinearLayoutManager(requireContext())
-        profile_detail_img.setOnClickListener(this@MyProfileFragment)
-        profile_image_view.setOnClickListener(this@MyProfileFragment)
-        profile_user_name_tv.setOnClickListener(this@MyProfileFragment)
+
+        binding.profileHistoryRv.adapter = adapter
+        binding.profileHistoryRv.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.profileDetailImg.setOnClickListener(this@MyProfileFragment)
+        binding.profileImageView.setOnClickListener(this@MyProfileFragment)
+        binding.profileUserNameTv.setOnClickListener(this@MyProfileFragment)
     }
 
     private fun setupObserve() {
@@ -99,9 +105,9 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                 Status.SUCCESS -> {
                     progressDialog.dismiss()
                     if (it.data != null) {
-                        profile_user_name_tv.text = it.data.nickName
-                        profile_user_id_tv.text = "#${it.data.id}"
-                        profile_image_view.setImageResource(
+                        binding.profileUserNameTv.text = it.data.nickName
+                        binding.profileUserIdTv.text = "#${it.data.id}"
+                        binding.profileImageView.setImageResource(
                             ProfileImageUtil.getImageId(
                                 it.data.profileImageId ?: -1
                             )
@@ -133,9 +139,10 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-            profile_detail_img,
-            profile_image_view,
-            profile_user_name_tv -> {
+
+            binding.profileDetailImg,
+            binding.profileImageView,
+            binding.profileUserNameTv -> {
                 result.launch(Intent(requireContext(), ProfileDetailActivity::class.java))
             }
         }
