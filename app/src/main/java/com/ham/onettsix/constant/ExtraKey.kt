@@ -7,4 +7,6 @@ object ExtraKey {
 
     const val PERMISSION_PRIVACY_POLICY = "PERMISSION_PRIVACY_POLICY"
 
+    const val YOUTUBE_ITEM_DATA = "YOUTUBE_ITEM_DATA"
+
 }

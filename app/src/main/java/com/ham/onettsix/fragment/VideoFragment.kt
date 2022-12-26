@@ -1,6 +1,7 @@
 package com.ham.onettsix.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,6 @@ import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.databinding.FragmentAttendanceBinding
 import com.ham.onettsix.databinding.FragmentVideoBinding
 import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.utils.Status
@@ -111,17 +111,21 @@ class VideoFragment : Fragment(), View.OnClickListener {
                     it.data?.data?.let { signature ->
                         if (signature.rvConfig.isNotEmpty()) {
                             var isTimeout = false
+                            var isLoaded = false
                             val placementId = signature.rvConfig[0].placementId
                             if (placementId.isNotEmpty()) {
                                 lifecycleScope.launch {
                                     delay(30000L)
                                     isTimeout = true
-                                    progressDialog.dismiss()
-                                    Toast.makeText(
-                                        requireContext(),
-                                        R.string.video_load_fail,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    if (!isLoaded) {
+                                        progressDialog.dismiss()
+                                        Toast.makeText(
+                                            requireContext(),
+                                            R.string.video_load_fail,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    isLoaded = true
                                 }
 
                                 AdmobAdapter.load(requireActivity(),
@@ -129,6 +133,8 @@ class VideoFragment : Fragment(), View.OnClickListener {
                                     object : RewardedAdLoadCallback() {
                                         override fun onAdFailedToLoad(error: LoadAdError) {
                                             super.onAdFailedToLoad(error)
+                                            isLoaded = true
+                                            Log.d("jhlee", "onAdFailedToLoad")
                                             if (!isTimeout) {
                                                 progressDialog.dismiss()
                                                 Toast.makeText(
@@ -141,6 +147,7 @@ class VideoFragment : Fragment(), View.OnClickListener {
 
                                         override fun onAdLoaded(rewardAd: RewardedAd) {
                                             super.onAdLoaded(rewardAd)
+                                            isLoaded = true
                                             if (!isTimeout) {
                                                 progressDialog.dismiss()
                                                 val serverSideVerificationOptions =
@@ -153,7 +160,8 @@ class VideoFragment : Fragment(), View.OnClickListener {
                                                 rewardAd.setServerSideVerificationOptions(
                                                     serverSideVerificationOptions.build()
                                                 )
-                                                rewardAd.show(requireActivity()) { _ ->
+                                                rewardAd.show(requireActivity()) { reward ->
+                                                    Log.d("jhlee", "reward : " + reward.type + "-" + reward.amount)
                                                     (parentFragment as GameFragment).updateMyTicket()
                                                     videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
                                                         binding.videoCountInfoTv.text =
@@ -187,16 +195,6 @@ class VideoFragment : Fragment(), View.OnClickListener {
                 (parentFragment as GameFragment).login()
             }
 
-        }
-    }
-
-    fun loginUpdate() {
-        if (PreferencesHelper.getInstance(requireContext()).isLogin()) {
-            binding.videoFragmentLayout.visibility = View.VISIBLE
-            binding.layoutVideoNeededLogin.layoutGameNeededLogin.visibility = View.GONE
-        } else {
-            binding.videoFragmentLayout.visibility = View.GONE
-            binding.layoutVideoNeededLogin.layoutGameNeededLogin.visibility = View.VISIBLE
         }
     }
 }

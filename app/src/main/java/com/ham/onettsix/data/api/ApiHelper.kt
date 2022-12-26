@@ -1,6 +1,8 @@
 package com.ham.onettsix.data.api
 
 import com.ham.onettsix.data.model.*
+import retrofit2.http.GET
+import retrofit2.http.QueryMap
 
 interface ApiHelper {
 
@@ -47,5 +49,7 @@ interface ApiHelper {
     suspend fun getNoticeList(): Notice
 
     suspend fun setFirebaseToken(params: HashMap<String, Any?>) : Result
+
+    suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo
 
 }

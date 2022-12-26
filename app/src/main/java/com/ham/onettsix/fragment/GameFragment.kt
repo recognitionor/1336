@@ -1,6 +1,7 @@
 package com.ham.onettsix.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,18 +42,22 @@ class GameFragment : Fragment() {
         gameViewModel.gameTypeInfo.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+
                     var remainTicket =
                         (it.data?.data?.allTicket ?: 0) - (it.data?.data?.usedTicket ?: 0)
                     if (remainTicket < 0) {
                         remainTicket = 0
                     }
+                    Log.d("jhlee", "SUCCESS : $remainTicket")
                     (childFragmentManager.findFragmentById(R.id.ticket_status_fragment) as TicketStatusFragment).updateStatusText(
                         "$remainTicket"
                     )
-                    (childFragmentManager.findFragmentById(R.id.rps_game_fragment) as RPSGameFragment).updateCountText(
-                        it.data?.data?.gameCount ?: 0, it.data?.data?.maxCount ?: 0
-                    )
-
+                    (childFragmentManager.findFragmentById(R.id.rps_game_fragment) as RPSGameFragment).apply {
+                        this.updateCountText(
+                            it.data?.data?.gameCount ?: 0, it.data?.data?.maxCount ?: 0
+                        )
+                        this.enableTicket(remainTicket > 0)
+                    }
 
                 }
                 else -> {}
@@ -71,13 +76,18 @@ class GameFragment : Fragment() {
         (activity as MainActivity).login()
     }
 
-    fun updateMyTicket() {
+    fun updateMyTicket(needGameLoad: Boolean = false) {
+        Log.d("jhlee", "updateMyTicket")
         gameViewModel.gameTypeInfo.value?.data?.data?.let {
             var remainTicket = (it.allTicket) - it.usedTicket
-            (childFragmentManager.findFragmentById(R.id.ticket_status_fragment) as TicketStatusFragment).updateStatusText(
-                "${++remainTicket}"
-            )
+            (childFragmentManager.findFragmentById(R.id.ticket_status_fragment) as TicketStatusFragment).apply {
+                this.updateStatusText(
+                    "${++remainTicket}"
+                )
+            }
         }
-        gameViewModel.gameLoad()
+        if (needGameLoad) {
+            gameViewModel.gameLoad()
+        }
     }
 }

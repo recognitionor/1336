@@ -17,7 +17,7 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.SplashViewModel
 
-class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
+class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
 

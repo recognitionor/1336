@@ -58,7 +58,7 @@ class RPSGameFragment : Fragment(), View.OnClickListener {
         rpsGameViewModel.userInfo.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.layoutGameNeededLogin.layoutGameNeededLogin.visibility  = View.GONE
+                    binding.layoutGameNeededLogin.layoutGameNeededLogin.visibility = View.GONE
                 }
                 else -> {
                     binding.layoutGameNeededLogin.layoutGameNeededLogin.visibility = View.VISIBLE
@@ -198,7 +198,10 @@ class RPSGameFragment : Fragment(), View.OnClickListener {
     }
 
     private fun onGameStop(result: Int, isError: Boolean = false) {
-        (parentFragment as GameFragment).updateMyTicket()
+        (parentFragment as GameFragment).apply {
+            this.updateMyTicket(true)
+        }
+
         coroutineScope?.cancel()
         isStopGame = true
         binding.gameResultTv.visibility = View.VISIBLE
@@ -268,5 +271,9 @@ class RPSGameFragment : Fragment(), View.OnClickListener {
     fun updateCountText(gameCount: Int, maxCount: Int) {
         binding.gameCountTv.text =
             "$gameCount${getString(R.string.count_divide_mark, "d")}$maxCount"
+    }
+
+    fun enableTicket(isEnable: Boolean) {
+        binding.gameStartBtn.isEnabled = isEnable
     }
 }

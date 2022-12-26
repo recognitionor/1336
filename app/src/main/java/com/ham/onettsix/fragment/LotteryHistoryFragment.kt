@@ -21,7 +21,7 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.LotteryHistoryViewModel
 
-class LotteryHistoryFragment : Fragment(R.layout.fragment_history) {
+class LotteryHistoryFragment : Fragment() {
 
     private lateinit var binding: FragmentHistoryBinding
 

@@ -21,6 +21,7 @@
     <string name="menu_profile">내 정보</string>
     <string name="menu_get_ticket">Get 티켓!</string>
     <string name="menu_history">역대 육뉵이</string>
+    <string name="menu_youtube">돈버는 정보</string>
 
     <string name="eula_item_terms">약관</string>
     <string name="eula_item_privacy_policy">개인정보 처리방침</string>
@@ -138,6 +139,9 @@
     <string name="profile_detail_version">버전 정보</string>
     <string name="profile_detail_logout">로그아웃</string>
     <string name="profile_detail_withdraw">회원 탈퇴하시려면 여기를 눌러주세요</string>
+
+    <!--YouTube-->
+    <string name="youtube_last_list">리스트의 마지막입니다.</string>
 
 
 

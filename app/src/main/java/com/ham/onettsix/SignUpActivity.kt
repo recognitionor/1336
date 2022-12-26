@@ -6,7 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.ham.onettsix.databinding.ActivitySignUpBinding
 
-class SignUpActivity : AppCompatActivity(R.layout.activity_sign_up), View.OnClickListener {
+class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivitySignUpBinding
 

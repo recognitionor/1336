@@ -21,5 +21,10 @@
             android:icon="@drawable/ic_timeline"
             android:title="@string/menu_history" />
 
+        <item
+            android:id="@+id/nav_youtube"
+            android:icon="@drawable/ic_youtube"
+            android:title="@string/menu_youtube" />
+
     </group>
 </menu>

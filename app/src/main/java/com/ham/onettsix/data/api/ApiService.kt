@@ -78,5 +78,6 @@ interface ApiService {
     @POST("firebasetoken")
     suspend fun setFirebaseToken(@QueryMap params: HashMap<String, Any?>): Result
 
-
+    @GET("/get/youtubelist")
+    suspend fun getYouTubeList(@QueryMap params: HashMap<String, Any?>): YouTubeInfo
 }

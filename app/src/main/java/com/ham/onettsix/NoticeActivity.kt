@@ -17,7 +17,7 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.NoticeViewModel
 
-class NoticeActivity : AppCompatActivity(R.layout.activity_notice),
+class NoticeActivity : AppCompatActivity(),
     View.OnClickListener {
 
     private lateinit var binding: ActivityNoticeBinding

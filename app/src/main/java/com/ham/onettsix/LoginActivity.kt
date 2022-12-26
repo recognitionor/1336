@@ -19,7 +19,7 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.LoginViewModel
 
-class LoginActivity : AppCompatActivity(R.layout.activity_login) {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 

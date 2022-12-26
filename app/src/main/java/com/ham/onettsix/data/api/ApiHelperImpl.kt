@@ -63,4 +63,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result =
         apiService.setFirebaseToken(params)
 
+    override suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo =
+        apiService.getYouTubeList(params)
+
 }

@@ -64,6 +64,9 @@ class ViewModelFactory(
             return GameViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
+        if (modelClass.isAssignableFrom(YouTubeViewModel::class.java)) {
+            return YouTubeViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
 
         throw IllegalArgumentException("Unknown class name")
     }

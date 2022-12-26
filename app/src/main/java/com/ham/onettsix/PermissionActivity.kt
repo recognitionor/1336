@@ -10,7 +10,7 @@ import com.ham.onettsix.constant.ExtraKey
 import com.ham.onettsix.databinding.ActivityPermissionBinding
 import com.ham.onettsix.fragment.EulaFragment
 
-class PermissionActivity : AppCompatActivity(R.layout.activity_permission), View.OnClickListener {
+class PermissionActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityPermissionBinding
 //    private val permissionViewModel by lazy {

@@ -18,7 +18,7 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.ProfileDetailViewModel
 
-class ProfileDetailActivity : AppCompatActivity(R.layout.activity_profile_detail),
+class ProfileDetailActivity : AppCompatActivity(),
     View.OnClickListener {
 
     private lateinit var binding: ActivityProfileDetailBinding

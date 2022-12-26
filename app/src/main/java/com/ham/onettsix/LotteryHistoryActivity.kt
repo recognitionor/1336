@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ham.onettsix.databinding.ActivityLotteryHistoryBinding
 
-class LotteryHistoryActivity : AppCompatActivity(R.layout.activity_lottery_history) {
+class LotteryHistoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLotteryHistoryBinding
 
