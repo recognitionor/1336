@@ -13,19 +13,18 @@ import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.ActivityNoticeBinding
+import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.NoticeViewModel
 
-class NoticeActivity : AppCompatActivity(),
-    View.OnClickListener {
+class NoticeActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityNoticeBinding
 
     private val noticeViewModel by lazy {
         ViewModelProviders.of(
-            this,
-            ViewModelFactory(
+            this, ViewModelFactory(
                 ApiHelperImpl(RetrofitBuilder.apiService),
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
                 PreferencesHelper.getInstance(applicationContext)
@@ -58,9 +57,16 @@ class NoticeActivity : AppCompatActivity(),
         noticeViewModel.notice.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.data?.let {list->
-                        noticeAdapter.setItemList(list)
-                        noticeAdapter.notifyDataSetChanged()
+                    it.data?.data?.let { list ->
+                        if (list.isEmpty()) {
+                            OneButtonDialog("", getString(R.string.list_empty)) { dialog ->
+                                dialog.dismiss()
+                                finish()
+                            }.show(supportFragmentManager, OneButtonDialog.TAG)
+                        } else {
+                            noticeAdapter.setItemList(list)
+                            noticeAdapter.notifyDataSetChanged()
+                        }
                     }
                 }
                 Status.ERROR -> {

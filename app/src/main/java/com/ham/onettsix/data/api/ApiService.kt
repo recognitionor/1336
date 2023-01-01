@@ -80,4 +80,13 @@ interface ApiService {
 
     @GET("/get/youtubelist")
     suspend fun getYouTubeList(@QueryMap params: HashMap<String, Any?>): YouTubeInfo
+
+    @DELETE("/user")
+    suspend fun withDraw(): Result
+
+    @POST("/setAlarm")
+    suspend fun changeAlarm(@QueryMap params: HashMap<String, Any?>): Result
+
+    @GET("/getSecretCode")
+    suspend fun getSecretCode(@QueryMap params: HashMap<String, Any?>): WinnerSecretCode
 }

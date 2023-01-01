@@ -15,6 +15,7 @@ import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.LotteryHistory
+import com.ham.onettsix.data.model.LotteryInfo
 import com.ham.onettsix.data.model.SignIn
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -30,12 +31,25 @@ class LotteryHistoryViewModel(
 
     val lotteryHistoryList = MutableLiveData<Resource<ArrayList<LotteryHistory.Data>>>()
 
+    val lotteryInfo = MutableLiveData<Resource<LotteryInfo>>()
+
+    fun getLotteryInfo() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            lotteryInfo.postValue(Resource.error("signin error", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val result = apiHelper.getLotteryInfo("ALL")
+                lotteryInfo.postValue(Resource.success(result))
+            }
+        }
+    }
+
     fun getLotteryHistoryList(socialType: String, startEpisode: Int) {
-        Log.d("jhlee", "getLotteryHistoryList : ")
         lotteryHistoryList.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             lotteryHistoryList.postValue(Resource.error("signin error", null))
-            Log.d("jhlee", "exceptionHandler : ${e.message}")
         }
 
         viewModelScope.launch(exceptionHandler) {

@@ -16,7 +16,6 @@ object RetrofitBuilder {
 
     private fun getRetrofit(): Retrofit {
         val interceptor = HttpLoggingInterceptor {
-                            Log.d("HttpLoggingInterceptor", "interceptor : $it")
         }
 
         val headerInterceptor = Interceptor { chain ->

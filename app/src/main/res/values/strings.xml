@@ -11,6 +11,7 @@
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
+    <string name="list_empty">리스트가 없습니다.</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
@@ -28,6 +29,7 @@
     <string name="sign_up">가입하기</string>
 
     <string name="common_error">에러가 발생했습니다. 다시 시도 해주세요</string>
+    <string name="common_error_short">문제 발생</string>
 
     <string name="splash_title">일삼삼뉵</string>
 
@@ -35,11 +37,16 @@
     <string name="lottery_history_count">제 %1$s회</string>
     <string name="lottery_history_title">육뉵이 발표</string>
     <string name="lottery_history_end_date">(%1$s 추첨)</string>
+    <string name="lottery_history_next_time">당첨자 없음…\n다음 기회에</string>
     <string name="lottery_history_winning_btn">당첨 포인트 받으러가기 신나게~~~</string>
     <string name="lottery_history_winning_info_message">당첨 발표 후 7일내 마이페이지를 통해 지급 신청을 해야만 지급이 가능합니다.</string>
     <string name="lottery_history_list_title">역대 육뉵이</string>
+    <string name="lottery_history_default_comment">입력한 소감이 없습니다.</string>
+    <string name="lottery_history_total_price">누적 당첨금</string>
+
 
     <!--Home-->
+    <string name="home_remain_drawing_next_time_title">다음 게임까지\n남은 시간</string>
     <string name="home_remain_drawing_time_title">당첨까지\n남은 시간</string>
     <string name="home_remain_drawing_time_days">DAYS</string>
     <string name="home_remain_drawing_time_hours">HOURS</string>
@@ -54,7 +61,9 @@
     <string name="home_game_get_ticket_btn">행운의 당첨자 도전!</string>
     <string name="home_profile_user_name">%1$s 님은</string>
     <string name="home_profile_user_reward">%1$s 입니다.</string>
-    <string name="home_game_who_is_lucky">행운의 육뉵이는 뉴규?</string>
+    <string name="home_game_who_is_lucky_who">행운의 육뉵이는 뉴규?</string>
+    <string name="home_game_who_is_lucky_next">행운의 육뉵이는 다음 기회에</string>
+    <string name="home_game_who_is_lucky">행운의 육뉵이는</string>
     <string name="home_game_now_chance_percent">지금 참여하면 당첨 확률 %1$s%</string>
     <string name="home_game_now_left_chance">남은 찬스 %1$s개</string>
     <string name="home_game_ticket_info">%1$s명이 참여해서\n총 %2$s개의 티켓이 모였어요.</string>
@@ -68,7 +77,7 @@
     <string name="game_daily_title">티켓 득템하러 가기</string>
     <string name="game_daily_title_info">참여하면 100% 1 티켓 바로 응모</string>
     <string name="game_rv_title">동영상 보고 티켓 얻기</string>
-    <string name="game_rv_title_info">영상 보면 최대 3개 티겟 당첨! 참여시 바로 응모</string>
+    <string name="game_rv_title_info">영상 보면 1개 티겟 당첨! 참여시 바로 응모</string>
     <string name="attend_btn">출to the첵</string>
     <string name="attend_done">출첵완료!</string>
     <string name="video_btn">영상보고 티겟얻기</string>
@@ -93,7 +102,8 @@
     <string name="login_apple">Apple로 로그인</string>
     <string name="login_do">로그인 하세요.</string>
     <string name="login_is_required">로그인이 필요합니다.</string>
-    <string name="login_next_signin">다음에 가입하기 ></string>
+    <string name="login_eula_confirm">이용약관</string>
+    <string name="login_personal_privacy">개인정보 처리 방침</string>
     <string name="login_error">%1$s 소셜 로그인에 실패 했습니다.</string>
     <string name="naver_login_required_agreement">네이버 로그인시 필수 약관에 동의해주세요.</string>
     <string name="logout">로그아웃</string>
@@ -140,9 +150,25 @@
     <string name="profile_detail_logout">로그아웃</string>
     <string name="profile_detail_withdraw">회원 탈퇴하시려면 여기를 눌러주세요</string>
 
+
     <!--YouTube-->
     <string name="youtube_last_list">리스트의 마지막입니다.</string>
 
-
+    <string name="mail_content">%1$s 회차의 육뉵이가 되신 걸 축하합니다!\n
+        개인정보 수집·이용에 동의하신다면, 당첨 지급 기한 내 아래 정보를 작성해 ham.factories@gmail.com 로 전달해주세요.
+        \n\n\n------------------------------------------\n
+        당첨자 정보\n
+        - 닉네임 :               (번호까지 정확히 기입해주세요 예) 사슴 #11)\n
+        - 이름 :                   (실명을 기입해주세요 예) 홍길동)\n
+        - 입금 은행 및 계좌번호 :                   (입금 받으실 은행을 알려주세요 예) 신한 111-111-111111)\n
+- 당첨 소감 :               (당첨자 페이지에 표시되는 문구를 입력해주세요. 최대 15자까지 표시 가능합니다. )\n
+- 시크릿 코드 :%2$s               (이 코드를 임의로 변경할 시에는 지급이 거부될 수 있습니다.)\n\n\n
+        ---------------------------------------------------\n
+        당첨 지급을 위한 개인정보 수집·이용 동의서\n\n
+        이벤트 활동 참여를 위해 개인정보를 수집·이용하고자하는 경우 개인정보보호법 제 15조, 제 22조에 따라 동의를 얻어야 하빈다. 이에 이벤트 응모 및 경품 지급을 위하여 아래와 같이 개인 정보를 수집 이용 및 제공하고자 합니다. 내용을 자세히 읽으신 후 동의하신다면 위 정보를 포함하여 메일 전송해주십시오.\n\n
+        - 개인정보의 수집·이용 목적: 이벤트 진행 및 당첨금 지급\n
+        - 수집하는 개인정보의 항목: 이름, 계좌번호\n
+        - 개인정보의 보유·이용 기간:  경품 지급 완료 후 최대 3개월 (지급 내용 및 관련 응대 완료 후 폐기)\n
+개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으며, 이 경우 이벤트 참여가 제한됩니다.</string>
 
 </resources>

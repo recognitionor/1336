@@ -42,6 +42,7 @@ class NaverSignInService(private val ctx: Context) : OAuthLoginCallback {
     }
 
     override fun onSuccess() {
+        Log.d("jhlee", "onSuccess: ")
         NaverIdLoginSDK.getAccessToken()?.let {
             listener?.getToken(
                 ISocialLoginListener.SOCIAL_TYPE_NAVER, it

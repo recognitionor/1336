@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ham.onettsix.R
+import com.ham.onettsix.data.api.UrlInfo
 import com.ham.onettsix.databinding.FragmentEulaBinding
 import kotlin.math.abs
 
@@ -24,9 +25,7 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentEulaBinding.inflate(layoutInflater)
         return binding.root
@@ -34,8 +33,9 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val url = if (sectionNumber == 0) "${UrlInfo.getBaseURL()}/get/eula" else "${UrlInfo.getBaseURL()}/get/personalPrivacy"
 
-        binding.webviewEula.loadUrl("file:///android_res/raw/eula.html")
+        binding.webviewEula.loadUrl(url)
         isReadDone = listener.getCheckState(sectionNumber)
         binding.webviewEula.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             val standardValue = binding.webviewEula.contentHeight * binding.webviewEula.scale
@@ -47,9 +47,7 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
                     isReadDone = true
                     listener.onFinishRead(sectionNumber)
                     Toast.makeText(
-                        this@EulaFragment.context,
-                        getString(R.string.confirm),
-                        Toast.LENGTH_SHORT
+                        this@EulaFragment.context, getString(R.string.confirm), Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -73,8 +71,7 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
          */
         @JvmStatic
         fun newInstance(
-            sectionNumber: Int,
-            listener: OnEulaReadListener
+            sectionNumber: Int, listener: OnEulaReadListener
         ): EulaFragment {
             return EulaFragment(sectionNumber, listener)
         }

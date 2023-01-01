@@ -66,4 +66,10 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo =
         apiService.getYouTubeList(params)
 
+    override suspend fun withDraw(): Result = apiService.withDraw()
+
+    override suspend fun changeAlarm(params: HashMap<String, Any?>): Result = apiService.changeAlarm(params)
+
+    override suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode = apiService.getSecretCode(params)
+
 }

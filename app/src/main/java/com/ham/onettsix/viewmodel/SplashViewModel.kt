@@ -1,6 +1,7 @@
 package com.ham.onettsix.viewmodel
 
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -41,6 +42,7 @@ class SplashViewModel(
     }
 
     fun refreshLogin() {
+        Log.d("jhlee", "refreshLogin")
         refreshResult.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             refreshResult.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))

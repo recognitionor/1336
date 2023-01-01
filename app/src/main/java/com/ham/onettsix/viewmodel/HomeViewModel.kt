@@ -11,7 +11,6 @@ import com.ham.onettsix.data.model.LotteryInfo
 import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.*
-import okhttp3.internal.wait
 
 class HomeViewModel(
     private val apiHelper: ApiHelper,

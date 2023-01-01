@@ -27,6 +27,7 @@ class VideoViewModel(
         Log.d("jhlee", "validateLimitedRv")
         validateLimitedRvStatus.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            Log.d("jhlee", "validateLimitedRv Error : ${e.message}")
             validateLimitedRvStatus.postValue(Resource.error("", null))
         }
         viewModelScope.launch(exceptionHandler) {
@@ -39,7 +40,6 @@ class VideoViewModel(
     }
 
     fun getVideoSignature() {
-        Log.d("jhlee", "getVideoSignature")
         videoSignature.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             videoSignature.postValue(Resource.error("", null))
@@ -48,6 +48,7 @@ class VideoViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getSignature()
+                Log.d("jhlee", "getVideoSignature : $result")
                 videoSignature.postValue(Resource.success(result))
             }
         }

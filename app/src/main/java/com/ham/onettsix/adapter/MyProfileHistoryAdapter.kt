@@ -1,28 +1,39 @@
 package com.ham.onettsix.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
 import com.ham.onettsix.data.model.HistoryInfo
 import com.ham.onettsix.databinding.RvItemMyProfileHistoryBinding
+import java.text.SimpleDateFormat
 
 class MyProfileHistoryAdapter(
     private val context: Context,
+    private val listener: OnItemWinningListener
 ) : RecyclerView.Adapter<MyProfileHistoryAdapter.MyProfileHistoryViewHolder>() {
+
+    interface OnItemWinningListener {
+        fun onWinnerClick(item: HistoryInfo.Data)
+    }
 
     private var list: ArrayList<HistoryInfo.Data> = ArrayList()
 
-    class MyProfileHistoryViewHolder(private val binding: RvItemMyProfileHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyProfileHistoryViewHolder(
+        private val binding: RvItemMyProfileHistoryBinding,
+        private val listener: OnItemWinningListener
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HistoryInfo.Data) {
-
+            Log.d("jhlee", "item : ${item.endDate}")
             binding.myProfileHistoryItemEpisode.text =
                 itemView.resources.getString(R.string.profile_history_item_episode, item.episode)
-
+            binding.myProfileHistoryItemEndDate.text = SimpleDateFormat("yy.MM.dd").format(item.endDate)
             binding.myProfileHistoryItemPrice.text = itemView.resources.getString(
-                R.string.profile_history_item_price,
-                item.winningAmount
+                R.string.profile_history_item_price, item.winningAmount
             )
             when (item.grade) {
                 0 -> {
@@ -30,18 +41,24 @@ class MyProfileHistoryAdapter(
                     binding.myProfileHistoryItemStatus.setText(R.string.unwinnable)
                 }
                 1 -> {
-                    binding.myProfileHistoryItemStatus.setTextColor(R.color.main_color)
+                    binding.root.setOnClickListener {
+                        listener.onWinnerClick(item)
+                    }
+
                     binding.myProfileHistoryItemStatus.setText(R.string.winning)
+                    binding.myProfileHistoryItemStatus.setBackgroundResource(R.drawable.main_color_btn_background)
+                    binding.myProfileHistoryItemStatus.setTextColor(R.color.white)
                 }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyProfileHistoryViewHolder {
-        val binding = RvItemMyProfileHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyProfileHistoryViewHolder(binding)
+        val binding = RvItemMyProfileHistoryBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return MyProfileHistoryViewHolder(binding, listener)
     }
-
 
 
     override fun onBindViewHolder(holder: MyProfileHistoryViewHolder, position: Int) {

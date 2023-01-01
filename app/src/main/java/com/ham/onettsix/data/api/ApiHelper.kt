@@ -52,4 +52,10 @@ interface ApiHelper {
 
     suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo
 
+    suspend fun withDraw(): Result
+
+    suspend fun changeAlarm(params: HashMap<String, Any?>): Result
+
+    suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode
+
 }

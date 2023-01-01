@@ -3,27 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/my_profile_history_item_episode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/my_profile_history_item_end_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/my_profile_history_item_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/my_profile_history_item_status"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/my_profile_history_item_episode"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:id="@+id/my_profile_history_item_expire_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
         android:gravity="center"
-        android:layout_weight="1" />
+        android:textColor="@color/main_color"
+        android:textSize="14dp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/my_profile_history_item_price"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/my_profile_history_item_status"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

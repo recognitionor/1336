@@ -9,6 +9,7 @@ class PreferencesHelper private constructor(ctx: Context, val name: String) {
     companion object {
         const val KEY_FIREBASE_TOKEN = "KEY_FIREBASE_TOKEN"
         const val KEY_USER_ID = "KEY_USER_ID"
+        const val KEY_CONFIRM_EULA = "KEY_CONFIRM_EULA"
 
         private var instance: PreferencesHelper? = null
 
@@ -31,6 +32,15 @@ class PreferencesHelper private constructor(ctx: Context, val name: String) {
 
     fun getFireBaseToken(): String {
         return pref.getString(KEY_FIREBASE_TOKEN, "") ?: ""
+    }
+
+    fun setConfirmEULA() {
+        saver.putBoolean(KEY_CONFIRM_EULA, true)
+        saver.commit()
+    }
+
+    fun getConfirmEULA(): Boolean {
+        return pref.getBoolean(KEY_CONFIRM_EULA, false)
     }
 
     fun setLogin(uid: Int) {

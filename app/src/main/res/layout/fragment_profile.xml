@@ -28,8 +28,7 @@
         android:textColor="@color/text_black"
         android:textSize="24dp"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/profile_image_view"
         app:layout_constraintTop_toBottomOf="@id/profile_image_view" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -59,97 +58,6 @@
         app:layout_constraintTop_toTopOf="@id/profile_user_name_tv" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/profile_today_attend_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:fontFamily="@font/gmarket_sans_ttf_bold"
-        android:lineHeight="32dp"
-        android:text="@string/profile_toady_attend"
-        android:textColor="@color/text_black"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@id/profile_today_attend_user_count"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/profile_image_view"
-        app:layout_constraintTop_toTopOf="@id/profile_today_attend_user_count" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/profile_today_attend_user_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="26dp"
-        android:fontFamily="@font/gmarket_sans_ttf_bold"
-        android:gravity="center"
-        android:lineHeight="48dp"
-        android:text="3"
-        android:textColor="@color/main_color"
-        android:textSize="44dp"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toRightOf="@+id/profile_today_attend_title"
-        app:layout_constraintRight_toLeftOf="@id/profile_today_attend_divider"
-        app:layout_constraintTop_toBottomOf="@id/profile_user_name_tv" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/profile_today_attend_divider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:fontFamily="@font/gmarket_sans_ttf_bold"
-        android:gravity="center"
-        android:lineHeight="48dp"
-        android:text="@string/profile_toady_attend_divider"
-        android:textColor="@color/text_black"
-        android:textSize="44dp"
-        app:layout_constraintBottom_toBottomOf="@id/profile_today_attend_user_count"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toRightOf="@+id/profile_today_attend_user_count"
-        app:layout_constraintRight_toLeftOf="@+id/profile_today_attend_max_count"
-        app:layout_constraintTop_toTopOf="@id/profile_today_attend_user_count" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/profile_today_attend_max_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:fontFamily="@font/gmarket_sans_ttf_bold"
-        android:gravity="center"
-        android:lineHeight="48dp"
-        android:text="10"
-        android:textColor="@color/text_black"
-        android:textSize="44dp"
-        app:layout_constraintBottom_toBottomOf="@id/profile_today_attend_user_count"
-        app:layout_constraintLeft_toRightOf="@+id/profile_today_attend_divider"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/profile_today_attend_user_count" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/profile_possessed_ticket_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gmarket_sans_ttf_bold"
-        android:lineHeight="32dp"
-        android:text="@string/profile_possessed_ticket_title"
-        android:textColor="@color/text_black"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_possessed_ticket"
-        app:layout_constraintLeft_toLeftOf="@+id/profile_today_attend_title"
-        app:layout_constraintTop_toTopOf="@id/profile_possessed_ticket" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/profile_possessed_ticket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gmarket_sans_ttf_bold"
-        android:gravity="center"
-        android:lineHeight="48dp"
-        android:text="0"
-        android:textColor="@color/main_color"
-        android:textSize="44dp"
-        app:layout_constraintLeft_toLeftOf="@+id/profile_today_attend_user_count"
-        app:layout_constraintTop_toBottomOf="@id/profile_today_attend_user_count" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/profile_ticket_info_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -161,7 +69,7 @@
         android:textSize="14dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_possessed_ticket_title" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_user_name_tv" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/profile_history_title"
@@ -211,5 +119,20 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/warning_text_info"
         app:layout_constraintVertical_chainStyle="spread" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/profile_history_rv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:textSize="24dp"
+        android:text="@string/list_empty"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warning_text_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ham.onettsix">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:name=".application.BaseApplication"
         android:allowBackup="true"
@@ -13,6 +15,7 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/Theme.ham.NoActionBar">
             <intent-filter>
@@ -24,31 +27,39 @@
 
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" >
         </activity>
         <activity
             android:name=".EulaActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
         <activity
             android:name=".PermissionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
         <activity
             android:name=".SignUpActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <activity
             android:name=".LotteryHistoryActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <activity
             android:name=".ProfileDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -63,6 +74,7 @@
 
         <activity
             android:name=".NoticeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <meta-data

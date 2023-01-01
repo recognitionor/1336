@@ -29,10 +29,8 @@ class LoginViewModel(
     val signIn = MutableLiveData<Resource<SignIn>>()
 
     fun signIn(socialType: String, token: String) {
-        Log.d("jhlee", "signin")
         signIn.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "error : ${e.message}")
             signIn.postValue(Resource.error("signin error", null))
         }
 
@@ -44,13 +42,11 @@ class LoginViewModel(
                     this[KEY_ACCESS_TOKEN] = token
                     this[KEY_ENABLE_ALARM] = true
                 }
-                Log.d("jhlee", "apiHelper.signIn(hashMap)")
                 var result = apiHelper.signIn(hashMap)
                 val needSigninUp = result?.data?.needSignUp == true
                 if (needSigninUp) {
-                    Log.d("jhlee", "apiHelper.signUp(hashMap)")
-                    result = apiHelper.signUp(hashMap)
-                    return@withContext
+                    apiHelper.signUp(hashMap)
+                    result = apiHelper.signIn(hashMap)
                 }
                 result?.data?.let {
                     RetrofitBuilder.accessToken = it.tokenSet.accessToken
@@ -76,7 +72,7 @@ class LoginViewModel(
                     signIn.postValue(Resource.success(result))
                     return@withContext
                 }
-                throw Exception("에러~~!~!")
+                throw Exception("error")
             }
         }
     }

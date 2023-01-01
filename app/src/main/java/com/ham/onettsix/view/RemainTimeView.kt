@@ -37,14 +37,25 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
         addView(binding.root)
     }
 
-    fun setStartTime(limitedDate: Long = Long.MAX_VALUE) {
-        CoroutineScope(Dispatchers.Default).launch {
-            this@RemainTimeView.coroutineScope = this
-            Log.d("jhlee", "defaultTime 1 : ")
-            if (limitedDate <= System.currentTimeMillis()) {
-                Log.d("jhlee", "defaultTime 2 :")
-                val defaultTime = resources.getText(R.string.home_remain_drawing_time_default)
+    fun stopTime() {
+        this@RemainTimeView.coroutineScope?.cancel()
+        val defaultTime = resources.getString(R.string.home_remain_drawing_time_default)
+        binding.remainTimeHourTv.post{
+            binding.remainTimeHourTv.text = defaultTime
+        }
+        binding.remainTimeMinsTv.post{
+            binding.remainTimeHourTv.text = defaultTime
+        }
+        binding.remainTimeSecsTv.post{
+            binding.remainTimeHourTv.text = defaultTime
+        }
+    }
 
+    fun setStartTime(limitedDate: Long = Long.MAX_VALUE) {
+        coroutineScope = CoroutineScope(Dispatchers.Default)
+        coroutineScope?.launch {
+            if (limitedDate <= System.currentTimeMillis()) {
+                val defaultTime = resources.getText(R.string.home_remain_drawing_time_default)
                 binding.remainTimeDaysTv.post {
                     binding.remainTimeDaysTv.text = defaultTime
                 }
@@ -59,6 +70,10 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                 }
             } else {
                 while (true) {
+                    if (coroutineScope?.isActive == false){
+                        Log.d("jhlee", "return")
+                        return@launch
+                    }
                     val targetTime =
                         LocalDateTime.ofInstant(Date(limitedDate).toInstant(), ZoneId.systemDefault())
                     val totalSec = LocalDateTime.now().until(targetTime, ChronoUnit.SECONDS)
@@ -71,14 +86,19 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                         binding.remainTimeDaysTv.text = day.toString()
                     }
                     binding.remainTimeHourTv.post {
-                        binding.remainTimeHourTv.text = hour.toString()
+                        if (coroutineScope?.isActive == true) {
+                            binding.remainTimeHourTv.text = hour.toString()
+                        }
                     }
                     binding.remainTimeMinsTv.post {
-                        binding.remainTimeMinsTv.text = min.toString()
+                        if (coroutineScope?.isActive == true) {
+                            binding.remainTimeMinsTv.text = min.toString()
+                        }
                     }
-
                     binding.remainTimeSecsTv.post {
-                        binding.remainTimeSecsTv.text = sec.toString()
+                        if (coroutineScope?.isActive == true) {
+                            binding.remainTimeSecsTv.text = sec.toString()
+                        }
                     }
                     delay(1000)
                 }

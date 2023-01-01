@@ -56,6 +56,7 @@ class AttendFragment : Fragment() {
                     if (it.data?.resultCode == ResultCode.SUCCESS_ATTEND || it.data?.resultCode == ResultCode.DUPLICATED_ATTEND) {
                         binding.attendanceBtn.isEnabled = false
                         binding.attendanceBtn.text = getString(R.string.attend_done)
+                        (parentFragment as GameFragment).updateMyTicket(true)
                     } else {
                         binding.attendanceBtn.isEnabled = true
                         binding.attendanceBtn.setText(R.string.attend_btn)

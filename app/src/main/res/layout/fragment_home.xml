@@ -79,7 +79,7 @@
                 android:fontFamily="@font/gmarket_sans_ttf_bold"
                 android:gravity="center"
                 android:lineHeight="32dp"
-                android:text="@string/home_game_who_is_lucky"
+                android:text="@string/home_game_who_is_lucky_who"
                 android:textColor="@color/text_black"
                 android:textSize="24dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -92,35 +92,20 @@
                 android:layout_height="100dp"
                 android:background="@drawable/profile_layout_background"
                 android:src="@mipmap/ic_sixsix_man"
+                android:layout_marginTop="30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/home_game_six_six_man_question_img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/ic_question_mark"
+                android:layout_marginTop="30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_now_chance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_who_is_lucky"
-                android:textColor="@color/text_black"
-                android:textSize="24dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_six_six_man_img" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_game_now_left_chance"
@@ -136,7 +121,7 @@
                 android:textSize="24dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_now_chance" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_game_ticket_info"
@@ -153,7 +138,7 @@
                 android:textSize="24dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_now_left_chance" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_six_six_man_img" />
 
             <View
                 android:id="@+id/home_game_border_view"

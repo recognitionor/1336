@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/profile_detail_user_name_tv" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/profile_detail_img"
+            android:id="@+id/profile_detail_notice_img"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="10dp"
@@ -87,30 +87,6 @@
             app:layout_constraintTop_toTopOf="@id/profile_detail_notice" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/profile_detail_app_push"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:lineHeight="50dp"
-            android:text="@string/profile_detail_app_push"
-            android:textColor="@color/text_black"
-            android:textSize="24dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_detail_notice" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/profile_detail_app_push_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:theme="@style/SwitchCompatTheme"
-            app:layout_constraintBottom_toBottomOf="@id/profile_detail_app_push"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/profile_detail_app_push" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/profile_detail_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +96,7 @@
             android:textColor="@color/text_black"
             android:textSize="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_detail_app_push" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_detail_notice" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/profile_detail_event_switch"

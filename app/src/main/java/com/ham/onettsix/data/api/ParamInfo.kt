@@ -31,6 +31,8 @@ object ParamsKeys {
 
     const val KEY_ENABLE_ALARM = "enableAlarm"
 
+    const val KEY_EPISODE = "episode"
+
     const val KEY_ENABLE_ALARM_DATE = "enableAlarmDate"
 
     const val KEY_COUPON_USER_NAME = "userName"

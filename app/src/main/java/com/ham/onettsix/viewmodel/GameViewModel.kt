@@ -24,7 +24,6 @@ class GameViewModel(
     val gameTypeInfo = MutableLiveData<Resource<GameTypeInfo>>()
 
     fun gameLoad() {
-        Log.d("jhlee", "gameLoad ")
         gameTypeInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             Log.d("jhlee", "gameLoad Error ${e.message} ")
@@ -37,6 +36,7 @@ class GameViewModel(
                     this[ParamsKeys.KEY_GAME_TYPE] = RPSGameViewModel.GAME_TYPE_RPC
                 }
                 val result = apiHelper.getGameCount(params)
+                Log.d("jhlee", "gameLoad : $result")
                 gameTypeInfo.postValue(Resource.success(result))
             }
         }

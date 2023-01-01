@@ -52,5 +52,8 @@ data class LotteryHistory(
         @SerializedName("nickname")
         val nickname: String,
 
+        @SerializedName("content")
+        val content: String
+
         ) : Parcelable
 }

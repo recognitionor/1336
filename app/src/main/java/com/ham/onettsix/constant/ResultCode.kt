@@ -10,5 +10,7 @@ object ResultCode {
     const val DUPLICATED_ATTEND = 1003
     const val LOTTERY_FINISHED_WIN = 1
     const val LOTTERY_FINISHED_LOSE = 2
-    const val LOTTERY_FINISHED = 3
+    const val LOTTERY_INFO_PROCEEDING = 4
+    const val LOTTERY_INFO_FINISHED = 0
+    const val PERMISSION_EULA_CONFIRM = 3000
 }

@@ -1,7 +1,12 @@
 package com.ham.onettsix
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -30,10 +36,11 @@ import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.MainViewModel
+import java.util.jar.Manifest
 
 
-class MainActivity : AppCompatActivity(),
-    NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -73,8 +80,10 @@ class MainActivity : AppCompatActivity(),
             }
         }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         navHeaderBinding = NavHeaderMainBinding.inflate(layoutInflater)
         binding.navView.addHeaderView(navHeaderBinding.root)
@@ -89,7 +98,11 @@ class MainActivity : AppCompatActivity(),
         navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_get_ticket, R.id.nav_history, R.id.nav_youtube
+                R.id.nav_home,
+                R.id.nav_profile,
+                R.id.nav_get_ticket,
+                R.id.nav_history,
+                R.id.nav_youtube
             ), binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -142,17 +155,6 @@ class MainActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.action_mail -> {
-                val email = Intent(Intent.ACTION_SEND)
-                email.putExtra(Intent.EXTRA_USER, arrayOf("ham.factories@gmail.com"))
-                email.putExtra(Intent.EXTRA_EMAIL, arrayOf("ham.factories@gmail.com"))
-                email.putExtra(Intent.EXTRA_SUBJECT, "환급신청")
-                email.putExtra(Intent.EXTRA_TEXT, "메시지")
-                email.type = "message/rfc822"
-                startActivity(Intent.createChooser(email, "Choose an Email client :"))
-                true
-            }
-
             R.id.action_settings -> {
                 myProfileResult.launch(Intent(this, NoticeActivity::class.java))
                 true
@@ -184,7 +186,6 @@ class MainActivity : AppCompatActivity(),
     override fun onClick(v: View?) {
         when (v) {
             navHeaderBinding.navHeaderImg, navHeaderBinding.navHeaderNickname -> {
-                Log.d("jhlee", "navHeaderImg")
                 if (!mainViewModel.isLogin()) {
                     login()
                 }

@@ -1,7 +1,13 @@
 package com.ham.onettsix
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,18 +39,32 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private val activityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            when (result.resultCode) {
-            }
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 200)
+        createNotificationChannel(this)
+
         binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupObserver()
         splashViewModel.refreshLogin()
         binding.splashErrorBtn.setOnClickListener {
             splashViewModel.refreshLogin()
+        }
+    }
+
+    private fun createNotificationChannel(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "my-notification-channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channelId = "${context.packageName}-$name"
+            val channel = NotificationChannel(channelId, name, importance)
+            channel.description = "my notification channel description"
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
@@ -56,7 +76,6 @@ class SplashActivity : AppCompatActivity() {
                     activityResult.launch(Intent(this, MainActivity::class.java))
                 }
                 Status.LOADING -> {
-
                     binding.splashProgress.visibility = View.VISIBLE
                     binding.splashErrorBtn.visibility = View.GONE
                 }

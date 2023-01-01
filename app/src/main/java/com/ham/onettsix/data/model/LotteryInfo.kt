@@ -32,6 +32,9 @@ data class LotteryInfo(
         @SerializedName("limitedDate")
         val limitedDate: Long,
 
+        @SerializedName("nextEpisodeStartDate")
+        val nextEpisodeStartDate: Long,
+
         @SerializedName("winningAmount")
         val winningAmount: Int,
 
@@ -42,7 +45,16 @@ data class LotteryInfo(
         val totalJoinCount: Long,
 
         @SerializedName("remainLotteryCount")
-        val remainLotteryCount: Long
+        val remainLotteryCount: Long,
+
+        @SerializedName("nickName")
+        val nickName: String,
+
+        @SerializedName("userId")
+        val userId: String,
+
+        @SerializedName("profileImageId")
+        val profileImageId: Int,
 
     ) : Parcelable
 }

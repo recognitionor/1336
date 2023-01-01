@@ -29,7 +29,7 @@ android {
             keyAlias 'key0'
         }
     }
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
     dataBinding {
         enabled = true
@@ -47,7 +47,7 @@ android {
     defaultConfig {
         applicationId "com.ham.onettsix"
         minSdk 21
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true

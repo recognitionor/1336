@@ -8,11 +8,4 @@
         android:icon="@drawable/ic_alarm"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_mail"
-        android:orderInCategory="100"
-        android:title="@string/mail"
-        android:icon="@drawable/ic_send"
-        app:showAsAction="always" />
-
 </menu>

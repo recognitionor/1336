@@ -48,7 +48,6 @@ class GameFragment : Fragment() {
                     if (remainTicket < 0) {
                         remainTicket = 0
                     }
-                    Log.d("jhlee", "SUCCESS : $remainTicket")
                     (childFragmentManager.findFragmentById(R.id.ticket_status_fragment) as TicketStatusFragment).updateStatusText(
                         "$remainTicket"
                     )
@@ -77,7 +76,6 @@ class GameFragment : Fragment() {
     }
 
     fun updateMyTicket(needGameLoad: Boolean = false) {
-        Log.d("jhlee", "updateMyTicket")
         gameViewModel.gameTypeInfo.value?.data?.data?.let {
             var remainTicket = (it.allTicket) - it.usedTicket
             (childFragmentManager.findFragmentById(R.id.ticket_status_fragment) as TicketStatusFragment).apply {

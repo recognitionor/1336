@@ -7,32 +7,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ExtraKey
+import com.ham.onettsix.constant.ResultCode.PERMISSION_EULA_CONFIRM
 import com.ham.onettsix.databinding.ActivityPermissionBinding
 import com.ham.onettsix.fragment.EulaFragment
 
 class PermissionActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityPermissionBinding
-//    private val permissionViewModel by lazy {
-//        ViewModelProviders.of(
-//            this,
-//            ViewModelFactory(
-//                ApiHelperImpl(RetrofitBuilder.apiService),
-//                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)),
-//                PreferencesHelper.getInstance(applicationContext)
-//            )
-//        ).get(PermissionViewModel::class.java)
-//    }
 
     private val activityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when (result.resultCode) {
                 ActivityResultKey.EULA_RESULT -> {
                     result.data?.let {
-
                         binding.checkboxTerms.isChecked =
                             it.getBooleanExtra(EulaActivity.RESULT_KEY_CHECK_TERMS, false)
-
                         binding.checkboxPrivacyPolicy.isChecked =
                             it.getBooleanExtra(EulaActivity.RESULT_KEY_PRIVACY_POLICY, false)
                         binding.btnPermissionConfirm.isEnabled =
@@ -45,6 +34,7 @@ class PermissionActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPermissionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.viewEulaItemTerms.setOnClickListener(this)
         binding.permissionToolbarBack.setOnClickListener(this)
         binding.btnPermissionConfirm.setOnClickListener(this)
@@ -71,9 +61,10 @@ class PermissionActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             binding.btnPermissionConfirm -> {
-                Intent(this@PermissionActivity, SignUpActivity::class.java).apply {
-                    activityResult.launch(this)
+                if (binding.checkboxTerms.isChecked && binding.checkboxPrivacyPolicy.isChecked) {
+                    setResult(PERMISSION_EULA_CONFIRM)
                 }
+                finish()
                 return
             }
         }

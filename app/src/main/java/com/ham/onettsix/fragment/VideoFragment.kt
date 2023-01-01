@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
@@ -22,6 +23,7 @@ import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.FragmentVideoBinding
+import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
@@ -47,9 +49,7 @@ class VideoFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentVideoBinding.inflate(layoutInflater)
         return binding.root
@@ -84,6 +84,7 @@ class VideoFragment : Fragment(), View.OnClickListener {
         videoViewModel.validateLimitedRvStatus.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    Log.d("jhlee", "validateLimitedRvStatus : SUCCESS")
                     progressDialog.dismiss()
                     if (it.data?.resultCode == ResultCode.EXCEED_VIDEO_FREQUENCY) {
                         binding.exceedVideoTv.text = it.data.description
@@ -108,72 +109,87 @@ class VideoFragment : Fragment(), View.OnClickListener {
         videoViewModel.videoSignature.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.data?.let { signature ->
-                        if (signature.rvConfig.isNotEmpty()) {
-                            var isTimeout = false
-                            var isLoaded = false
-                            val placementId = signature.rvConfig[0].placementId
-                            if (placementId.isNotEmpty()) {
-                                lifecycleScope.launch {
-                                    delay(30000L)
-                                    isTimeout = true
-                                    if (!isLoaded) {
-                                        progressDialog.dismiss()
-                                        Toast.makeText(
-                                            requireContext(),
-                                            R.string.video_load_fail,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                    isLoaded = true
-                                }
-
-                                AdmobAdapter.load(requireActivity(),
-                                    signature.rvConfig[0].placementId,
-                                    object : RewardedAdLoadCallback() {
-                                        override fun onAdFailedToLoad(error: LoadAdError) {
-                                            super.onAdFailedToLoad(error)
-                                            isLoaded = true
-                                            Log.d("jhlee", "onAdFailedToLoad")
-                                            if (!isTimeout) {
-                                                progressDialog.dismiss()
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    R.string.video_load_fail,
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
+                    if (it.data?.data == null) {
+                        progressDialog.dismiss()
+                        OneButtonDialog(
+                            getString(R.string.common_error_short), it.data?.description ?: ""
+                        ) { dialog ->
+                            dialog.dismiss()
+                            binding.videoValidCheckBtn.text = getString(R.string.game_expire)
+                            binding.videoValidCheckBtn.isEnabled = false
+                        }.show(parentFragmentManager, OneButtonDialog.TAG)
+                    } else {
+                        binding.videoValidCheckBtn.text = getString(R.string.video_btn)
+                        binding.videoValidCheckBtn.isEnabled = true
+                        it.data.data.let { signature ->
+                            if (signature.rvConfig.isNotEmpty()) {
+                                var isTimeout = false
+                                var isLoaded = false
+                                val placementId = signature.rvConfig[0].placementId
+                                if (placementId.isNotEmpty()) {
+                                    lifecycleScope.launch {
+                                        delay(30000L)
+                                        isTimeout = true
+                                        if (!isLoaded) {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                R.string.video_load_fail,
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
+                                        isLoaded = true
+                                    }
+                                    AdmobAdapter.load(requireActivity(),
+                                        signature.rvConfig[0].placementId,
+                                        object : RewardedAdLoadCallback() {
 
-                                        override fun onAdLoaded(rewardAd: RewardedAd) {
-                                            super.onAdLoaded(rewardAd)
-                                            isLoaded = true
-                                            if (!isTimeout) {
-                                                progressDialog.dismiss()
-                                                val serverSideVerificationOptions =
-                                                    ServerSideVerificationOptions.Builder()
-                                                serverSideVerificationOptions.setUserId(signature.rvId)
-                                                serverSideVerificationOptions.setCustomData(
-                                                    signature.signature
-                                                )
+                                            override fun onAdFailedToLoad(error: LoadAdError) {
+                                                super.onAdFailedToLoad(error)
+                                                isLoaded = true
+                                                if (!isTimeout) {
+                                                    progressDialog.dismiss()
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        R.string.video_load_fail,
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                            }
 
-                                                rewardAd.setServerSideVerificationOptions(
-                                                    serverSideVerificationOptions.build()
-                                                )
-                                                rewardAd.show(requireActivity()) { reward ->
-                                                    Log.d("jhlee", "reward : " + reward.type + "-" + reward.amount)
-                                                    (parentFragment as GameFragment).updateMyTicket()
-                                                    videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
-                                                        binding.videoCountInfoTv.text =
-                                                            "${++data.currentRvCount}/${data.limitedRvCount}"
+                                            override fun onAdLoaded(rewardAd: RewardedAd) {
+                                                super.onAdLoaded(rewardAd)
+                                                isLoaded = true
+                                                if (!isTimeout) {
+                                                    progressDialog.dismiss()
+                                                    val serverSideVerificationOptions =
+                                                        ServerSideVerificationOptions.Builder()
+                                                    serverSideVerificationOptions.setUserId(
+                                                        signature.rvId
+                                                    )
+                                                    serverSideVerificationOptions.setCustomData(
+                                                        signature.signature
+                                                    )
+
+                                                    rewardAd.setServerSideVerificationOptions(
+                                                        serverSideVerificationOptions.build()
+                                                    )
+                                                    rewardAd.show(requireActivity()) {
+                                                        (parentFragment as GameFragment).updateMyTicket()
+                                                        videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
+                                                            binding.videoCountInfoTv.text =
+                                                                "${++data.currentRvCount}/${data.limitedRvCount}"
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                    })
+                                        })
+                                }
                             }
+                            return@observe
                         }
                     }
+
+
                 }
                 Status.ERROR -> {
                     progressDialog.dismiss()
