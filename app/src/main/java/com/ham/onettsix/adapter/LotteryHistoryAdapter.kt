@@ -1,12 +1,16 @@
 package com.ham.onettsix.adapter
 
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
 import com.ham.onettsix.data.model.LotteryHistory
 import com.ham.onettsix.databinding.RvItemLotteryHistoryBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.Locale
 
 class LotteryHistoryAdapter :
     RecyclerView.Adapter<LotteryHistoryAdapter.LotteryHistoryViewHolder>() {
@@ -17,7 +21,7 @@ class LotteryHistoryAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: LotteryHistory.Data) {
-            binding.rvItemLotteryHistoryDayStr.text = item.endDate
+            binding.rvItemLotteryHistoryDayStr.text = "${SimpleDateFormat("MM.dd", Locale.ENGLISH).format(item.endDate)}\n${SimpleDateFormat("E", Locale.ENGLISH).format(item.endDate)}"
             binding.rvItemLotteryHistoryWinnerUserid.text = "#${item.userId}"
             binding.rvItemLotteryHistoryTotalPrice.text = "${item.winningAmount} ${itemView.resources.getString(R.string.won)}"
             binding.rvItemLotteryHistoryEpisodeNum.text =

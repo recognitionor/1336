@@ -92,7 +92,6 @@ class LotteryHistoryFragment : Fragment() {
         lotteryHistoryViewModel.lotteryHistoryList.observe(requireActivity()) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "Status.SUCCESS")
                     it?.data?.let { list ->
                         lotteryHistoryAdapter.setItemList(list)
                     }
@@ -100,11 +99,9 @@ class LotteryHistoryFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
-                    Log.d("jhlee", "Status.ERROR")
                 }
 
                 Status.LOADING -> {
-                    Log.d("jhlee", "Status.LOADING")
                 }
             }
         }

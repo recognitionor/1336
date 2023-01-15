@@ -49,16 +49,6 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getHistoryInfo(): HistoryInfo = apiService.getHistoryInfo()
 
     override suspend fun getNoticeList(): Notice = apiService.getNoticeList()
-//        Notice("", Pagination(), 1, "", arrayListOf<Notice.Data>().apply {
-//            this.add(Notice.Data("행운의 육뉵이는 누규?", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규-2?", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규-3?", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규-4?", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규-5?", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규?-7", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규?-9", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//            this.add(Notice.Data("행운의 육뉵이는 누규?-11", "블라블라블라블라인드 블라호비치", "", System.currentTimeMillis().toString()))
-//        })
 
     override suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result =
         apiService.setFirebaseToken(params)

@@ -71,7 +71,6 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
             } else {
                 while (true) {
                     if (coroutineScope?.isActive == false){
-                        Log.d("jhlee", "return")
                         return@launch
                     }
                     val targetTime =

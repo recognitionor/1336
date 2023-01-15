@@ -47,7 +47,7 @@ data class LotteryHistory(
         val memberCount: Int,
 
         @SerializedName("endDate")
-        val endDate: String,
+        val endDate: Long,
 
         @SerializedName("nickname")
         val nickname: String,

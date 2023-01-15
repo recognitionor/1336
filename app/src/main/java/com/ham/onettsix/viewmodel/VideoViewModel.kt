@@ -24,16 +24,13 @@ class VideoViewModel(
     val videoSignature = MutableLiveData<Resource<VideoSignature>>()
 
     fun validateLimitedRv() {
-        Log.d("jhlee", "validateLimitedRv")
         validateLimitedRvStatus.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "validateLimitedRv Error : ${e.message}")
             validateLimitedRvStatus.postValue(Resource.error("", null))
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.validateLimitedRv()
-                Log.d("jhlee", "validateLimitedRv result : $result")
                 validateLimitedRvStatus.postValue(Resource.success(result))
             }
         }
@@ -43,18 +40,15 @@ class VideoViewModel(
         videoSignature.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             videoSignature.postValue(Resource.error("", null))
-            Log.d("jhlee", "getVideoSignature e: ${e.message}")
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getSignature()
-                Log.d("jhlee", "getVideoSignature : $result")
                 videoSignature.postValue(Resource.success(result))
             }
         }
     }
 
     fun addVideoCount() {
-        Log.d("jhlee", "getVideoSignature")
     }
 }

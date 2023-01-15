@@ -12,8 +12,6 @@ class YouTubeAdapter(var itemClickListener: YouTubeAdapterItemClickListener) :
     RecyclerView.Adapter<YouTubeAdapter.YouTubeViewHolder>() {
 
     private var list: ArrayList<YouTubeInfo.Data> = ArrayList()
-
-
     interface YouTubeAdapterItemClickListener {
         fun onItemClick(data: YouTubeInfo.Data)
     }
@@ -23,20 +21,18 @@ class YouTubeAdapter(var itemClickListener: YouTubeAdapterItemClickListener) :
         fun bind(data: YouTubeInfo.Data) {
             binding.youtubeTitle.text = data.title
             Glide.with(binding.root.context).load(data.thumbnailLink)
-                .placeholder(R.drawable.ic_no_video).into(binding.youtubeThumbnailImg)
+                .placeholder(R.drawable.ic_no_video)
+                .into(binding.youtubeThumbnailImg)
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): YouTubeViewHolder {
         val binding = RvItemYoutubeBinding.inflate(LayoutInflater.from(parent.context))
-        binding.root.setOnClickListener {
-            itemClickListener.onItemClick(list[position])
-        }
         return YouTubeViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: YouTubeViewHolder, position: Int) {
-
+        holder.itemView.setOnClickListener {
+            itemClickListener.onItemClick(list[position])
+        }
         holder.bind(list[position])
     }
 
@@ -46,5 +42,10 @@ class YouTubeAdapter(var itemClickListener: YouTubeAdapterItemClickListener) :
 
     fun setAdapterList(list: ArrayList<YouTubeInfo.Data>) {
         this.list.addAll(list)
+    }
+
+    fun clear() {
+        this.list.clear()
+        this.notifyDataSetChanged()
     }
 }

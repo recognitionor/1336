@@ -62,10 +62,8 @@ class ProfileDetailViewModel(
     }
 
     fun withDraw() {
-        Log.d("jhlee", " withDraw")
         historyInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "error : ${e.message}")
             historyInfo.postValue(Resource.error("signin error", null))
         }
         viewModelScope.launch(exceptionHandler) {

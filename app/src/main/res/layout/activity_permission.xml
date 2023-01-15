@@ -93,6 +93,17 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/alarm_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
+        android:textColor="@color/text_black"
+        android:checked="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/eula_alarm_switch" />
+
     <View
         android:layout_width="wrap_content"
         android:layout_height="0dp"

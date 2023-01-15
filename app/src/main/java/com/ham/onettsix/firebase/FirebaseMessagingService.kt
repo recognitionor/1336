@@ -38,7 +38,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Log.d("jhlee", "onNewToken : $token")
         PreferencesHelper.getInstance(this).setFireBaseToken(token)
 //        sendNotification("테스트 타이틀", "body", "summary", "largeImage", "smallImage", "action")
     }

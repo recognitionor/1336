@@ -28,7 +28,6 @@ class KakaoSignInService(private val ctx: Context) {
             }
         } else {
             UserApiClient.instance.loginWithKakaoAccount(ctx) { token, error ->
-                Log.d("jhlee", "kakao token : $token, ${error?.message}")
                 loginCallBack(token, error, listener)
             }
         }

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
 import com.ham.onettsix.adapter.YouTubeAdapter
-import com.ham.onettsix.constant.ExtraKey.YOUTUBE_ITEM_DATA
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
@@ -62,15 +61,20 @@ class YouTubeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         youtubeAdapter = YouTubeAdapter(object : YouTubeAdapter.YouTubeAdapterItemClickListener {
             override fun onItemClick(data: YouTubeInfo.Data) {
                 result.launch(
                     Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("${YOUTUBE_URI}${data.youtubeId}")
-                    ))
+                    )
+                )
             }
         })
+        if (youtubeAdapter.itemCount <= 0) {
+            getYoutubeList()
+        }
         setupObserve()
     }
 
@@ -81,20 +85,24 @@ class YouTubeFragment : Fragment() {
                     progressDialog.dismiss()
                     it.data?.data?.let { list ->
                         if (list.size < 1) {
-                            Toast.makeText(
-                                requireContext(),
-                                R.string.youtube_last_list,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            context?.let { ctx ->
+                                Toast.makeText(
+                                    ctx,
+                                    R.string.youtube_last_list,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         } else {
                             youtubeAdapter.setAdapterList(list)
                             youtubeAdapter.notifyDataSetChanged()
                         }
                     }
                 }
+
                 Status.LOADING -> {
                     progressDialog.show()
                 }
+
                 Status.ERROR -> {
                     progressDialog.dismiss()
                 }
@@ -111,17 +119,28 @@ class YouTubeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getYoutubeList()
+
         binding.youtubeInfoRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!binding.youtubeInfoRv.canScrollVertically(1)) {
-                    getYoutubeList()
+                    youtubeViewModel.youtubeList.value?.data?.pagination?.let {
+                        if (it.currentPage + 1 < it.totalPages) {
+                            getYoutubeList()
+                        }
+                    }
                 }
             }
         })
         binding.youtubeInfoRv.adapter = youtubeAdapter
         binding.youtubeInfoRv.layoutManager = GridLayoutManager(context, GRID_COUNT)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        youtubeAdapter.clear()
+        youtubeAdapter.onDetachedFromRecyclerView(binding.youtubeInfoRv)
+        youtubeViewModel.clearYoutubeList()
     }
 
     private fun getYoutubeList() {

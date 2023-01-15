@@ -38,6 +38,10 @@ class PermissionActivity : AppCompatActivity(), View.OnClickListener {
         binding.viewEulaItemTerms.setOnClickListener(this)
         binding.permissionToolbarBack.setOnClickListener(this)
         binding.btnPermissionConfirm.setOnClickListener(this)
+        binding.alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
+            intent.putExtra(ExtraKey.PERMISSION_ALARM_SWITCH, isChecked)
+        }
+        intent.putExtra(ExtraKey.PERMISSION_ALARM_SWITCH, binding.alarmSwitch.isChecked)
         setupObserver()
     }
 
@@ -62,7 +66,8 @@ class PermissionActivity : AppCompatActivity(), View.OnClickListener {
 
             binding.btnPermissionConfirm -> {
                 if (binding.checkboxTerms.isChecked && binding.checkboxPrivacyPolicy.isChecked) {
-                    setResult(PERMISSION_EULA_CONFIRM)
+                    intent.putExtra(ExtraKey.PERMISSION_ALARM_SWITCH, binding.alarmSwitch.isChecked)
+                    setResult(PERMISSION_EULA_CONFIRM, intent)
                 }
                 finish()
                 return

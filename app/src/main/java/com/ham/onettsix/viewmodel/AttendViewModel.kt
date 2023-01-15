@@ -29,14 +29,12 @@ class AttendViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.validateAttendCheck()
-                Log.d("jhlee", "attendStatusLoad : $result");
                 attendStatus.postValue(Resource.success(result))
             }
         }
     }
 
     fun attendCheck() {
-        Log.d("jhlee", "attendCheck")
         attendStatus.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             attendStatus.postValue(Resource.error("", null))
@@ -44,7 +42,6 @@ class AttendViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.attendCheck()
-                Log.d("jhlee", "attendCheck result : $result")
                 attendStatus.postValue(Resource.success(result))
 
             }

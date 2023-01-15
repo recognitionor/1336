@@ -12,8 +12,7 @@ import com.ham.onettsix.databinding.RvItemMyProfileHistoryBinding
 import java.text.SimpleDateFormat
 
 class MyProfileHistoryAdapter(
-    private val context: Context,
-    private val listener: OnItemWinningListener
+    private val context: Context, private val listener: OnItemWinningListener
 ) : RecyclerView.Adapter<MyProfileHistoryAdapter.MyProfileHistoryViewHolder>() {
 
     interface OnItemWinningListener {
@@ -25,13 +24,12 @@ class MyProfileHistoryAdapter(
     class MyProfileHistoryViewHolder(
         private val binding: RvItemMyProfileHistoryBinding,
         private val listener: OnItemWinningListener
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HistoryInfo.Data) {
-            Log.d("jhlee", "item : ${item.endDate}")
             binding.myProfileHistoryItemEpisode.text =
                 itemView.resources.getString(R.string.profile_history_item_episode, item.episode)
-            binding.myProfileHistoryItemEndDate.text = SimpleDateFormat("yy.MM.dd").format(item.endDate)
+            binding.myProfileHistoryItemJoinInfo.text = "${item.joinCount} / ${item.totalCount}"
+
             binding.myProfileHistoryItemPrice.text = itemView.resources.getString(
                 R.string.profile_history_item_price, item.winningAmount
             )

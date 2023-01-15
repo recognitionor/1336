@@ -39,32 +39,23 @@ class HomeViewModel(
     }
 
     fun isLogin(): Boolean {
-        var test = false
-        val job = CoroutineScope(Dispatchers.Main).launch {
-            Log.d("jhlee", "1 : ${Thread.currentThread().name}")
-
-            val isLogin = async(Dispatchers.Default) {
-                Log.d("jhlee", "2 : ${Thread.currentThread().name} ---- ${dbHelper.getUser()}")
+        var isLogin = false
+        CoroutineScope(Dispatchers.Main).launch {
+            isLogin = async(Dispatchers.Default) {
                 return@async (dbHelper.getUser()?.uid ?: -1) > 0
             }.await()
-            test = isLogin
-            Log.d("jhlee", "3 : ${Thread.currentThread().name} ---- $isLogin")
         }
-        Log.d("jhlee", "4 : $test")
-        return test
+        return isLogin
     }
 
     fun getLotteryInfo() {
-        Log.d("jhlee", "getLotteryInfo")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "${e.message}")
             lotteryInfo.postValue(Resource.error("signin error", null))
         }
 
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getLotteryInfo("ALL")
-                Log.d("jhlee", "result : $result")
                 lotteryInfo.postValue(Resource.success(result))
             }
         }

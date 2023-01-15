@@ -32,17 +32,14 @@ class NaverSignInService(private val ctx: Context) : OAuthLoginCallback {
     }
 
     override fun onError(errorCode: Int, message: String) {
-        Log.d("jhlee", "errorCode: $errorCode - message : $message")
         listener?.onError(ISocialLoginListener.SOCIAL_TYPE_NAVER)
     }
 
     override fun onFailure(httpStatus: Int, message: String) {
-        Log.d("jhlee", "httpStatus: $httpStatus - message : $message")
         listener?.onError(ISocialLoginListener.SOCIAL_TYPE_NAVER)
     }
 
     override fun onSuccess() {
-        Log.d("jhlee", "onSuccess: ")
         NaverIdLoginSDK.getAccessToken()?.let {
             listener?.getToken(
                 ISocialLoginListener.SOCIAL_TYPE_NAVER, it

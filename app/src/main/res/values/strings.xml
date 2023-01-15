@@ -27,6 +27,7 @@
     <string name="eula_item_terms">약관</string>
     <string name="eula_item_privacy_policy">개인정보 처리방침</string>
     <string name="sign_up">가입하기</string>
+    <string name="eula_alarm_switch">알람 설정</string>
 
     <string name="common_error">에러가 발생했습니다. 다시 시도 해주세요</string>
     <string name="common_error_short">문제 발생</string>
@@ -55,9 +56,9 @@
     <string name="home_remain_drawing_time_divider">:</string>
     <string name="home_remain_drawing_time_default">-</string>
     <string name="home_game_info">제 %1$s회 당첨 포인트</string>
-    <string name="home_game_price">%1$s원</string>
+    <string name="home_game_price">%1$s햄</string>
     <string name="home_game_next_update_info">정각에 업데이트 됩니다. %1$s 기준</string>
-    <string name="home_game_price_title">당첨금액</string>
+    <string name="home_game_price_title">당첨 금액</string>
     <string name="home_game_get_ticket_btn">행운의 당첨자 도전!</string>
     <string name="home_profile_user_name">%1$s 님은</string>
     <string name="home_profile_user_reward">%1$s 입니다.</string>
@@ -93,6 +94,12 @@
     <string name="profile_history_item_status_wating">%1$s 회차</string>
     <string name="profile_ticket_info_message">(티겟은 참여 회차의 육뉵이 당첨시까지 유효하며, 미당첨시 다음 회자 당첨시까지로 연장됩니다. 티켓 획득 후 바로 응모를 권장합니다.)</string>
     <string name="profile_warning_message">당첨 발표 후 7일내 당첨 버튼을 클릭해서 메일을 보내야만 지급이 가능합니다.</string>
+    <string name="profile_history_item_join">내 참여 수 : </string>
+    <string name="profile_history_item_total">총 참여 수 : </string>
+    <string name="profile_history_game_index_title">회차</string>
+    <string name="profile_history_game_join_info_title">내 참여 /\n총 참여</string>
+    <string name="profile_history_game_point">금액</string>
+    <string name="profile_history_game_result">육뉵이!</string>
 
     <!--Login-->
     <string name="login_info_title">회원가입 / 로그인</string>

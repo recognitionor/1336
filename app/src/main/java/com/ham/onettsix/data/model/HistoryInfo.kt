@@ -51,5 +51,11 @@ data class HistoryInfo(
         @SerializedName("isPaid")
         val isPaid: Boolean,
 
+        @SerializedName("joinCount")
+        val joinCount: Int,
+
+        @SerializedName("totalCount")
+        val totalCount: Int,
+
     ) : Parcelable
 }

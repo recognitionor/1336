@@ -30,9 +30,7 @@ class MyProfileViewModel(
     val winnerSecretCode = MutableLiveData<Resource<WinnerSecretCode>>()
 
     fun getWinnerSecretCode(episode: Int) {
-        Log.d("jhlee", "getWinnerSecretCode")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e : ${e.message}")
             winnerSecretCode.postValue(Resource.error("signin error", null))
         }
 
@@ -41,7 +39,6 @@ class MyProfileViewModel(
                 val param = HashMap<String, Any?>()
                 param[KEY_EPISODE] = episode
                 val result = apiHelper.getSecretCode(param)
-                Log.d("jhlee", "getWinnerSecretCode : $result")
                 winnerSecretCode.postValue(Resource.success(result))
             }
         }
@@ -67,7 +64,6 @@ class MyProfileViewModel(
     fun getHistoryInfo() {
         historyInfo.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "error : ${e.message}")
             historyInfo.postValue(Resource.error("signin error", null))
         }
 
@@ -75,7 +71,6 @@ class MyProfileViewModel(
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getHistoryInfo()
                 historyInfo.postValue(Resource.success(result))
-                Log.d("jhlee", "result getHistoryInfo : $result")
 
             }
         }

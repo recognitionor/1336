@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProviders
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ExtraKey
@@ -36,8 +37,11 @@ class LoginActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when (result.resultCode) {
                 PERMISSION_EULA_CONFIRM -> {
-                    PreferencesHelper.getInstance(this).setConfirmEULA()
-                    loginKakao()
+                    val enableAlarm =
+                        result.data?.extras?.getBoolean(ExtraKey.PERMISSION_ALARM_SWITCH) == true
+                    this.loginViewModel.signIn.value?.data?.data?.let {
+                        loginViewModel.signup(it.socialType, it.socialAccessToken, enableAlarm)
+                    }
                 }
             }
         }
@@ -58,7 +62,11 @@ class LoginActivity : AppCompatActivity() {
         kakaoService.signIn(object : ISocialLoginListener {
             override fun getToken(socialType: String, token: String) {
                 progressDialog.dismiss()
-                loginViewModel.signIn(socialType, token)
+                loginViewModel.signIn(
+                    socialType,
+                    token,
+                    NotificationManagerCompat.from(this@LoginActivity).areNotificationsEnabled()
+                )
             }
 
             override fun onError(socialType: String) {
@@ -89,22 +97,24 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
         binding.btnLoginKakao.setOnClickListener {
-            if (PreferencesHelper.getInstance(this).getConfirmEULA()) {
-                loginKakao()
-            } else {
-                activityResult.launch(Intent(this, PermissionActivity::class.java))
-            }
+            loginKakao()
         }
 
         binding.btnLoginNaver.setOnClickListener {
+            progressDialog.show()
             val naverService = NaverSignInService(this)
             naverService.signIn(object : ISocialLoginListener {
                 override fun getToken(socialType: String, token: String) {
-                    loginViewModel.signIn(socialType, token)
+                    progressDialog.dismiss()
+                    loginViewModel.signIn(
+                        socialType,
+                        token,
+                        NotificationManagerCompat.from(this@LoginActivity).areNotificationsEnabled()
+                    )
                 }
 
                 override fun onError(socialType: String) {
-                    Log.d("jhlee", "onError : $socialType")
+                    progressDialog.dismiss()
                 }
             })
         }
@@ -115,12 +125,32 @@ class LoginActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dismiss()
-                    setResult(ActivityResultKey.LOGIN_RESULT_OK)
-                    finish()
+                    if (it.data?.data?.needSignUp == true) {
+                        if (it.data.data.socialType == KakaoSignInService.SOCIAL_TYPE_KAKAO) {
+                            activityResult.launch(
+                                Intent(
+                                    this@LoginActivity,
+                                    PermissionActivity::class.java
+                                )
+                            )
+                        } else {
+                            loginViewModel.signup(
+                                it.data.data.socialType,
+                                it.data.data.socialAccessToken,
+                                NotificationManagerCompat.from(this@LoginActivity)
+                                    .areNotificationsEnabled()
+                            )
+                        }
+                    } else {
+                        setResult(ActivityResultKey.LOGIN_RESULT_OK)
+                        finish()
+                    }
                 }
+
                 Status.LOADING -> {
                     progressDialog.show()
                 }
+
                 Status.ERROR -> {
                     progressDialog.dismiss()
                     Toast.makeText(this, R.string.sign_in_error, Toast.LENGTH_SHORT).show()

@@ -33,7 +33,7 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val url = if (sectionNumber == 0) "${UrlInfo.getBaseURL()}/get/eula" else "${UrlInfo.getBaseURL()}/get/personalPrivacy"
+        val url = if (sectionNumber == 0) "https://eula.onettsix.com/get/eula" else "https://eula.onettsix.com/get/personalPrivacy"
 
         binding.webviewEula.loadUrl(url)
         isReadDone = listener.getCheckState(sectionNumber)

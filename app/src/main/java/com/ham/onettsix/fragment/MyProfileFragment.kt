@@ -1,7 +1,6 @@
 package com.ham.onettsix.fragment
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -91,7 +90,6 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
         myProfileViewModel.winnerSecretCode.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "SUCCESS")
                     val email = Intent(Intent.ACTION_SEND)
                     email.putExtra(Intent.EXTRA_USER, arrayOf("ham.factories@gmail.com"))
                     email.putExtra(Intent.EXTRA_EMAIL, arrayOf("ham.factories@gmail.com"))
@@ -124,9 +122,11 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     progressDialog.dismiss()
                     it.data?.data?.let { historyInfo ->
                         if (historyInfo.isEmpty()) {
+                            binding.rvItemHeaderMyProfileHistoryInclude.rvItemHeaderMyProfileHistory.visibility = View.GONE
                             binding.profileHistoryRvEmpty.visibility = View.VISIBLE
                             binding.profileHistoryRv.visibility = View.GONE
                         } else {
+                            binding.rvItemHeaderMyProfileHistoryInclude.rvItemHeaderMyProfileHistory.visibility = View.VISIBLE
                             binding.profileHistoryRvEmpty.visibility = View.GONE
                             binding.profileHistoryRv.visibility = View.VISIBLE
                             adapter.setList(historyInfo)

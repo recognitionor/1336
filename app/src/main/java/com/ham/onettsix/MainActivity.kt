@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         navHeaderBinding = NavHeaderMainBinding.inflate(layoutInflater)
         binding.navView.addHeaderView(navHeaderBinding.root)

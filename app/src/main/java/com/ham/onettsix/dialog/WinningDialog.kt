@@ -84,7 +84,6 @@ class WinningDialog(private val data: Result, private val onDismissListener: Dia
             }
             LOTTERY_FINISHED_LOSE -> {
                 // 미당첨
-                Log.d("jhlee", "미당첨")
                 PreferencesHelper.getInstance(this@WinningDialog.requireContext()).name
                 binding.winningResultDescription.text = getString(R.string.winning_result_lose, "")
                 binding.winningResultSubDescription.text = getString(R.string.winning_result_lose_sub)

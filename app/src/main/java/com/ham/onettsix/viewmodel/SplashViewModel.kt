@@ -42,7 +42,6 @@ class SplashViewModel(
     }
 
     fun refreshLogin() {
-        Log.d("jhlee", "refreshLogin")
         refreshResult.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             refreshResult.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))

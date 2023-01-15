@@ -32,9 +32,9 @@ data class SignIn(
         @SerializedName("nickName")
         val nickName: String,
         @SerializedName("socialType")
-        val socialType: String,
+        var socialType: String,
         @SerializedName("socialAccessToken")
-        val socialAccessToken: String,
+        var socialAccessToken: String,
         @SerializedName("uid")
         val uid: Int,
         @SerializedName("needSignUp")

@@ -1,7 +1,6 @@
 package com.ham.onettsix.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
@@ -84,7 +82,6 @@ class VideoFragment : Fragment(), View.OnClickListener {
         videoViewModel.validateLimitedRvStatus.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "validateLimitedRvStatus : SUCCESS")
                     progressDialog.dismiss()
                     if (it.data?.resultCode == ResultCode.EXCEED_VIDEO_FREQUENCY) {
                         binding.exceedVideoTv.text = it.data.description
@@ -96,10 +93,12 @@ class VideoFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 }
+
                 Status.ERROR -> {
                     binding.videoValidCheckBtn.isEnabled = false
                     progressDialog.dismiss()
                 }
+
                 Status.LOADING -> {
                     progressDialog.show()
                 }
@@ -128,7 +127,7 @@ class VideoFragment : Fragment(), View.OnClickListener {
                                 val placementId = signature.rvConfig[0].placementId
                                 if (placementId.isNotEmpty()) {
                                     lifecycleScope.launch {
-                                        delay(30000L)
+                                        delay(20000L)
                                         isTimeout = true
                                         if (!isLoaded) {
                                             Toast.makeText(
@@ -183,17 +182,24 @@ class VideoFragment : Fragment(), View.OnClickListener {
                                                 }
                                             }
                                         })
+                                    return@observe
                                 }
                             }
+                            progressDialog.dismiss()
+                            Toast.makeText(
+                                requireContext(), R.string.common_error, Toast.LENGTH_SHORT
+                            ).show()
                             return@observe
                         }
                     }
 
 
                 }
+
                 Status.ERROR -> {
                     progressDialog.dismiss()
                 }
+
                 Status.LOADING -> {
                     progressDialog.show()
                 }
@@ -207,6 +213,7 @@ class VideoFragment : Fragment(), View.OnClickListener {
             binding.videoLayoutImg, binding.videoValidCheckBtn -> {
                 videoViewModel.getVideoSignature()
             }
+
             binding.layoutVideoNeededLogin.layoutGameNeededLogin -> {
                 (parentFragment as GameFragment).login()
             }

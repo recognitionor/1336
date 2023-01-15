@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.data.model.Test
 import com.ham.onettsix.data.model.YouTubeInfo
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -27,12 +26,15 @@ class YouTubeViewModel(
 
     val youtubeList = MutableLiveData<Resource<YouTubeInfo>>()
 
+    fun clearYoutubeList() {
+        youtubeList.value?.data?.data?.clear()
+    }
+
     fun getYoutubeList(startPage: Int, contentPage: Int) {
         youtubeList.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            youtubeList.postValue(Resource.error("", null))
+            youtubeList.postValue(Resource.error(e.toString(), null))
         }
-        Log.d("jhlee", "getYoutubeList : $startPage")
         viewModelScope.launch(exceptionHandler) {
             val map = HashMap<String, Any?>()
             map[PARAM_KEY_START_PAGE] = startPage
