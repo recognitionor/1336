@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class YouTubeInfo(
+data class InvestmentTag(
     @SerializedName("description")
     override val description: String,
 
@@ -20,19 +20,16 @@ data class YouTubeInfo(
 
     @SerializedName("data")
     override val data: ArrayList<Data> = arrayListOf()
-) : BasicData<ArrayList<YouTubeInfo.Data>>() {
+) : BasicData<ArrayList<InvestmentTag.Data>>() {
 
     @Parcelize
     data class Data(
+
         @SerializedName("id")
         val id: Int,
-        @SerializedName("title")
-        val title: String,
-        @SerializedName("youtubeId")
-        val youtubeId: String,
-        @SerializedName("thumbnailLink")
-        val thumbnailLink: String,
-        @SerializedName("youtubeLink")
-        val youtubeLink: String,
-        ) : Parcelable
+
+        @SerializedName("name")
+        val name: String
+
+    ) : Parcelable
 }

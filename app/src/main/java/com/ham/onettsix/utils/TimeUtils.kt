@@ -1,5 +1,7 @@
 package com.ham.onettsix.utils
 
+import android.content.Context
+import com.ham.onettsix.R
 import java.util.*
 
 class TimeUtils {
@@ -10,7 +12,7 @@ class TimeUtils {
     }
 
     companion object {
-        fun timeDiff(time: Long): String {
+        fun timeDiff(ctx: Context, time: Long): String {
             val curTime = System.currentTimeMillis()
             var diffTime = (curTime - time) / 1000
             var msg: String = ""
@@ -19,7 +21,7 @@ class TimeUtils {
                 for (i in TimeValue.values()) {
                     diffTime /= i.value
                     if (diffTime < i.maximum) {
-                        msg = i.msg
+                        msg = "$diffTime ${ctx.getString(R.string.day_ago)}"
                         break
                     }
                 }

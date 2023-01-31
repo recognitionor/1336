@@ -78,8 +78,8 @@ interface ApiService {
     @POST("firebasetoken")
     suspend fun setFirebaseToken(@QueryMap params: HashMap<String, Any?>): Result
 
-    @GET("/get/youtubelist")
-    suspend fun getYouTubeList(@QueryMap params: HashMap<String, Any?>): YouTubeInfo
+    @GET("/get/investmentlist")
+    suspend fun getInvestmentList(@QueryMap params: HashMap<String, Any?>): InvestmentInfo
 
     @DELETE("/user")
     suspend fun withDraw(): Result
@@ -89,4 +89,6 @@ interface ApiService {
 
     @GET("/getSecretCode")
     suspend fun getSecretCode(@QueryMap params: HashMap<String, Any?>): WinnerSecretCode
+    @GET("/investmentTagList")
+    suspend fun getInvestmentTagList(): InvestmentTag
 }

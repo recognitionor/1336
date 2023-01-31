@@ -53,8 +53,10 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result =
         apiService.setFirebaseToken(params)
 
-    override suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo =
-        apiService.getYouTubeList(params)
+    override suspend fun getInvestmentList(params: HashMap<String, Any?>): InvestmentInfo =
+        apiService.getInvestmentList(params)
+
+    override suspend fun getInvestmentTagList(): InvestmentTag = apiService.getInvestmentTagList()
 
     override suspend fun withDraw(): Result = apiService.withDraw()
 

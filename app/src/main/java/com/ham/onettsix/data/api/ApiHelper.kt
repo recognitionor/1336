@@ -1,8 +1,6 @@
 package com.ham.onettsix.data.api
 
 import com.ham.onettsix.data.model.*
-import retrofit2.http.GET
-import retrofit2.http.QueryMap
 
 interface ApiHelper {
 
@@ -50,7 +48,9 @@ interface ApiHelper {
 
     suspend fun setFirebaseToken(params: HashMap<String, Any?>) : Result
 
-    suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo
+    suspend fun getInvestmentList(params: HashMap<String, Any?>): InvestmentInfo
+
+    suspend fun getInvestmentTagList(): InvestmentTag
 
     suspend fun withDraw(): Result
 

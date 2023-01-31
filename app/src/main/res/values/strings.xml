@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">1336</string>
     <!--common-->
+    <string name="all">전체</string>
     <string name="must">[필수]</string>
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
@@ -10,6 +11,7 @@
     <string name="mail">mail</string>
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
+    <string name="day_ago">일전</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
     <string name="list_empty">리스트가 없습니다.</string>
 
@@ -160,6 +162,8 @@
 
     <!--YouTube-->
     <string name="youtube_last_list">리스트의 마지막입니다.</string>
+    <string name="investment_tag_title">나에게 필요한 돈버는 TAG</string>
+
 
     <string name="mail_content">%1$s 회차의 육뉵이가 되신 걸 축하합니다!\n
         개인정보 수집·이용에 동의하신다면, 당첨 지급 기한 내 아래 정보를 작성해 ham.factories@gmail.com 로 전달해주세요.
