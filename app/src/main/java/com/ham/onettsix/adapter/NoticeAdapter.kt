@@ -1,7 +1,5 @@
 package com.ham.onettsix.adapter
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,13 +16,12 @@ class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>() {
     class NoticeViewHolder(private val binding: RvItemNoticeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         fun bind(item: Notice.Data) {
             binding.noticeItemTitleTv.text = item.title
             binding.noticeItemContentTv.text = item.content
             binding.noticeItemTimeTv.text =
                 TimeUtils.timeDiff(itemView.context, item.createdAt.toLong())
-            Glide.with(itemView.context).load(R.drawable.ic_alarm).into(binding.noticeItemIconImg)
+            Glide.with(itemView.context).load(R.drawable.ic_notifications).into(binding.noticeItemIconImg)
         }
     }
 

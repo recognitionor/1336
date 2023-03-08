@@ -70,6 +70,7 @@ class InvestmentFragment : Fragment() {
 
         investmentTagAdapter = InvestmentTagAdapter(object :
             InvestmentTagAdapter.InvestmentAdapterTagItemClickListener {
+
             override fun onItemClick(data: InvestmentTag.Data) {
                 investmentAdapter.clear()
                 getInvestmentList()
@@ -79,11 +80,20 @@ class InvestmentFragment : Fragment() {
         investmentAdapter =
             InvestmentAdapter(object : InvestmentAdapter.InvestmentAdapterItemClickListener {
                 override fun onItemClick(data: InvestmentInfo.Data) {
-                    result.launch(
-                        Intent(
-                            Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_URI}${data.youtubeId}")
-                        )
-                    )
+                    when(data.type) {
+                        0 -> {
+                            result.launch(
+                                Intent(
+                                    Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_URI}${data.youtubeId}")
+                                )
+                            )
+                        }
+                        1 -> {
+                            result.launch(Intent(Intent.ACTION_VIEW, Uri.parse(data.link)))
+                            Log.d("jhlee", data.link)
+
+                        }
+                    }
                 }
             })
         if (investmentAdapter.itemCount <= 0) {

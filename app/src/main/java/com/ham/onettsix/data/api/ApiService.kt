@@ -75,6 +75,9 @@ interface ApiService {
     @GET("/get/notices")
     suspend fun getNoticeList(): Notice
 
+    @GET("/get/newNotices")
+    suspend fun getNewNotice(): NewNotice
+
     @POST("firebasetoken")
     suspend fun setFirebaseToken(@QueryMap params: HashMap<String, Any?>): Result
 
@@ -91,4 +94,5 @@ interface ApiService {
     suspend fun getSecretCode(@QueryMap params: HashMap<String, Any?>): WinnerSecretCode
     @GET("/investmentTagList")
     suspend fun getInvestmentTagList(): InvestmentTag
+
 }

@@ -8,6 +8,7 @@ import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.LotteryInfo
+import com.ham.onettsix.data.model.NewNotice
 import com.ham.onettsix.data.model.Result
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.*
@@ -23,6 +24,8 @@ class HomeViewModel(
     }
 
     val lotteryInfo = MutableLiveData<Resource<LotteryInfo>>()
+
+    val newNotice = MutableLiveData<Resource<NewNotice>>()
 
     val winningViewModel = MutableLiveData<Resource<Result>>()
 
@@ -57,6 +60,19 @@ class HomeViewModel(
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getLotteryInfo("ALL")
                 lotteryInfo.postValue(Resource.success(result))
+            }
+        }
+    }
+    fun getNewNotice() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            newNotice.postValue(Resource.error("newNotice error", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val result = apiHelper.getNewNotice()
+                Log.d("jhlee", "result : $result")
+                newNotice.postValue(Resource.success(result))
             }
         }
     }

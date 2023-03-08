@@ -12,6 +12,7 @@ class InvestmentAdapter(var itemClickListener: InvestmentAdapterItemClickListene
     RecyclerView.Adapter<InvestmentAdapter.InvestmentViewHolder>() {
 
     private var list: ArrayList<InvestmentInfo.Data> = ArrayList()
+
     interface InvestmentAdapterItemClickListener {
         fun onItemClick(data: InvestmentInfo.Data)
     }
@@ -19,16 +20,35 @@ class InvestmentAdapter(var itemClickListener: InvestmentAdapterItemClickListene
     class InvestmentViewHolder(private val binding: RvItemInvestmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: InvestmentInfo.Data) {
-            binding.investmentTitle.text = data.title
-            Glide.with(binding.root.context).load(data.thumbnailLink)
-                .placeholder(R.drawable.ic_no_video)
-                .into(binding.investmentThumbnailImg)
+
+            when (data.type) {
+                0 -> {
+                    binding.investmentTitle.text = data.title
+
+                    Glide.with(binding.root.context).load(data.thumbnailLink)
+                        .placeholder(R.drawable.ic_no_video)
+                        .fitCenter()
+                        .into(binding.investmentThumbnailImg)
+                }
+                1 -> {
+                    val blog = binding.root.context.getString(R.string.investment_blog)
+                    val title = data.title
+                    binding.investmentTitle.text = "$blog $title"
+                    Glide.with(binding.root.context).load(data.thumbnailLink)
+                        .placeholder(R.drawable.open_in_browser)
+                        .fitCenter()
+                        .into(binding.investmentThumbnailImg)
+                }
+            }
+
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): InvestmentViewHolder {
         val binding = RvItemInvestmentBinding.inflate(LayoutInflater.from(parent.context))
         return InvestmentViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: InvestmentViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             itemClickListener.onItemClick(list[position])

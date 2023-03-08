@@ -50,6 +50,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getNoticeList(): Notice = apiService.getNoticeList()
 
+    override suspend fun getNewNotice(): NewNotice = apiService.getNewNotice()
     override suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result =
         apiService.setFirebaseToken(params)
 

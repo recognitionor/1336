@@ -44,6 +44,7 @@ class LoginViewModel(
                     this[KEY_ENABLE_ALARM] = enableAlarm
                 }
                 val result = apiHelper.signUp(hashMap)
+                Log.d("jhlee", "signin result $result")
                 result?.data?.let {
                     RetrofitBuilder.accessToken = it.tokenSet.accessToken
                     dbHelper.insertUser(

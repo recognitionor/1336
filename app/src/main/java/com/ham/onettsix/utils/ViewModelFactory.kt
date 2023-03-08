@@ -68,6 +68,14 @@ class ViewModelFactory(
             return InvestmentViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
+        if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
+            return QuizViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(QuizGameViewModel::class.java)) {
+            return QuizGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
         throw IllegalArgumentException("Unknown class name")
     }
 }

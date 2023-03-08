@@ -77,8 +77,10 @@
 
     <!--티켓참여-->
     <string name="my_ticket">내 티켓</string>
-    <string name="game_daily_title">티켓 득템하러 가기</string>
-    <string name="game_daily_title_info">참여하면 100% 1 티켓 바로 응모</string>
+    <string name="rps_daily_title">가위 바위 보 로 티켓 얻기</string>
+    <string name="rps_daily_title_info">참여 하면 1개 소진 승리 시 3개 지급</string>
+    <string name="quiz_daily_title">퀴즈 맞추고 티켓 얻기</string>
+    <string name="quiz_daily_title_info">퀴즈 세트 모두 맞추면 5개 지급</string>
     <string name="game_rv_title">동영상 보고 티켓 얻기</string>
     <string name="game_rv_title_info">영상 보면 1개 티겟 당첨! 참여시 바로 응모</string>
     <string name="attend_btn">출to the첵</string>
@@ -163,7 +165,7 @@
     <!--YouTube-->
     <string name="youtube_last_list">리스트의 마지막입니다.</string>
     <string name="investment_tag_title">나에게 필요한 돈버는 TAG</string>
-
+    <string name="investment_blog">[블로그]</string>
 
     <string name="mail_content">%1$s 회차의 육뉵이가 되신 걸 축하합니다!\n
         개인정보 수집·이용에 동의하신다면, 당첨 지급 기한 내 아래 정보를 작성해 ham.factories@gmail.com 로 전달해주세요.
@@ -181,5 +183,9 @@
         - 수집하는 개인정보의 항목: 이름, 계좌번호\n
         - 개인정보의 보유·이용 기간:  경품 지급 완료 후 최대 3개월 (지급 내용 및 관련 응대 완료 후 폐기)\n
 개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으며, 이 경우 이벤트 참여가 제한됩니다.</string>
+
+    <!--quiz-->
+    <string name="quiz_start_button">퀴즈 시작 하기</string>
+
 
 </resources>

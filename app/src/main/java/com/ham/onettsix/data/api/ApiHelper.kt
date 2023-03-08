@@ -46,6 +46,8 @@ interface ApiHelper {
 
     suspend fun getNoticeList(): Notice
 
+    suspend fun getNewNotice(): NewNotice
+
     suspend fun setFirebaseToken(params: HashMap<String, Any?>) : Result
 
     suspend fun getInvestmentList(params: HashMap<String, Any?>): InvestmentInfo
