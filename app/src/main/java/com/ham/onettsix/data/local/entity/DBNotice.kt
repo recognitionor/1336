@@ -1,4 +1,3 @@
-/*
 package com.ham.onettsix.data.local.entity
 
 import androidx.room.ColumnInfo
@@ -14,4 +13,3 @@ data class DBNotice(
     var id: Int = 1
 }
 
-*/
