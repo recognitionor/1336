@@ -15,6 +15,7 @@ import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.Pagination
 import com.ham.onettsix.data.model.Result
+import com.ham.onettsix.data.model.RewardUnit
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.*
 
@@ -25,6 +26,9 @@ class SplashViewModel(
 ) : ViewModel() {
 
     val refreshResult = MutableLiveData<Resource<Result>>()
+
+    val rewardUnit = MutableLiveData<Resource<RewardUnit>>()
+
 
     private val firebaseTokenResult = MutableLiveData<Resource<Result>>()
 
@@ -37,6 +41,20 @@ class SplashViewModel(
                 val map = HashMap<String, Any?>()
                 map[KEY_TOKEN] = preferenceHelper?.getFireBaseToken()
                 apiHelper.setFirebaseToken(map)
+            }
+        }
+    }
+
+    fun getRewardUnit() {
+        rewardUnit.postValue(Resource.loading(null))
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            Log.d("jhlee", "refreshLogin error : ${e.message}")
+            rewardUnit.postValue(Resource.error(e.toString(), null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                preferenceHelper?.setRewardUnit(apiHelper.getRewardUnit().data)
             }
         }
     }
@@ -54,33 +72,32 @@ class SplashViewModel(
                 val user = dbHelper.getUser()
                 val accessToken = user?.accessToken ?: ""
                 val refreshToken = user?.refreshToken ?: ""
-                if (user != null &&
-                    !TextUtils.isEmpty(accessToken) &&
-                    !TextUtils.isEmpty(refreshToken)
+                if (user != null && !TextUtils.isEmpty(accessToken) && !TextUtils.isEmpty(
+                        refreshToken
+                    )
                 ) {
                     val params = HashMap<String, Any>().apply {
                         this[ParamsKeys.KEY_REFRESH_TOKEN] = refreshToken
                     }
-//                    val result = apiHelper.refreshAccessToken(params)
-//                    Log.d("jhlee", "result : $result")
-//                    if (result.data != null) {
-                        // refresh 를 했는데 데이터가 널이 아닌 경우 정상이므로 토큰값 업데이트 해준다.
-//                        RetrofitBuilder.accessToken = result.data.accessToken
-//                        dbHelper.updateUser(
-//                            DBUser(
-//                                result.data.accessToken,
-//                                result.data.refreshToken,
-//                                user.email,
-//                                user.nickName,
-//                                user.socialType,
-//                                user.profileImageId,
-//                                user.uid
-//                            )
-//                        )
-//                    } else {
-//                        // 만료되었다고 판단되면 유저 정보는 삭제 해준다.
-//                        dbHelper.deleteUser()
-//                    }
+                    val result = apiHelper.refreshAccessToken(params)
+                    if (result.data != null) {
+//                        refresh 를 했는데 데이터가 널이 아닌 경우 정상이므로 토큰값 업데이트 해준다.
+                        RetrofitBuilder.accessToken = result.data.accessToken
+                        dbHelper.updateUser(
+                            DBUser(
+                                result.data.accessToken,
+                                result.data.refreshToken,
+                                user.email,
+                                user.nickName,
+                                user.socialType,
+                                user.profileImageId,
+                                user.uid
+                            )
+                        )
+                    } else {
+                        // 만료되었다고 판단되면 유저 정보는 삭제 해준다.
+                        dbHelper.deleteUser()
+                    }
                     if (preferenceHelper?.getFireBaseToken()?.isNotEmpty() == true) {
                         serFirebaseToken()
                     }

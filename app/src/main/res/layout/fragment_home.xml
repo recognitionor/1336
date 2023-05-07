@@ -80,8 +80,8 @@
                 android:gravity="center"
                 android:lineHeight="32dp"
                 android:text="@string/home_game_who_is_lucky_who"
-                android:textColor="@color/text_black"
-                android:textSize="18dp"
+                android:textColor="@color/sub_color_gradient_red"
+                android:textSize="14dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_game_price" />

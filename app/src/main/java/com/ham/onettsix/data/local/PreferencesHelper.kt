@@ -3,12 +3,14 @@ package com.ham.onettsix.data.local
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import com.ham.onettsix.data.model.RewardUnit
 
 class PreferencesHelper private constructor(ctx: Context, val name: String) {
 
     companion object {
         const val KEY_FIREBASE_TOKEN = "KEY_FIREBASE_TOKEN"
         const val KEY_USER_ID = "KEY_USER_ID"
+        const val KEY_REWARD_UNIT = "KEY_REWARD_UNIT"
         const val KEY_CONFIRM_EULA = "KEY_CONFIRM_EULA"
 
         private var instance: PreferencesHelper? = null
@@ -55,6 +57,15 @@ class PreferencesHelper private constructor(ctx: Context, val name: String) {
 
     fun isLogin(): Boolean {
         return pref.getInt(KEY_USER_ID, -1) > 0
+    }
+
+    fun getRewardUnit(): String {
+        return pref.getString(KEY_REWARD_UNIT, "원") ?: "원"
+    }
+
+    fun setRewardUnit(rewardUnit: String) {
+        saver.putString(KEY_REWARD_UNIT, rewardUnit)
+        saver.commit()
     }
 }
 

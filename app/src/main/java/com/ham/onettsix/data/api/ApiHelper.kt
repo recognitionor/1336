@@ -40,7 +40,7 @@ interface ApiHelper {
 
     suspend fun createLottery(): Result
 
-    suspend fun getInstantLottery(): Result
+    suspend fun getInstantLottery(params: HashMap<String, Any?>): Result
 
     suspend fun getHistoryInfo(): HistoryInfo
 
@@ -59,5 +59,7 @@ interface ApiHelper {
     suspend fun changeAlarm(params: HashMap<String, Any?>): Result
 
     suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode
+
+    suspend fun getRewardUnit(): RewardUnit
 
 }

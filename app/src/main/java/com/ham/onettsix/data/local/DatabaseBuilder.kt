@@ -16,6 +16,7 @@ object DatabaseBuilder {
 //                    "PRIMARY KEY(`id`))")
         }
     }
+
     fun getInstance(context: Context): AppDatabase {
         if (INSTANCE == null) {
             synchronized(AppDatabase::class) {
@@ -25,11 +26,8 @@ object DatabaseBuilder {
         return INSTANCE!!
     }
 
-    private fun buildRoomDB(context: Context) =
-        Room.databaseBuilder(
-            context.applicationContext,
-            AppDatabase::class.java,
-            context.packageName
-        ).addMigrations(MIGRATION_1_2).build()
+    private fun buildRoomDB(context: Context) = Room.databaseBuilder(
+        context.applicationContext, AppDatabase::class.java, context.packageName
+    ).build()
 
 }

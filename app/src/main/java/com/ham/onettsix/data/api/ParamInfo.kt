@@ -48,4 +48,6 @@ object ParamsKeys {
     const val KEY_TOKEN = "token"
 
     const val KEY_START_EPISODE = "startEpisode"
+
+    const val KEY_LOTTERY_COUNT = "lotteryCount"
 }

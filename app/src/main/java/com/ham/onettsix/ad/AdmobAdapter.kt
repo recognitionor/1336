@@ -1,30 +1,65 @@
 package com.ham.onettsix.ad
 
 import android.app.Activity
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions
+import com.ham.onettsix.data.model.RVConfig
+import com.ham.onettsix.data.model.VideoSignature
+
 
 class AdmobAdapter {
     //"ca-app-pub-5672204188980144/9812109243"
     companion object {
-        fun load(
-            activity: Activity,
-            adId: String,
-            callback: RewardedAdLoadCallback
-        ) {
-            MobileAds.initialize(
-                activity
-            ) {
-                val adRequest = AdRequest.Builder().build()
-                RewardedAd.load(
-                    activity,
-                    adId,
-                    adRequest,
-                    callback
-                )
+        private var instance: AdmobAdapter? = null
+        fun getInstance(): AdmobAdapter {
+            if (instance == null) {
+                instance = AdmobAdapter()
             }
+            return instance as AdmobAdapter
+        }
+    }
+
+    fun loadBanner(activity: Activity, adView: AdView) {
+        MobileAds.initialize(activity) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+        }
+    }
+
+    fun load(
+        activity: Activity,
+        videoData: VideoSignature.Data,
+        rvConfig: RVConfig,
+        listener: AdManager.AdManagerListener
+    ) {
+        MobileAds.initialize(
+            activity
+        ) {
+            val adRequest = AdRequest.Builder().build()
+            RewardedAd.load(
+                activity,
+                rvConfig.placementId,
+                adRequest,
+                object : RewardedAdLoadCallback() {
+
+                    override fun onAdFailedToLoad(error: LoadAdError) {
+                        super.onAdFailedToLoad(error)
+                        listener.onFailLoaded(error.message)
+                    }
+
+                    override fun onAdLoaded(rewardedAd: RewardedAd) {
+                        super.onAdLoaded(rewardedAd)
+                        val serverSideVerificationOptions = ServerSideVerificationOptions.Builder()
+                        serverSideVerificationOptions.setUserId(videoData.rvId)
+                        serverSideVerificationOptions.setCustomData(videoData.signature)
+                        listener.onSuccessLoaded()
+                        rewardedAd.show(
+                            activity
+                        ) {}
+                    }
+                })
         }
     }
 }

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.ham.onettsix.data.api.ApiHelperImpl
@@ -42,6 +43,7 @@ class SplashActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
         }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 200)
@@ -51,6 +53,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupObserver()
         splashViewModel.refreshLogin()
+        splashViewModel.getRewardUnit()
         binding.splashErrorBtn.setOnClickListener {
             splashViewModel.refreshLogin()
         }

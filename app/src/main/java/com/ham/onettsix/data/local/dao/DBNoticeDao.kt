@@ -1,3 +1,4 @@
+/*
 package com.ham.onettsix.data.local.dao
 
 import androidx.room.*
@@ -12,4 +13,4 @@ interface DBNoticeDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertNoticeId(noticeId: DBNotice)
-}
+}*/

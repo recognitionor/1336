@@ -58,7 +58,7 @@ interface ApiService {
     suspend fun createLottery(): Result
 
     @GET("getInstantLottery")
-    suspend fun getInstantLottery(): Result
+    suspend fun getInstantLottery(@QueryMap params: HashMap<String, Any?>): Result
 
     @POST("getLottery")
     suspend fun getLottery(@Body params: HashMap<String, Any?>): Result
@@ -92,7 +92,11 @@ interface ApiService {
 
     @GET("/getSecretCode")
     suspend fun getSecretCode(@QueryMap params: HashMap<String, Any?>): WinnerSecretCode
+
     @GET("/investmentTagList")
     suspend fun getInvestmentTagList(): InvestmentTag
+
+    @GET("/get/rewardUnit")
+    suspend fun getRewardUnit(): RewardUnit
 
 }

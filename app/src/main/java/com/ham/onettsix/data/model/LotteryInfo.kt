@@ -38,6 +38,9 @@ data class LotteryInfo(
         @SerializedName("winningAmount")
         val winningAmount: Int,
 
+        @SerializedName("rewardUnit")
+        val rewardUnit: Int,
+
         @SerializedName("joinUserCount")
         val joinUserCount: Long,
 

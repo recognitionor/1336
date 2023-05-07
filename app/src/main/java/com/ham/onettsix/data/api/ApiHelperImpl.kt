@@ -44,7 +44,8 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun createLottery(): Result = apiService.createLottery()
 
-    override suspend fun getInstantLottery(): Result = apiService.getInstantLottery()
+    override suspend fun getInstantLottery(params: HashMap<String, Any?>): Result =
+        apiService.getInstantLottery(params)
 
     override suspend fun getHistoryInfo(): HistoryInfo = apiService.getHistoryInfo()
 
@@ -61,8 +62,12 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun withDraw(): Result = apiService.withDraw()
 
-    override suspend fun changeAlarm(params: HashMap<String, Any?>): Result = apiService.changeAlarm(params)
+    override suspend fun changeAlarm(params: HashMap<String, Any?>): Result =
+        apiService.changeAlarm(params)
 
-    override suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode = apiService.getSecretCode(params)
+    override suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode =
+        apiService.getSecretCode(params)
+
+    override suspend fun getRewardUnit(): RewardUnit = apiService.getRewardUnit()
 
 }

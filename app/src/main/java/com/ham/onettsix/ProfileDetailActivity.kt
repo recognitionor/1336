@@ -118,6 +118,7 @@ class ProfileDetailActivity : AppCompatActivity(), View.OnClickListener {
                 activityResult.launch(Intent(this, NoticeActivity::class.java))
             }
             binding.profileDetailWithdraw -> {
+                Log.d("jhlee", "profileDetailViewModel.withDraw()")
                 profileDetailViewModel.withDraw()
             }
             binding.loginToolbarBack -> {

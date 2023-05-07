@@ -13,13 +13,14 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
+        maven { url 'https://android-sdk.is.com/' }
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 
 android {
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        enabled = true
     }
     signingConfigs {
         key {
@@ -124,5 +125,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+    /*ad*/
+    implementation 'com.ironsource.sdk:mediationsdk:7.2.7'
+
 
 }

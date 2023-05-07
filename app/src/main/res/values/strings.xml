@@ -11,6 +11,7 @@
     <string name="mail">mail</string>
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
+    <string name="count">개</string>
     <string name="day_ago">일전</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
     <string name="list_empty">리스트가 없습니다.</string>
@@ -40,7 +41,8 @@
     <string name="lottery_history_count">제 %1$s회</string>
     <string name="lottery_history_title">육뉵이 발표</string>
     <string name="lottery_history_end_date">(%1$s 추첨)</string>
-    <string name="lottery_history_next_time">당첨자 없음…\n다음 기회에</string>
+    <string name="lottery_history_next_time">행운의 주인공이 되어 보세요</string>
+    <string name="lottery_history_empty">-</string>
     <string name="lottery_history_winning_btn">당첨 포인트 받으러가기 신나게~~~</string>
     <string name="lottery_history_winning_info_message">당첨 발표 후 7일내 마이페이지를 통해 지급 신청을 해야만 지급이 가능합니다.</string>
     <string name="lottery_history_list_title">역대 육뉵이</string>
@@ -64,9 +66,9 @@
     <string name="home_game_get_ticket_btn">행운의 당첨자 도전!</string>
     <string name="home_profile_user_name">%1$s 님은</string>
     <string name="home_profile_user_reward">%1$s 입니다.</string>
-    <string name="home_game_who_is_lucky_who">행운의 육뉵이는 뉴규?</string>
+    <string name="home_game_who_is_lucky_who">행운의 당첨자는 뉴규?</string>
     <string name="home_game_who_is_lucky_next">행운의 육뉵이는 다음 기회에</string>
-    <string name="home_game_who_is_lucky">행운의 육뉵이는</string>
+    <string name="home_game_who_is_듬ucky">행운의 육뉵이는</string>
     <string name="home_game_now_chance_percent">지금 참여하면 당첨 확률 %1$s%</string>
     <string name="home_game_now_left_chance">남은 찬스 %1$s개</string>
     <string name="home_game_ticket_info">%1$s명이 참여해서\n총 %2$s개의 티켓이 모였어요.</string>
@@ -128,6 +130,9 @@
     <string name="game_draw">무승부</string>
     <string name="game_expire">참여 할수 있는 횟수를 초과 했습니다.</string>
     <string name="game_try_dialog_title">육뉵이에 도전하시겠습니까?</string>
+    <string name="game_try_dialog_chance">당첨 확률 : %1$s</string>
+    <string name="game_try_dialog_chance_caution">당첨자는 한명이기에 동시 참여하는 경우 확률에 관계없이 당첨이 보장이 되지 않을 수 있음</string>
+
     <string name="game_try_dialog_content">소지한 티켓 1개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
     <string name="no_ticket">티켓이 없습니다.</string>
     <string name="no_ticket_title">앗! 응모 가능한 티켓이 없습니다.</string>

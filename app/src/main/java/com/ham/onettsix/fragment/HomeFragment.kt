@@ -1,14 +1,17 @@
 package com.ham.onettsix.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -28,10 +31,7 @@ import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.FragmentHomeBinding
-import com.ham.onettsix.dialog.DialogDismissListener
-import com.ham.onettsix.dialog.OneButtonDialog
-import com.ham.onettsix.dialog.TwoButtonDialog
-import com.ham.onettsix.dialog.WinningDialog
+import com.ham.onettsix.dialog.*
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
@@ -70,7 +70,38 @@ class HomeFragment : Fragment(), View.OnClickListener {
         setupObserver()
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun setupObserver() {
+        homeViewModel.gameTypeInfo.observe(this) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.data?.let { data ->
+                        val remainTicket = data.allTicket - data.usedTicket
+                        val remainChance =
+                            homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount ?: 0
+                        if (remainTicket > 0 && remainChance > 0) {
+                            homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount
+                            ChallengeGameDialog(remainTicket.toInt(), remainChance) { isPositive: Boolean, remainTicket: Int, dialog: DialogFragment ->
+                                if (isPositive) {
+                                    homeViewModel.getInstanceLottery(remainTicket)
+                                }
+                                dialog.dismiss()
+                            }.show(parentFragmentManager, ChallengeGameDialog.TAG)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                requireContext().getString(R.string.no_ticket),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+                Status.LOADING -> {
+                }
+                Status.ERROR -> {
+                }
+            }
+        }
         homeViewModel.winningViewModel.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -97,9 +128,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
                         binding.homeGameInfo.text =
-                            getString(R.string.home_game_info, lotteryInfo.data.episode)
-                        binding.homeGamePrice.text =
-                            getString(R.string.home_game_price, lotteryInfo.data.winningAmount)
+                            getString(R.string.home_game_info, lotteryInfo.data.episode.toString())
+                        binding.homeGamePrice.text = lotteryInfo.data.winningAmount.toString() + PreferencesHelper.getInstance(requireContext()).getRewardUnit()
                         if (lotteryInfo.resultCode == ResultCode.LOTTERY_INFO_PROCEEDING) {
                             binding.homeGameSixSixManQuestionImg.visibility = View.VISIBLE
                             binding.homeRemainDrawingTimeTitle.text =
@@ -107,12 +137,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.limitedDate)
                             binding.homeGameTicketInfo.text = getString(
                                 R.string.home_game_ticket_info,
-                                lotteryInfo.data.joinUserCount,
-                                lotteryInfo.data.totalJoinCount
+                                lotteryInfo.data.joinUserCount.toString(),
+                                lotteryInfo.data.totalJoinCount.toString()
                             )
                             binding.homeGameNowLeftChance.text = getString(
                                 R.string.home_game_now_left_chance,
-                                lotteryInfo.data.remainLotteryCount
+                                lotteryInfo.data.remainLotteryCount.toString()
                             )
                             binding.homeGameNowLeftChance.visibility = View.VISIBLE
                             binding.homeGameTicketInfo.visibility = View.VISIBLE
@@ -123,7 +153,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             binding.homeRemainDrawingTimeTitle.text =
                                 getString(R.string.home_remain_drawing_next_time_title)
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.nextEpisodeStartDate)
-                            binding.homeRemainTimeView.stopTime()
                             binding.homeGameNowLeftChance.visibility = View.GONE
                             binding.homeGameTicketInfo.visibility = View.GONE
                             if (TextUtils.isEmpty(lotteryInfo.data.userId)) {
@@ -133,16 +162,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 Glide.with(this)
                                     .load(ProfileImageUtil.getImageId(lotteryInfo.data.profileImageId))
                                     .into(binding.homeGameSixSixManImg)
-                                val preString = getString(R.string.home_game_who_is_lucky)
-                                val ssb =
-                                    SpannableStringBuilder("$preString ${lotteryInfo.data.nickName}#${lotteryInfo.data.userId}")
-                                ssb.setSpan(
-                                    ForegroundColorSpan(R.color.main_color),
-                                    preString.length,
-                                    ssb.length,
-                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                                )
-                                binding.homeGameWhoIsLucky.text = ssb
+//                                val preString = getString(R.string.home_game_who_is_lucky)
+//                                val ssb =
+//                                    SpannableStringBuilder("$preString ${lotteryInfo.data.nickName}#${lotteryInfo.data.userId}")
+//                                ssb.setSpan(
+//                                    ForegroundColorSpan(R.color.main_color),
+//                                    preString.length,
+//                                    ssb.length,
+//                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//                                )
+//                                binding.homeGameWhoIsLucky.text = ssb
                             }
                         }
                     }
@@ -168,18 +197,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
-
             binding.homeGameGetTicketBtn -> {
                 if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
-                    TwoButtonDialog(
-                        getString(R.string.game_try_dialog_title),
-                        getString(R.string.game_try_dialog_content)
-                    ) { isPositive: Boolean, dialog: DialogFragment ->
-                        if (isPositive) {
-                            homeViewModel.getInstanceLottery()
-                        }
-                        dialog.dismiss()
-                    }.show(parentFragmentManager, TwoButtonDialog.TAG)
+                    homeViewModel.getGameTypeInfo()
                 } else {
                     OneButtonDialog(content = getString(R.string.login_is_required)) { dialog ->
                         dialog.dismiss()

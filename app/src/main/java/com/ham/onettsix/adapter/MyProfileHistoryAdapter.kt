@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
+import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.HistoryInfo
 import com.ham.onettsix.databinding.RvItemMyProfileHistoryBinding
 import java.text.SimpleDateFormat
@@ -27,12 +28,10 @@ class MyProfileHistoryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HistoryInfo.Data) {
             binding.myProfileHistoryItemEpisode.text =
-                itemView.resources.getString(R.string.profile_history_item_episode, item.episode)
+                itemView.resources.getString(R.string.profile_history_item_episode, item.episode.toString())
             binding.myProfileHistoryItemJoinInfo.text = "${item.joinCount} / ${item.totalCount}"
 
-            binding.myProfileHistoryItemPrice.text = itemView.resources.getString(
-                R.string.profile_history_item_price, item.winningAmount
-            )
+            binding.myProfileHistoryItemPrice.text = item.winningAmount.toString() + PreferencesHelper.getInstance(binding.root.context).getRewardUnit()
             when (item.grade) {
                 0 -> {
                     binding.myProfileHistoryItemStatus.setTextColor(R.color.text_black)

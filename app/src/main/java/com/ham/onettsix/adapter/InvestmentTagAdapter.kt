@@ -38,10 +38,10 @@ class InvestmentTagAdapter(var itemClickListener: InvestmentAdapterTagItemClickL
     override fun onBindViewHolder(holder: InvestmentTagViewHolder, position: Int) {
         holder.bind(list[position], position == selectedIndex) {
             val oldIndex = selectedIndex
-            this.selectedIndex = position
+            this.selectedIndex = list[position].id
             itemClickListener.onItemClick(list[position])
             notifyItemChanged(oldIndex)
-            notifyItemChanged(selectedIndex)
+            notifyItemChanged(position)
         }
     }
 

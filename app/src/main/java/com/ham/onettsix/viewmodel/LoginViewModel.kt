@@ -87,6 +87,7 @@ class LoginViewModel(
                     this[KEY_ENABLE_ALARM] = enableAlarm
                 }
                 val result = apiHelper.signIn(hashMap)
+                Log.d("jhlee", "signIn : result : $result")
                 result?.data?.socialType = socialType
                 result?.data?.socialAccessToken = token
                 val needSigninUp = result?.data?.needSignUp == true

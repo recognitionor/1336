@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
+import com.ham.onettsix.ad.AdmobAdapter
 import com.ham.onettsix.adapter.InvestmentAdapter
 import com.ham.onettsix.adapter.InvestmentTagAdapter
 import com.ham.onettsix.data.api.ApiHelperImpl
@@ -80,7 +81,7 @@ class InvestmentFragment : Fragment() {
         investmentAdapter =
             InvestmentAdapter(object : InvestmentAdapter.InvestmentAdapterItemClickListener {
                 override fun onItemClick(data: InvestmentInfo.Data) {
-                    when(data.type) {
+                    when (data.type) {
                         0 -> {
                             result.launch(
                                 Intent(
@@ -90,7 +91,6 @@ class InvestmentFragment : Fragment() {
                         }
                         1 -> {
                             result.launch(Intent(Intent.ACTION_VIEW, Uri.parse(data.link)))
-                            Log.d("jhlee", data.link)
 
                         }
                     }
@@ -132,13 +132,7 @@ class InvestmentFragment : Fragment() {
                 Status.SUCCESS -> {
                     progressDialog.dismiss()
                     it.data?.data?.let { list ->
-                        if (list.size < 1) {
-                            context?.let { ctx ->
-                                Toast.makeText(
-                                    ctx, R.string.youtube_last_list, Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        } else {
+                        if (list.size > 0) {
                             investmentAdapter.setAdapterList(list)
                             investmentAdapter.notifyDataSetChanged()
                         }
@@ -165,7 +159,7 @@ class InvestmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        AdmobAdapter.getInstance().loadBanner(requireActivity(), binding.adView)
         binding.investmentInfoRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

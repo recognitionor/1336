@@ -1,6 +1,7 @@
 package com.ham.onettsix
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,7 @@ class NoticeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("jhlee", "onCreate")
         binding = ActivityNoticeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupObserver()
@@ -57,6 +59,7 @@ class NoticeActivity : AppCompatActivity(), View.OnClickListener {
         noticeViewModel.notice.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    Log.d("jhlee", "SUCCESS")
                     it.data?.data?.let { list ->
                         if (list.isEmpty()) {
                             OneButtonDialog("", getString(R.string.list_empty)) { dialog ->

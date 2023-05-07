@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
+import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.model.GameTypeInfo
 import com.ham.onettsix.data.model.LotteryInfo
 import com.ham.onettsix.data.model.NewNotice
 import com.ham.onettsix.data.model.Result
@@ -29,13 +31,34 @@ class HomeViewModel(
 
     val winningViewModel = MutableLiveData<Resource<Result>>()
 
-    fun getInstanceLottery() {
+    val gameTypeInfo = MutableLiveData<Resource<GameTypeInfo>>()
+
+    fun getGameTypeInfo() {
+        gameTypeInfo.postValue(Resource.loading(null))
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            gameTypeInfo.postValue(Resource.error("", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val params = HashMap<String, Any?>().apply {
+                    this[ParamsKeys.KEY_GAME_TYPE] = RPSGameViewModel.GAME_TYPE_RPC
+                }
+                val result = apiHelper.getGameCount(params)
+                gameTypeInfo.postValue(Resource.success(result))
+            }
+        }
+    }
+
+    fun getInstanceLottery(remainTicket: Int) {
         val exceptionHandler = CoroutineExceptionHandler { _, _ ->
             winningViewModel.postValue(Resource.error("", null))
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-                val result = apiHelper.getInstantLottery()
+                val param = HashMap<String, Any?>()
+                param[ParamsKeys.KEY_LOTTERY_COUNT] = remainTicket
+                val result = apiHelper.getInstantLottery(param)
                 winningViewModel.postValue(Resource.success(result))
             }
         }
@@ -59,10 +82,12 @@ class HomeViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getLotteryInfo("ALL")
+                Log.d("jhlee", "result : $result")
                 lotteryInfo.postValue(Resource.success(result))
             }
         }
     }
+
     fun getNewNotice() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             newNotice.postValue(Resource.error("newNotice error", null))
