@@ -26,20 +26,8 @@ object DatabaseBuilder {
         return INSTANCE!!
     }
 
-    private val migration1to2 = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL(
-                "CREATE TABLE IF NOT EXISTS `DBNotice` " +
-                        "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                        "`noticeId` TEXT NOT NULL, " +
-                        "UNIQUE(`noticeId`))"
-            )
-        }
-    }
-
-
     private fun buildRoomDB(context: Context) = Room.databaseBuilder(
         context.applicationContext, AppDatabase::class.java, context.packageName
-    ).addMigrations(migration1to2).build()
+    ).fallbackToDestructiveMigration().build()
 
 }
