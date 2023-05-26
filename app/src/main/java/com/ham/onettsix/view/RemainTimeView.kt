@@ -1,10 +1,12 @@
 package com.ham.onettsix.view
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
 import com.ham.onettsix.R
 import com.ham.onettsix.databinding.ToolbarLayoutBinding
 import com.ham.onettsix.databinding.ViewRemainDrawingTimeBinding
@@ -70,13 +72,20 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                 }
             } else {
                 while (true) {
-                    Log.d("jhlee", "while")
                     val targetTime =
-                        LocalDateTime.ofInstant(
-                            Date(limitedDate).toInstant(),
-                            ZoneId.systemDefault()
-                        )
-                    val totalSec = LocalDateTime.now().until(targetTime, ChronoUnit.SECONDS)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            LocalDateTime.ofInstant(
+                                Date(limitedDate).toInstant(),
+                                ZoneId.systemDefault()
+                            )
+                        } else {
+                            java.time.LocalTime.now()
+                        }
+                    val totalSec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        LocalDateTime.now().until(targetTime, ChronoUnit.SECONDS)
+                    } else {
+                        0
+                    }
                     val day = totalSec / (60 * 60 * 24)
                     val hour = (totalSec % (60 * 60 * 24)) / (60 * 60)
                     val min = (totalSec % (60 * 60)) / (60)

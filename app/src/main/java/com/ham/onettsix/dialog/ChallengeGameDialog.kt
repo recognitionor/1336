@@ -29,6 +29,7 @@ class ChallengeGameDialog(
 
         binding = DialogChallengeGameBinding.inflate(layoutInflater)
         binding.twoButtonPositive.isEnabled = false
+
         if (remainTicket > remainChance) {
             binding.dialogChallengeSeekbar.max = remainChance.toInt()
         } else {
@@ -42,7 +43,9 @@ class ChallengeGameDialog(
                     R.string.game_try_dialog_chance,
                     String.format("%.3f", ((value.toDouble() / remainChance) * 100))
                 ) + "%"
+                binding.dialogChallengeChanceCautionTv.text = getString(R.string.game_try_dialog_remain, remainTicket, remainTicket - value)
                 binding.twoButtonPositive.isEnabled = value > 0
+                binding.twoButtonContent.text = getString(R.string.game_try_dialog_content, value)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -52,8 +55,9 @@ class ChallengeGameDialog(
             }
 
         })
+        binding.dialogChallengeChanceCautionTv.text = getString(R.string.game_try_dialog_remain, remainTicket, 0)
         binding.twoButtonTitle.text = getString(R.string.game_try_dialog_title)
-        binding.twoButtonContent.text = getString(R.string.game_try_dialog_content)
+        binding.twoButtonContent.text = getString(R.string.game_try_dialog_content, 0)
         binding.twoButtonPositive.setOnClickListener {
             callback.invoke(true, binding.dialogChallengeSeekbar.progress, this@ChallengeGameDialog)
         }

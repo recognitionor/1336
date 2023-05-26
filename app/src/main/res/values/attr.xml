@@ -4,4 +4,13 @@
         <attr name="toolbar_title" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="HomeGameHelpLayout">
+        <attr name="home_game_help_title" format="string" />
+        <attr name="home_game_help_count" format="reference" />
+        <attr name="home_game_help_content" format="string" />
+    </declare-styleable>
+
+
+
+
 </resources>

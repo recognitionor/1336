@@ -51,8 +51,12 @@
 
 
     <!--Home-->
+    <string name="home_game_progress_title">진행\n%1$s회차</string>
+    <string name="home_game_status_title">행운의 육뉵이가 될\n오직 단 1명에게</string>
+    <string name="home_game_status_won_price">%1$s원</string>
+    <string name="home_game_status_message">이벤트 기간 내\n제한된 티켓 수만큼 응모하면\n상금이 100% 내 품 안으로!</string>
     <string name="home_remain_drawing_next_time_title">다음 게임까지\n남은 시간</string>
-    <string name="home_remain_drawing_time_title">당첨까지\n남은 시간</string>
+    <string name="home_remain_drawing_time_title">당첨까지 남은 시간</string>
     <string name="home_remain_drawing_time_days">DAYS</string>
     <string name="home_remain_drawing_time_hours">HOURS</string>
     <string name="home_remain_drawing_time_mins">MINUTES</string>
@@ -68,10 +72,23 @@
     <string name="home_profile_user_reward">%1$s 입니다.</string>
     <string name="home_game_who_is_lucky_who">행운의 당첨자는 뉴규?</string>
     <string name="home_game_who_is_lucky_next">행운의 육뉵이는 다음 기회에</string>
-    <string name="home_game_who_is_듬ucky">행운의 육뉵이는</string>
-    <string name="home_game_now_chance_percent">지금 참여하면 당첨 확률 %1$s%</string>
-    <string name="home_game_now_left_chance">남은 찬스 %1$s개</string>
-    <string name="home_game_ticket_info">%1$s명이 참여해서\n총 %2$s개의 티켓이 모였어요.</string>
+    <string name="home_game_who_is_lucky">행운의 육뉵이는</string>
+    <string name="home_game_now_chance_percent">지금 참여 하면 당첨 확률 %1$s%</string>
+    <string name="home_game_now_left_chance">당첨 까지\n티켓 %1$s개 남음!</string>
+    <string name="home_game_ticket_info">%1$s 개 모두 응모 시 당첨 확률 100%</string>
+    <string name="home_game_ticket_info_allin">%1$s 개 모두 응모 시 당첨 확률 100%%</string>
+    <string name="home_game_current_ticket_percent">내가 가진 %1$s개 모두 응모 시 확률 %2$s%%</string>
+    <string name="home_game_current_ticket_update_info">%1$s시간 마다 업데이트 됩니다.(%2$s기준)</string>
+    <string name="home_game_help_info">이벤트 참여 순서</string>
+    <string name="home_game_help_content_1">출석체크 또는 광고보기로 티켓 획득</string>
+    <string name="home_game_help_content_2">기도 메타로 당첨 까지 남은 티켓이 0이 될때 까지 "당첨자 도전"</string>
+    <string name="home_game_help_content_3">당첨 알림 확인 후 마이 페이지 에서 정보 입력</string>
+    <string name="home_game_help_title_1">Get 티켓!</string>
+    <string name="home_game_help_title_2">홈화면</string>
+    <string name="home_game_help_title_3">육뉵이 당첨</string>
+    <string name="home_game_help_count_1">&#x261D;</string>
+    <string name="home_game_help_count_2">&#x270C;</string>
+    <string name="home_game_help_count_3">&#x270C;&#xFE0F;&#x270C;&#xFE0F;&#x270C;&#xFE0F;</string>
     <string name="home_game_go_history_title">역대 육뉵이 보러가기</string>
     <string name="home_game_caution_title">유의사항</string>
     <string name="home_game_caution_content">카운트 시작 시 응모 가능한 횟수와 당첨 번호가 지정됩니다.\n이벤트는 최대 참여자수에 도달하면 100% 당첨 됩니다.\n얻은 티켓은 이벤트 운영 기간동안만 유효합니다.\n카운트 다운이 끝나면 모두 회수됩니다.</string>
@@ -131,9 +148,10 @@
     <string name="game_expire">참여 할수 있는 횟수를 초과 했습니다.</string>
     <string name="game_try_dialog_title">육뉵이에 도전하시겠습니까?</string>
     <string name="game_try_dialog_chance">당첨 확률 : %1$s</string>
+    <string name="game_try_dialog_remain">내 보유 티켓 : %1$d, 잔여 티켓 : %2$d</string>
     <string name="game_try_dialog_chance_caution">당첨자는 한명이기에 동시 참여하는 경우 확률에 관계없이 당첨이 보장이 되지 않을 수 있음</string>
 
-    <string name="game_try_dialog_content">소지한 티켓 1개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
+    <string name="game_try_dialog_content">소지한 티켓 %1$d개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
     <string name="no_ticket">티켓이 없습니다.</string>
     <string name="no_ticket_title">앗! 응모 가능한 티켓이 없습니다.</string>
     <string name="no_ticket_msg">확인을 누르면 티켓을 얻을 수 있는 페이지로 이동합니다. 티켓을 모아 육뉵이에 도전해보세요.</string>

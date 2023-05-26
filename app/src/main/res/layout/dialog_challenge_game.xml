@@ -67,7 +67,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_challenge_chance_caution_tv"
-        android:text="0 개"
+        android:text="@string/home_game_help_title_1"
         android:textSize="18dp"
         android:gravity="center"
         android:fontFamily="@font/gmarket_sans_ttf_bold"
@@ -80,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
-
 
         <View
             android:layout_width="0dp"
