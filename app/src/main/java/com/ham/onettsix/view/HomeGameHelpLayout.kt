@@ -14,7 +14,6 @@ class HomeGameHelpLayout(ctx: Context, attrs: AttributeSet) : FrameLayout(ctx, a
     private lateinit var binding: HomeGameHelpLayoutBinding
 
     init {
-        Log.d("jhlee", "HomeGameHelpLayout")
         binding = HomeGameHelpLayoutBinding.inflate(LayoutInflater.from(context))
         val view = binding.root
         view.apply {

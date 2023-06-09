@@ -13,9 +13,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ham.onettsix.LoginActivity
 import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.adapter.HomeGameProgressAdapter
+import com.ham.onettsix.adapter.RecyclerDecorationWidth
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_LOSE
@@ -31,10 +34,11 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.HomeViewModel
 
-
 class HomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var adapter: HomeGameProgressAdapter
 
     val homeViewModel by lazy {
         ViewModelProviders.of(
@@ -57,42 +61,47 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        Log.d("jhlee", "onCreateView")
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding.homeGameProgressRv.adapter = adapter
+        binding.homeGameProgressRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeGameProgressRv.addItemDecoration(
+            RecyclerDecorationWidth(
+                resources.getDimension(
+                    R.dimen.rv_divider_width
+                )
+            )
+        )
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserver()
-        Log.d("jhlee", "onCreate")
+        adapter = HomeGameProgressAdapter()
     }
 
     @SuppressLint("ResourceAsColor")
     private fun setupObserver() {
+        homeViewModel.episodeList.observe(this) { it ->
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.data?.let { list ->
+                        adapter.setItemList(list)
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+
+                Status.ERROR -> {
+                }
+
+                Status.LOADING -> {
+                }
+            }
+        }
         homeViewModel.gameTypeInfo.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.data?.let { data ->
-                        val remainTicket = data.allTicket - data.usedTicket
-                        val remainChance =
-                            homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount ?: 0
-                        if (remainChance > 0) {
-                            if (PreferencesHelper.getInstance(requireContext()).isLogin()) {
-                                binding.homeGameCurrentTicketPercent.isVisible = true
-                                binding.homeGameCurrentTicketPercent.text = getString(
-                                    R.string.home_game_current_ticket_percent,
-                                    remainTicket.toString(),
-                                    String.format(
-                                        "%.2f",
-                                        (((remainTicket.toDouble() / remainChance.toDouble())) * 100L)
-                                    )
-                                )
-                            } else {
-                                binding.homeGameCurrentTicketPercent.isVisible = false
-                            }
-                        }
-                    }
                 }
 
                 Status.LOADING -> {
@@ -139,33 +148,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 (homeViewModel.gameTypeInfo.value?.data?.data?.allTicket
                                     ?: 0) - (homeViewModel.gameTypeInfo.value?.data?.data?.usedTicket
                                     ?: 0)
-                            val remainChance = lotteryInfo.data.remainLotteryCount
-                            if (remainChance > 0) {
-                                if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
-                                    binding.homeGameCurrentTicketPercent.isVisible = true
-                                    binding.homeGameCurrentTicketPercent.text = getString(
-                                        R.string.home_game_current_ticket_percent,
-                                        remainTicket.toString(),
-                                        String.format(
-                                            "%.2f",
-                                            (((remainTicket.toDouble() / remainChance.toDouble())) * 100L)
-                                        )
-                                    )
-                                } else {
-                                    binding.homeGameCurrentTicketPercent.isVisible = false
-                                }
-                            }
-                            binding.homeGameNowLeftChance.text = getString(
-                                R.string.home_game_now_left_chance,
-                                "${lotteryInfo.data.remainLotteryCount}"
-                            )
-                            binding.homeGameTicketInfo.text =
-                                getString(R.string.home_game_ticket_info)
 
+                            val ratePercent: Float =
+                                ((lotteryInfo.data.totalJoinCount.toFloat() / (lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount)) * 100).toFloat()
+                            binding.homeGameTicketParticipationRate.text = "$ratePercent%"
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.limitedDate)
-                            binding.homeGameTicketInfo.text = getString(
-                                R.string.home_game_ticket_info_allin,
-                                lotteryInfo.data.remainLotteryCount.toString()
+                            binding.homeGameCurrentTicketInfo.text = getString(
+                                R.string.home_game_current_ticket_info,
+                                lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount,
+                                lotteryInfo.data.totalJoinCount
                             )
                         } else {
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.nextEpisodeStartDate)
@@ -188,6 +179,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         homeViewModel.getLotteryInfo()
         homeViewModel.getNewNotice()
         homeViewModel.getGameTypeInfo()
+        homeViewModel.getEpisodeList()
 
         binding.homeGameGetTicketBtn.setOnClickListener(this)
         binding.homeGameHelp1.setOnClickListener(this)
@@ -248,7 +240,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     fun refresh() {
-        Log.d("jhlee", "refresh")
         homeViewModel.getGameTypeInfo()
         homeViewModel.getLotteryInfo()
     }

@@ -5,43 +5,33 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:paddingBottom="20dp"
-    android:paddingTop="20dp"
+    android:layout_marginTop="20dp"
     android:background="@drawable/home_game_status_background"
     android:gravity="center"
     android:orientation="vertical"
-    app:layout_constraintTop_toBottomOf="@+id/home_game_progress_title_layout">
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    app:layout_constraintTop_toBottomOf="@+id/home_game_progress_rv">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_game_status_winning_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24dp"
-        android:text="@string/home_game_status_title" />
+        android:text="@string/home_game_status_title"
+        android:textColor="@color/white"
+        android:textSize="24dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_game_status_won_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
         android:fontFamily="@font/gmarket_sans_ttf_bold"
         android:gravity="center"
         android:text="@string/home_game_status_won_price"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/main_color"
+        android:textColor="@color/white"
         android:textSize="40dp" />
-
-    <View
-        android:layout_width="200dp"
-        android:layout_height="1dp"
-        android:background="@color/white" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/home_game_status_message"
-        android:layout_marginTop="12dp"
-        android:textSize="13dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

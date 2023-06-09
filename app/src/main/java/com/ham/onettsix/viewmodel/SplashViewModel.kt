@@ -48,7 +48,6 @@ class SplashViewModel(
     fun getRewardUnit() {
         rewardUnit.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "refreshLogin error : ${e.message}")
             rewardUnit.postValue(Resource.error(e.toString(), null))
         }
 
@@ -60,10 +59,8 @@ class SplashViewModel(
     }
 
     fun refreshLogin() {
-        Log.d("jhlee", "refreshLogin : ")
         refreshResult.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "refreshLogin error : ${e.message}")
             refreshResult.postValue(Resource.error("", Result("", Pagination(), -1, "", "")))
         }
 

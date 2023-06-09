@@ -35,10 +35,8 @@ class IronSourceAdapter private constructor() {
         rvConfig: RVConfig,
         listener: AdManager.AdManagerListener
     ) {
-        Log.d("jhlee", "IronSource : $rvConfig")
         IronSource.init(
             activity, APP_KEY, {
-                Log.d("jhlee", "IronSource init : $rvConfig")
                 IronSource.setManualLoadRewardedVideo(object : RewardedVideoManualListener {
 
                     override fun onRewardedVideoAdOpened() {
@@ -76,7 +74,6 @@ class IronSourceAdapter private constructor() {
                     }
 
                     override fun onRewardedVideoAdLoadFailed(error: IronSourceError?) {
-                        Log.d("jhlee", "onRewardedVideoAdLoadFailed")
                         listener.onFailLoaded(error?.errorMessage ?: "")
                     }
                 })

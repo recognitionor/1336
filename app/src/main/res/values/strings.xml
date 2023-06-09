@@ -3,6 +3,7 @@
     <!--common-->
     <string name="all">전체</string>
     <string name="must">[필수]</string>
+    <string name="new_eng">NEW</string>
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
     <string name="waiting">대기</string>
@@ -51,12 +52,18 @@
 
 
     <!--Home-->
-    <string name="home_game_progress_title">진행\n%1$s회차</string>
-    <string name="home_game_status_title">행운의 육뉵이가 될\n오직 단 1명에게</string>
+    <string name="home_game_progress_open_percent">현재 티켓 오픈율 👀</string>
+    <string name="home_game_progress_episode">%1$s회차</string>
+    <string name="home_game_progress_title">%1$s회차</string>
+    <string name="home_game_progress_end_date">마감일 %1$s</string>
+    <string name="home_game_progress_now">게임 진행중</string>
+    <string name="home_game_progress_future">대기중 회차</string>
+    <string name="home_game_progress_winning_amount">당첨금 %1$d</string>
+    <string name="home_game_status_title">오직 단 1명의 행운의 육뉵이 에게</string>
     <string name="home_game_status_won_price">%1$s원</string>
     <string name="home_game_status_message">이벤트 기간 내\n제한된 티켓 수만큼 응모하면\n상금이 100% 내 품 안으로!</string>
     <string name="home_remain_drawing_next_time_title">다음 게임까지\n남은 시간</string>
-    <string name="home_remain_drawing_time_title">당첨까지 남은 시간</string>
+    <string name="home_remain_drawing_time_title">D-DAY</string>
     <string name="home_remain_drawing_time_days">DAYS</string>
     <string name="home_remain_drawing_time_hours">HOURS</string>
     <string name="home_remain_drawing_time_mins">MINUTES</string>
@@ -80,9 +87,11 @@
     <string name="home_game_current_ticket_percent">내가 가진 %1$s개 모두 응모 시 확률 %2$s%%</string>
     <string name="home_game_current_ticket_update_info">%1$s시간 마다 업데이트 됩니다.(%2$s기준)</string>
     <string name="home_game_help_info">이벤트 참여 순서</string>
+    <string name="home_game_ticket_rate_info">이벤트 기간 내 전체 티켓 수 만큼 응모하면\n100% 당첨 됩니다.</string>
+    <string name="home_game_current_ticket_info">전체 티켓 %1$d개\n응모 티켓 %2$d개</string>
     <string name="home_game_help_content_1">출석체크 또는 광고보기로 티켓 획득</string>
-    <string name="home_game_help_content_2">기도 메타로 당첨 까지 남은 티켓이 0이 될때 까지 "당첨자 도전"</string>
-    <string name="home_game_help_content_3">당첨 알림 확인 후 마이 페이지 에서 정보 입력</string>
+    <string name="home_game_help_content_2">기도 메타로 당첨 까지 남은 티켓이 0이 될때 까지 "당첨자 도전" 으로 응모</string>
+    <string name="home_game_help_content_3">마이 페이지에서 정보 입력</string>
     <string name="home_game_help_title_1">Get 티켓!</string>
     <string name="home_game_help_title_2">홈화면</string>
     <string name="home_game_help_title_3">육뉵이 당첨</string>

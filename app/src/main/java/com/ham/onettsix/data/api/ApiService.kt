@@ -99,4 +99,8 @@ interface ApiService {
     @GET("/get/rewardUnit")
     suspend fun getRewardUnit(): RewardUnit
 
+    @GET("/get/episodeList")
+    suspend fun getEpisodeList(): EpisodeList
+
+
 }

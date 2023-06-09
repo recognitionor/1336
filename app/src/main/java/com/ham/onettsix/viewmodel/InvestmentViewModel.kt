@@ -36,7 +36,6 @@ class InvestmentViewModel(
     }
 
     fun getInvestmentList(startPage: Int, contentPage: Int, tagId: Int) {
-        Log.d("jhlee", "getInvestmentList : $tagId")
         investmentList.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             investmentList.postValue(Resource.error(e.toString(), null))
@@ -47,16 +46,13 @@ class InvestmentViewModel(
             map[PARAM_KEY_CONTENT_COUNT] = contentPage
             map[PARAM_KEY_INVESTMENT_TAG_ID] = tagId
             val result = apiHelper.getInvestmentList(map)
-            Log.d("jhlee", "getInvestmentList result : $result")
             investmentList.postValue(Resource.success(result))
         }
     }
 
     fun getYoutubeTagList() {
-        Log.d("jhlee", "getYoutubeTagList :")
         investmentTagList.postValue(Resource.loading(null))
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "error : ${e.localizedMessage}")
         }
 
         viewModelScope.launch(exceptionHandler) {

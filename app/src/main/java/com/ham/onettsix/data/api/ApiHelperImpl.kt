@@ -69,5 +69,6 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
         apiService.getSecretCode(params)
 
     override suspend fun getRewardUnit(): RewardUnit = apiService.getRewardUnit()
+    override suspend fun getEpisodeList(): EpisodeList = apiService.getEpisodeList()
 
 }

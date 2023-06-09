@@ -43,7 +43,6 @@ class NoticeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("jhlee", "onCreate")
         binding = ActivityNoticeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupObserver()
@@ -59,7 +58,6 @@ class NoticeActivity : AppCompatActivity(), View.OnClickListener {
         noticeViewModel.notice.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("jhlee", "SUCCESS")
                     it.data?.data?.let { list ->
                         if (list.isEmpty()) {
                             OneButtonDialog("", getString(R.string.list_empty)) { dialog ->

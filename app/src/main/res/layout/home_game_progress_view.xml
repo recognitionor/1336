@@ -1,24 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/home_game_progress_current_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="3dp"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
+        android:lines="1"
+        android:text="@string/new_eng"
+        android:textColor="@color/sub_color_gradient_red"
+        android:textSize="16dp"
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/home_game_progress_border_background"
+        android:id="@+id/home_game_progress_item_layout"
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:background="@drawable/home_game_progress_layout_selector"
+        android:gravity="center"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/home_game_progress_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:id="@+id/home_game_progress_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
+            android:textColor="@color/text_main_color"
+            android:textSize="24dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/home_game_progress_episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:text="@string/home_game_progress_title"
+            android:textSize="20dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/home_game_progress_end_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="10dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/home_game_progress_winning_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/black" />
 
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 </FrameLayout>

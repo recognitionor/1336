@@ -57,10 +57,13 @@ class LotteryHistoryFragment : Fragment() {
                 Status.SUCCESS -> {
                     it.data?.data?.let { data ->
                         binding.lotteryHistoryCount.post {
-                            binding.lotteryHistoryCount.text = requireActivity().getString(R.string.lottery_history_count, data.episode)
+                            binding.lotteryHistoryCount.text = requireActivity().getString(
+                                R.string.lottery_history_count, data.episode.toString()
+                            )
                         }
-                        binding.lotteryHistoryWinningPrice.post{
-                            binding.lotteryHistoryWinningPrice.text = "${requireActivity().getString(R.string.lottery_history_total_price)} ${data.winningAmount}"
+                        binding.lotteryHistoryWinningPrice.post {
+                            binding.lotteryHistoryWinningPrice.text =
+                                "${requireActivity().getString(R.string.lottery_history_total_price)} ${data.winningAmount}"
                         }
 
                         if (TextUtils.isEmpty(data.userId)) {
@@ -68,21 +71,25 @@ class LotteryHistoryFragment : Fragment() {
                             binding.lotteryHistoryProfileImg.visibility = View.GONE
                             binding.lotteryHistoryWinningBtn.visibility = View.GONE
                             binding.lotteryHistoryWinnerId.post {
-                                binding.lotteryHistoryWinnerId.text = requireActivity().getString(R.string.lottery_history_next_time)
+                                binding.lotteryHistoryWinnerId.text =
+                                    requireActivity().getString(R.string.lottery_history_next_time)
                             }
                         } else {
                             binding.lotteryHistoryTitle.visibility = View.VISIBLE
                             binding.lotteryHistoryProfileImg.visibility = View.VISIBLE
                             binding.lotteryHistoryWinningBtn.visibility = View.VISIBLE
                             binding.lotteryHistoryWinnerId.post {
-                                binding.lotteryHistoryWinnerId.text = "${data.nickName}#${data.userId}"
+                                binding.lotteryHistoryWinnerId.text =
+                                    "${data.nickName}#${data.userId}"
                             }
                         }
                     }
                 }
+
                 Status.LOADING -> {
 
                 }
+
                 Status.ERROR -> {
 
                 }

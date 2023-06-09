@@ -8,6 +8,7 @@ import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.model.EpisodeList
 import com.ham.onettsix.data.model.GameTypeInfo
 import com.ham.onettsix.data.model.LotteryInfo
 import com.ham.onettsix.data.model.NewNotice
@@ -27,7 +28,9 @@ class HomeViewModel(
 
     val lotteryInfo = MutableLiveData<Resource<LotteryInfo>>()
 
-    val newNotice = MutableLiveData<Resource<NewNotice>>()
+    private val newNotice = MutableLiveData<Resource<NewNotice>>()
+
+    val episodeList = MutableLiveData<Resource<EpisodeList>>()
 
     val winningViewModel = MutableLiveData<Resource<Result>>()
 
@@ -82,8 +85,20 @@ class HomeViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getLotteryInfo("ALL")
-                Log.d("jhlee", "result : $result")
                 lotteryInfo.postValue(Resource.success(result))
+            }
+        }
+    }
+
+    fun getEpisodeList() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            lotteryInfo.postValue(Resource.error("error", null))
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                val result = apiHelper.getEpisodeList()
+                episodeList.postValue(Resource.success(result))
             }
         }
     }
@@ -96,7 +111,6 @@ class HomeViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getNewNotice()
-                Log.d("jhlee", "result : $result")
                 newNotice.postValue(Resource.success(result))
             }
         }

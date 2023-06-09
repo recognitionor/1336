@@ -39,7 +39,6 @@ class QuizGameFragment : Fragment(), OnClickListener {
     private val quizTagSelectDialog by lazy {
         QuizTagSelectDialog(object : DialogDismissListener {
             override fun onDismissListener() {
-                Log.d("jhlee", "dismiss")
                 activityResult.launch(Intent(requireContext(), QuizGameActivity::class.java))
             }
         })
@@ -56,7 +55,6 @@ class QuizGameFragment : Fragment(), OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("jhlee", "onCreate")
     }
 
     override fun onCreateView(
