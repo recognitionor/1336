@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".TestPresenterActivity" />
+        <activity android:name=".MVVMTestActivity" />
     </application>
 
 </manifest>

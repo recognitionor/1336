@@ -17,9 +17,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<AppCompatButton>(R.id.go_test_activity_btn).setOnClickListener {
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+        findViewById<AppCompatButton>(R.id.go_presenter_activity_btn).setOnClickListener {
             Intent(this, TestPresenterActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
+
+        findViewById<AppCompatButton>(R.id.go_mvvm_activity_btn).setOnClickListener {
+            Intent(this, MVVMTestActivity::class.java).apply {
                 startActivity(this)
             }
         }
