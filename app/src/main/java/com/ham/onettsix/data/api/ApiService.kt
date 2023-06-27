@@ -5,8 +5,11 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @POST("/test/get")
+    @POST("test/get")
     suspend fun getTest(@Body params: HashMap<String, Any?>): Test
+
+    @POST("referrer")
+    suspend fun setReferrer(@QueryMap params: HashMap<String, Any?>)
 
     @POST("test/set")
     suspend fun setTest(@Body params: HashMap<String, Any?>)

@@ -129,5 +129,7 @@ dependencies {
     /*ad*/
     implementation 'com.ironsource.sdk:mediationsdk:7.2.7'
 
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+
 
 }

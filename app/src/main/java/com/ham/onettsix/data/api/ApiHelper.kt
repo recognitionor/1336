@@ -6,6 +6,8 @@ interface ApiHelper {
 
     suspend fun getTest(params: HashMap<String, Any?>): Test?
 
+    suspend fun setReferrer(params: HashMap<String, Any?>)
+
     suspend fun setTest(params: HashMap<String, Any?>)
 
     suspend fun signIn(params: HashMap<String, Any>): SignIn?

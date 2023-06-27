@@ -4,7 +4,7 @@ import com.ham.onettsix.data.model.*
 
 class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getTest(params: HashMap<String, Any?>): Test = apiService.getTest(params)
-
+    override suspend fun setReferrer(params: HashMap<String, Any?>) = apiService.setReferrer(params)
     override suspend fun setTest(params: HashMap<String, Any?>) = apiService.setTest(params)
 
     override suspend fun signIn(params: HashMap<String, Any>): SignIn = apiService.signIn(params)

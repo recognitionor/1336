@@ -94,14 +94,24 @@
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
             android:theme="@android:style/Theme.Translucent" />
+
         <provider
-            android:authorities="${applicationId}.IronsourceLifecycleProvider"
-            android:name="com.ironsource.lifecycle.IronsourceLifecycleProvider" />
+            android:name="com.ironsource.lifecycle.IronsourceLifecycleProvider"
+            android:authorities="${applicationId}.IronsourceLifecycleProvider" />
 
         <activity
             android:name=".NoticeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
+
+        <receiver
+            android:name=".ReferrerBroadCastReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -123,6 +133,7 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="d508b76ef17b730d5e4c99875217d6f7" />
+
 
     </application>
 

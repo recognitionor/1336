@@ -32,6 +32,7 @@ class AttendViewModel(
                 attendStatus.postValue(Resource.success(result))
             }
         }
+
     }
 
     fun attendCheck() {

@@ -11,6 +11,10 @@ object ParamsKeys {
 
     const val KEY_SOCIAL_TYPE = "socialType"
 
+    const val KEY_REFERRER_CONTENT = "content"
+
+    const val KEY_REFERRER_STATUS = "status"
+
     const val KEY_UUID = "uuid"
 
     const val KEY_PAGE = "page"
