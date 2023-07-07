@@ -23,6 +23,7 @@ import com.ham.onettsix.databinding.ActivitySplashBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.SplashViewModel
+import android.net.Uri
 
 class SplashActivity : AppCompatActivity() {
 
@@ -57,6 +58,10 @@ class SplashActivity : AppCompatActivity() {
         binding.splashErrorBtn.setOnClickListener {
             splashViewModel.refreshLogin()
         }
+        // ATTENTION: This was auto-generated to handle app links.
+        val appLinkIntent: Intent = intent
+        val appLinkAction: String? = appLinkIntent.action
+        val appLinkData: Uri? = appLinkIntent.data
     }
 
     private fun createNotificationChannel(context: Context) {

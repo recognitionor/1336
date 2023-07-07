@@ -90,6 +90,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         adapter.setItemList(list)
                     }
                     adapter.notifyDataSetChanged()
+                    binding.homeGameProgressRv.scrollToPosition(adapter.getCurrentGamePosition())
                 }
 
                 Status.ERROR -> {
@@ -143,12 +144,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 R.string.home_game_status_won_price,
                                 "${lotteryInfo.data.winningAmount}"
                             )
-
-                            val remainTicket =
-                                (homeViewModel.gameTypeInfo.value?.data?.data?.allTicket
-                                    ?: 0) - (homeViewModel.gameTypeInfo.value?.data?.data?.usedTicket
-                                    ?: 0)
-
                             val ratePercent: Float =
                                 ((lotteryInfo.data.totalJoinCount.toFloat() / (lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount)) * 100).toFloat()
                             binding.homeGameTicketParticipationRate.text = "$ratePercent%"

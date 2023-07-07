@@ -13,9 +13,16 @@
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
     <string name="count">개</string>
-    <string name="day_ago">일전</string>
+    <string name="some_day_ago">일전</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
     <string name="list_empty">리스트가 없습니다.</string>
+
+    <string name="sec_ago">방금 전</string>
+    <string name="min_ago">%1$d 분 전</string>
+    <string name="hour_ago">%1$d 시 전</string>
+    <string name="day_ago">%1$d 일 전</string>
+    <string name="month_ago">%1$d 달 전</string>
+    <string name="year_ago">%1$d 년 전</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
@@ -125,7 +132,7 @@
     <string name="profile_history_item_price">%1$s 원</string>
     <string name="profile_history_item_status_wating">%1$s 회차</string>
     <string name="profile_ticket_info_message">(티겟은 참여 회차의 육뉵이 당첨시까지 유효하며, 미당첨시 다음 회자 당첨시까지로 연장됩니다. 티켓 획득 후 바로 응모를 권장합니다.)</string>
-    <string name="profile_warning_message">당첨 발표 후 7일내 당첨 버튼을 클릭해서 메일을 보내야만 지급이 가능합니다.</string>
+    <string name="profile_warning_message">당첨이 되면 발표 후 7일 내 ‘축!당첨!’\n버튼 클릭 후 Gmail 아이콘을 선택해 \n필요 정보를 보내야만 지급됩니다.</string>
     <string name="profile_history_item_join">내 참여 수 : </string>
     <string name="profile_history_item_total">총 참여 수 : </string>
     <string name="profile_history_game_index_title">회차</string>
@@ -192,8 +199,8 @@
     <string name="profile_detail_version">버전 정보</string>
     <string name="profile_detail_logout">로그아웃</string>
     <string name="profile_detail_withdraw">회원 탈퇴하시려면 여기를 눌러주세요</string>
-
-
+    <string name="withdraw_dialog_title">회원 탈퇴</string>
+    <string name="withdraw_dialog_content">정말로 탈퇴하시겠습니까?</string>
     <!--YouTube-->
     <string name="youtube_last_list">리스트의 마지막입니다.</string>
     <string name="investment_tag_title">나에게 필요한 돈버는 TAG</string>

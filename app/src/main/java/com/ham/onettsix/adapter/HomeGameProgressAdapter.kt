@@ -1,6 +1,5 @@
 package com.ham.onettsix.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,5 +65,15 @@ class HomeGameProgressAdapter :
 
     override fun onBindViewHolder(holder: HomeGameProgressViewHolder, position: Int) {
         holder.bind(list[position])
+    }
+
+    fun getCurrentGamePosition(): Int {
+        repeat(list.size) {
+            val item = list[it]
+            if (item.episodeStatus != 2) {
+                return it
+            }
+        }
+        return 0
     }
 }

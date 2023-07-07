@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
 import com.ham.onettsix.data.local.PreferencesHelper
@@ -27,16 +28,24 @@ class MyProfileHistoryAdapter(
         private val listener: OnItemWinningListener
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HistoryInfo.Data) {
-            binding.myProfileHistoryItemEpisode.text =
-                itemView.resources.getString(R.string.profile_history_item_episode, item.episode.toString())
+            binding.myProfileHistoryItemEpisode.text = itemView.resources.getString(
+                R.string.profile_history_item_episode, item.episode.toString()
+            )
             binding.myProfileHistoryItemJoinInfo.text = "${item.joinCount} / ${item.totalCount}"
 
-            binding.myProfileHistoryItemPrice.text = item.winningAmount.toString() + PreferencesHelper.getInstance(binding.root.context).getRewardUnit()
+            binding.myProfileHistoryItemPrice.text =
+                item.winningAmount.toString() + PreferencesHelper.getInstance(binding.root.context)
+                    .getRewardUnit()
             when (item.grade) {
                 0 -> {
-                    binding.myProfileHistoryItemStatus.setTextColor(R.color.text_black)
+                    binding.myProfileHistoryItemStatus.setTextColor(
+                        ContextCompat.getColor(
+                            binding.root.context, R.color.black
+                        )
+                    )
                     binding.myProfileHistoryItemStatus.setText(R.string.unwinnable)
                 }
+
                 1 -> {
                     binding.root.setOnClickListener {
                         listener.onWinnerClick(item)
@@ -44,7 +53,11 @@ class MyProfileHistoryAdapter(
 
                     binding.myProfileHistoryItemStatus.setText(R.string.winning)
                     binding.myProfileHistoryItemStatus.setBackgroundResource(R.drawable.main_color_btn_background)
-                    binding.myProfileHistoryItemStatus.setTextColor(R.color.white)
+                    binding.myProfileHistoryItemStatus.setTextColor(
+                        ContextCompat.getColor(
+                            binding.root.context, R.color.white
+                        )
+                    )
                 }
             }
         }

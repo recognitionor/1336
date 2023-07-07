@@ -20,6 +20,7 @@ import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.ActivityProfileDetailBinding
+import com.ham.onettsix.dialog.TwoButtonDialog
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
@@ -56,7 +57,8 @@ class ProfileDetailActivity : AppCompatActivity(), View.OnClickListener {
         setupObserver()
 
         binding.profileDetailEventSwitch.setOnClickListener {
-            binding.profileDetailEventSwitch.isChecked = NotificationManagerCompat.from(this).areNotificationsEnabled()
+            binding.profileDetailEventSwitch.isChecked =
+                NotificationManagerCompat.from(this).areNotificationsEnabled()
             activityResult.launch(
                 Intent(
                     ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -102,9 +104,11 @@ class ProfileDetailActivity : AppCompatActivity(), View.OnClickListener {
                         finish()
                     }
                 }
+
                 Status.LOADING -> {
 
                 }
+
                 Status.ERROR -> {
 
                 }
@@ -117,15 +121,29 @@ class ProfileDetailActivity : AppCompatActivity(), View.OnClickListener {
             binding.profileDetailNotice, binding.profileDetailNoticeImg -> {
                 activityResult.launch(Intent(this, NoticeActivity::class.java))
             }
+
             binding.profileDetailWithdraw -> {
-                profileDetailViewModel.withDraw()
+                TwoButtonDialog(
+                    getString(R.string.withdraw_dialog_title),
+                    getString(R.string.withdraw_dialog_content)
+                ) { isPositive, dialog ->
+                    if (isPositive) {
+                        profileDetailViewModel.withDraw()
+                    } else {
+                        dialog.dialog?.cancel()
+                    }
+                }.show(supportFragmentManager, TwoButtonDialog.TAG)
+
             }
+
             binding.loginToolbarBack -> {
                 finish()
             }
+
             binding.profileDetailEula, binding.profileDetailEulaForwardImg -> {
                 activityResult.launch(Intent(this, EulaActivity::class.java))
             }
+
             binding.profileDetailLogout, binding.profileDetailLogoutImg -> {
                 profileDetailViewModel.logout()
 

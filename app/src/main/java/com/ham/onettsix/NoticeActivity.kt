@@ -1,11 +1,11 @@
 package com.ham.onettsix
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ham.onettsix.adapter.NoticeAdapter
 import com.ham.onettsix.data.api.ApiHelperImpl
@@ -18,6 +18,7 @@ import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.NoticeViewModel
+
 
 class NoticeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -50,7 +51,16 @@ class NoticeActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.noticeToolbarBack.setOnClickListener { finish() }
         noticeAdapter = NoticeAdapter()
-        binding.noticeRv.layoutManager = LinearLayoutManager(this)
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.noticeRv.layoutManager = layoutManager
+
+        binding.noticeRv.addItemDecoration(
+            DividerItemDecoration(
+                binding.noticeRv.context,
+                layoutManager.orientation
+            )
+        )
         binding.noticeRv.adapter = noticeAdapter
     }
 
@@ -70,9 +80,11 @@ class NoticeActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
+
                 Status.ERROR -> {
 
                 }
+
                 Status.LOADING -> {
 
                 }

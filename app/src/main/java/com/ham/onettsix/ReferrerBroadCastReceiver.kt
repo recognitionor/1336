@@ -23,8 +23,7 @@ class ReferrerBroadCastReceiver : BroadcastReceiver() {
             referrerClient.startConnection(object : InstallReferrerStateListener {
 
                 override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                    val exceptionHandler = CoroutineExceptionHandler { _, e ->
-                    }
+                    val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
                     GlobalScope.launch(exceptionHandler) {
                         val params = HashMap<String, Any?>()
                         val msg = intent?.getStringExtra("referrer") ?: ""

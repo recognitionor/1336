@@ -1,6 +1,8 @@
 package com.ham.onettsix.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -8,6 +10,7 @@ import com.ham.onettsix.R
 import com.ham.onettsix.data.model.Notice
 import com.ham.onettsix.databinding.RvItemNoticeBinding
 import com.ham.onettsix.utils.TimeUtils
+
 
 class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>() {
 
@@ -21,7 +24,8 @@ class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>() {
             binding.noticeItemContentTv.text = item.content
             binding.noticeItemTimeTv.text =
                 TimeUtils.timeDiff(itemView.context, item.createdAt.toLong())
-            Glide.with(itemView.context).load(R.drawable.ic_notifications).into(binding.noticeItemIconImg)
+            Glide.with(itemView.context).load(R.drawable.ic_notifications)
+                .into(binding.noticeItemIconImg)
         }
     }
 
@@ -29,6 +33,10 @@ class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>() {
         parent: ViewGroup, viewType: Int
     ): NoticeViewHolder {
         val binding = RvItemNoticeBinding.inflate(LayoutInflater.from(parent.context))
+        val lp = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        binding.root.layoutParams = lp
         return NoticeViewHolder(binding)
     }
 
