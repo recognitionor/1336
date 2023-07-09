@@ -78,6 +78,7 @@ class HomeViewModel(
     }
 
     fun getLotteryInfo() {
+        Log.d("jhlee", "getLotteryInfo")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             lotteryInfo.postValue(Resource.error("signin error", null))
         }

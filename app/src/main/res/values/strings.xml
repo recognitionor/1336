@@ -169,6 +169,7 @@
 
     <string name="game_try_dialog_content">소지한 티켓 %1$d개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
     <string name="no_ticket">티켓이 없습니다.</string>
+    <string name="try_next_time">다음 게임을 기다려 주세요</string>
     <string name="no_ticket_title">앗! 응모 가능한 티켓이 없습니다.</string>
     <string name="no_ticket_msg">확인을 누르면 티켓을 얻을 수 있는 페이지로 이동합니다. 티켓을 모아 육뉵이에 도전해보세요.</string>
 

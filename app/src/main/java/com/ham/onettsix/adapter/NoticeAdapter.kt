@@ -23,7 +23,7 @@ class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>() {
             binding.noticeItemTitleTv.text = item.title
             binding.noticeItemContentTv.text = item.content
             binding.noticeItemTimeTv.text =
-                TimeUtils.timeDiff(itemView.context, item.createdAt.toLong())
+                TimeUtils.timeDiff(itemView.context, item.createdAt)
             Glide.with(itemView.context).load(R.drawable.ic_notifications)
                 .into(binding.noticeItemIconImg)
         }

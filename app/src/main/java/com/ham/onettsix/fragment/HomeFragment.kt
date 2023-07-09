@@ -23,6 +23,7 @@ import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_LOSE
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_WIN
+import com.ham.onettsix.constant.ResultCode.LOTTERY_INFO_PROCEEDING
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
@@ -140,10 +141,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
                         if (lotteryInfo.resultCode == ResultCode.LOTTERY_INFO_PROCEEDING) {
-                            binding.homeGameStatusLayout.homeGameStatusWonPrice.text = getString(
-                                R.string.home_game_status_won_price,
-                                "${lotteryInfo.data.winningAmount}"
-                            )
+                            binding.homeGameTicketOpenPercent.visibility = View.VISIBLE
+                            binding.homeGameRemainTicketInfoLayout.visibility = View.VISIBLE
                             val ratePercent: Float =
                                 ((lotteryInfo.data.totalJoinCount.toFloat() / (lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount)) * 100).toFloat()
                             binding.homeGameTicketParticipationRate.text = "$ratePercent%"
@@ -154,8 +153,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 lotteryInfo.data.totalJoinCount
                             )
                         } else {
+                            binding.homeGameTicketOpenPercent.visibility = View.GONE
+                            binding.homeGameRemainTicketInfoLayout.visibility = View.GONE
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.nextEpisodeStartDate)
                         }
+                        binding.homeGameStatusLayout.homeGameStatusWonPrice.text = getString(
+                            R.string.home_game_status_won_price, "${lotteryInfo.data.winningAmount}"
+                        )
                     }
                 }
 
@@ -206,7 +210,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         val remainTicket = data.allTicket - data.usedTicket
                         val remainChance =
                             homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount ?: 0
-                        if (remainTicket > 0 && remainChance > 0) {
+                        if (homeViewModel.lotteryInfo.value?.data?.resultCode != LOTTERY_INFO_PROCEEDING) {
+                            Toast.makeText(
+                                requireContext(),
+                                requireContext().getString(R.string.try_next_time),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                        if (remainTicket > 0) {
                             homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount
                             ChallengeGameDialog(
                                 remainTicket.toInt(), remainChance
