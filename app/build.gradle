@@ -49,7 +49,7 @@ android {
         applicationId "com.ham.onettsix"
         minSdk 21
         targetSdk 33
-        versionCode 1
+        versionCode 120
         versionName "1.2.0"
         multiDexEnabled = true
     }
