@@ -49,6 +49,7 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                 ActivityResultKey.LOGOUT_RESULT_OK -> {
                     (requireActivity() as MainActivity).apply {
                         selectedItem(0)
+                        RetrofitBuilder.accessToken = ""
                         mainViewModel.updateUserInfo()
                     }
                 }
@@ -95,7 +96,11 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     email.putExtra(Intent.EXTRA_SUBJECT, "환급신청")
                     email.putExtra(
                         Intent.EXTRA_TEXT,
-                        getString(R.string.mail_content, it.data?.data?.episode ?: 0, it.data?.data?.secretCode ?: 0)
+                        getString(
+                            R.string.mail_content,
+                            it.data?.data?.episode ?: 0,
+                            it.data?.data?.secretCode ?: 0
+                        )
                     )
 
                     email.type = "message/rfc822"
@@ -107,9 +112,11 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     )
 
                 }
+
                 Status.LOADING -> {
 
                 }
+
                 Status.ERROR -> {
 
                 }
@@ -121,11 +128,13 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     progressDialog.dismiss()
                     it.data?.data?.let { historyInfo ->
                         if (historyInfo.isEmpty()) {
-                            binding.rvItemHeaderMyProfileHistoryInclude.rvItemHeaderMyProfileHistory.visibility = View.GONE
+                            binding.rvItemHeaderMyProfileHistoryInclude.rvItemHeaderMyProfileHistory.visibility =
+                                View.GONE
                             binding.profileHistoryRvEmpty.visibility = View.VISIBLE
                             binding.profileHistoryRv.visibility = View.GONE
                         } else {
-                            binding.rvItemHeaderMyProfileHistoryInclude.rvItemHeaderMyProfileHistory.visibility = View.VISIBLE
+                            binding.rvItemHeaderMyProfileHistoryInclude.rvItemHeaderMyProfileHistory.visibility =
+                                View.VISIBLE
                             binding.profileHistoryRvEmpty.visibility = View.GONE
                             binding.profileHistoryRv.visibility = View.VISIBLE
                             adapter.setList(historyInfo)
@@ -134,9 +143,11 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     }
 
                 }
+
                 Status.LOADING -> {
                     progressDialog.show()
                 }
+
                 Status.ERROR -> {
                     progressDialog.dismiss()
                 }
@@ -161,9 +172,11 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 }
+
                 Status.ERROR -> {
                     progressDialog.dismiss()
                 }
+
                 Status.LOADING -> {
                     progressDialog.show()
                 }

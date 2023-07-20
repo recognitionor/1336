@@ -55,6 +55,7 @@ class AdmobAdapter {
                         serverSideVerificationOptions.setUserId(videoData.rvId)
                         serverSideVerificationOptions.setCustomData(videoData.signature)
                         listener.onSuccessLoaded()
+                        rewardedAd.setServerSideVerificationOptions(serverSideVerificationOptions.build())
                         rewardedAd.show(
                             activity
                         ) {}

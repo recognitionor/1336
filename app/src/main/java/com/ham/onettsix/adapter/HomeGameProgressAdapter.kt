@@ -25,17 +25,22 @@ class HomeGameProgressAdapter :
                     binding.homeGameProgressCurrentTv.rotation = -45.0f
                     binding.homeGameProgressCurrentTv.visibility = View.VISIBLE
                 }
+
                 2 -> {
                     binding.homeGameProgressCurrentTv.visibility = View.INVISIBLE
                 }
             }
-            if (item.isEnd) {
-                binding.homeGameProgressEndData.visibility = View.VISIBLE
+            if (item.episodeStatus == 0) {
+                binding.homeGameProgressItemLayout.isEnabled = true
+                val date = SimpleDateFormat("yy년MM월dd일", Locale.ENGLISH).format(item.endDate)
+                binding.homeGameProgressEndData.text =
+                    binding.root.context.getString(R.string.home_game_progress_start_date, date)
+            } else if (item.isEnd) {
+//                binding.homeGameProgressStatus.textColors=
+                binding.homeGameProgressItemLayout.isEnabled = false
                 val date = SimpleDateFormat("yy년MM월dd일", Locale.ENGLISH).format(item.endDate)
                 binding.homeGameProgressEndData.text =
                     binding.root.context.getString(R.string.home_game_progress_end_date, date)
-            } else {
-                binding.homeGameProgressEndData.visibility = View.INVISIBLE
             }
 
             binding.homeGameProgressStatus.text = item.status

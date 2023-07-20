@@ -63,6 +63,7 @@
     <string name="home_game_progress_episode">%1$s회차</string>
     <string name="home_game_progress_title">%1$s회차</string>
     <string name="home_game_progress_end_date">마감일 %1$s</string>
+    <string name="home_game_progress_start_date">시작일 %1$s</string>
     <string name="home_game_progress_now">게임 진행중</string>
     <string name="home_game_progress_future">대기중 회차</string>
     <string name="home_game_progress_winning_amount">당첨금 %1$d</string>

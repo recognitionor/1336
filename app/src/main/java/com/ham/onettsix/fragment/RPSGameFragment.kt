@@ -148,6 +148,7 @@ class RPSGameFragment : Fragment(), View.OnClickListener {
                 return
             }
             binding.gameStartBtn -> {
+
                 if (isStopGame) {
                     binding.gameImageRock.visibility = View.VISIBLE
                     binding.gameImageScissors.visibility = View.VISIBLE
