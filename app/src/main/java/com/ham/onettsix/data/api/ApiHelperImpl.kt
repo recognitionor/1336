@@ -4,7 +4,7 @@ import com.ham.onettsix.data.model.*
 
 class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getTest(params: HashMap<String, Any?>): Test = apiService.getTest(params)
-
+    override suspend fun setReferrer(params: HashMap<String, Any?>) = apiService.setReferrer(params)
     override suspend fun setTest(params: HashMap<String, Any?>) = apiService.setTest(params)
 
     override suspend fun signIn(params: HashMap<String, Any>): SignIn = apiService.signIn(params)
@@ -44,22 +44,31 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun createLottery(): Result = apiService.createLottery()
 
-    override suspend fun getInstantLottery(): Result = apiService.getInstantLottery()
+    override suspend fun getInstantLottery(params: HashMap<String, Any?>): Result =
+        apiService.getInstantLottery(params)
 
     override suspend fun getHistoryInfo(): HistoryInfo = apiService.getHistoryInfo()
 
     override suspend fun getNoticeList(): Notice = apiService.getNoticeList()
 
+    override suspend fun getNewNotice(): NewNotice = apiService.getNewNotice()
     override suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result =
         apiService.setFirebaseToken(params)
 
-    override suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo =
-        apiService.getYouTubeList(params)
+    override suspend fun getInvestmentList(params: HashMap<String, Any?>): InvestmentInfo =
+        apiService.getInvestmentList(params)
+
+    override suspend fun getInvestmentTagList(): InvestmentTag = apiService.getInvestmentTagList()
 
     override suspend fun withDraw(): Result = apiService.withDraw()
 
-    override suspend fun changeAlarm(params: HashMap<String, Any?>): Result = apiService.changeAlarm(params)
+    override suspend fun changeAlarm(params: HashMap<String, Any?>): Result =
+        apiService.changeAlarm(params)
 
-    override suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode = apiService.getSecretCode(params)
+    override suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode =
+        apiService.getSecretCode(params)
+
+    override suspend fun getRewardUnit(): RewardUnit = apiService.getRewardUnit()
+    override suspend fun getEpisodeList(): EpisodeList = apiService.getEpisodeList()
 
 }

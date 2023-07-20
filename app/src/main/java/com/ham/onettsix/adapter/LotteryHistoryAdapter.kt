@@ -3,9 +3,11 @@ package com.ham.onettsix.adapter
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
+import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.LotteryHistory
 import com.ham.onettsix.databinding.RvItemLotteryHistoryBinding
 import java.text.SimpleDateFormat
@@ -22,11 +24,18 @@ class LotteryHistoryAdapter :
 
         fun bind(item: LotteryHistory.Data) {
             binding.rvItemLotteryHistoryDayStr.text = "${SimpleDateFormat("MM.dd", Locale.ENGLISH).format(item.endDate)}\n${SimpleDateFormat("E", Locale.ENGLISH).format(item.endDate)}"
-            binding.rvItemLotteryHistoryWinnerUserid.text = "#${item.userId}"
-            binding.rvItemLotteryHistoryTotalPrice.text = "${item.winningAmount} ${itemView.resources.getString(R.string.won)}"
+            binding.rvItemLotteryHistoryTotalPrice.text = "${item.winningAmount} ${PreferencesHelper.getInstance(binding.root.context).getRewardUnit()}"
             binding.rvItemLotteryHistoryEpisodeNum.text =
-                itemView.resources.getString(R.string.lottery_history_count, item.episode)
+                itemView.resources.getString(R.string.lottery_history_count, item.episode.toString())
             binding.rvItemLotteryHistoryWinnerName.text = item.nickname
+            if (!item.isWinning) {
+                binding.rvItemLotteryHistoryWinnerName.visibility = View.GONE
+                binding.rvItemLotteryHistoryWinnerUserid.text = itemView.context.getString(R.string.lottery_history_empty)
+            } else {
+                binding.rvItemLotteryHistoryWinnerName.visibility = View.VISIBLE
+                binding.rvItemLotteryHistoryWinnerUserid.text = "#${item.userId}"
+            }
+
             if (TextUtils.isEmpty(item.content)) {
                 binding.rvItemLotteryHistoryComment.text = itemView.resources.getString(R.string.lottery_history_default_comment)
             } else {

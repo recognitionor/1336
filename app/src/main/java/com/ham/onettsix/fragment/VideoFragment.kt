@@ -8,12 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions
 import com.ham.onettsix.R
-import com.ham.onettsix.ad.AdmobAdapter
+import com.ham.onettsix.ad.AdManager
 import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
@@ -29,7 +25,7 @@ import com.ham.onettsix.viewmodel.VideoViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class VideoFragment : Fragment(), View.OnClickListener {
+class VideoFragment : Fragment(), View.OnClickListener, AdManager.AdManagerListener {
 
     private lateinit var binding: FragmentVideoBinding
 
@@ -120,68 +116,21 @@ class VideoFragment : Fragment(), View.OnClickListener {
                     } else {
                         binding.videoValidCheckBtn.text = getString(R.string.video_btn)
                         binding.videoValidCheckBtn.isEnabled = true
+                        AdManager.getInstance().isLoaded = false
+                        AdManager.getInstance().isTimeout = false
                         it.data.data.let { signature ->
                             if (signature.rvConfig.isNotEmpty()) {
-                                var isTimeout = false
-                                var isLoaded = false
                                 val placementId = signature.rvConfig[0].placementId
                                 if (placementId.isNotEmpty()) {
                                     lifecycleScope.launch {
                                         delay(20000L)
-                                        isTimeout = true
-                                        if (!isLoaded) {
-                                            Toast.makeText(
-                                                requireContext(),
-                                                R.string.video_load_fail,
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                        progressDialog.dismiss()
+                                        AdManager.getInstance().isTimeout = true
+                                        if (!AdManager.getInstance().isLoaded) {
+                                            onFailLoaded("Load TimeOut")
                                         }
-                                        isLoaded = true
-                                    }
-                                    AdmobAdapter.load(requireActivity(),
-                                        signature.rvConfig[0].placementId,
-                                        object : RewardedAdLoadCallback() {
-
-                                            override fun onAdFailedToLoad(error: LoadAdError) {
-                                                super.onAdFailedToLoad(error)
-                                                isLoaded = true
-                                                if (!isTimeout) {
-                                                    progressDialog.dismiss()
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        R.string.video_load_fail,
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            }
-
-                                            override fun onAdLoaded(rewardAd: RewardedAd) {
-                                                super.onAdLoaded(rewardAd)
-                                                isLoaded = true
-                                                if (!isTimeout) {
-                                                    progressDialog.dismiss()
-                                                    val serverSideVerificationOptions =
-                                                        ServerSideVerificationOptions.Builder()
-                                                    serverSideVerificationOptions.setUserId(
-                                                        signature.rvId
-                                                    )
-                                                    serverSideVerificationOptions.setCustomData(
-                                                        signature.signature
-                                                    )
-
-                                                    rewardAd.setServerSideVerificationOptions(
-                                                        serverSideVerificationOptions.build()
-                                                    )
-                                                    rewardAd.show(requireActivity()) {
-                                                        (parentFragment as GameFragment).updateMyTicket()
-                                                        videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
-                                                            binding.videoCountInfoTv.text =
-                                                                "${++data.currentRvCount}/${data.limitedRvCount}"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        })
+                                    }.start()
+                                    AdManager.getInstance().load(signature, requireActivity(), this@VideoFragment)
                                     return@observe
                                 }
                             }
@@ -218,6 +167,31 @@ class VideoFragment : Fragment(), View.OnClickListener {
                 (parentFragment as GameFragment).login()
             }
 
+        }
+    }
+
+    override fun onSuccessLoaded() {
+        AdManager.getInstance().isLoaded = true
+        AdManager.getInstance().isTimeout = false
+        progressDialog.dismiss()
+    }
+
+    override fun onFailLoaded(error: String) {
+        AdManager.getInstance().isLoaded = false
+        AdManager.getInstance().isTimeout = false
+        progressDialog.dismiss()
+        Toast.makeText(
+            requireContext(),
+            R.string.video_load_fail,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun onClosed() {
+        (parentFragment as GameFragment).updateMyTicket()
+        videoViewModel.validateLimitedRvStatus.value?.data?.data?.let { data ->
+            binding.videoCountInfoTv.text =
+                "${++data.currentRvCount}/${data.limitedRvCount}"
         }
     }
 }

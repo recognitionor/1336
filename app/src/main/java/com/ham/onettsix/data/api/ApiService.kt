@@ -5,8 +5,11 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @POST("/test/get")
+    @POST("test/get")
     suspend fun getTest(@Body params: HashMap<String, Any?>): Test
+
+    @POST("referrer")
+    suspend fun setReferrer(@QueryMap params: HashMap<String, Any?>)
 
     @POST("test/set")
     suspend fun setTest(@Body params: HashMap<String, Any?>)
@@ -58,7 +61,7 @@ interface ApiService {
     suspend fun createLottery(): Result
 
     @GET("getInstantLottery")
-    suspend fun getInstantLottery(): Result
+    suspend fun getInstantLottery(@QueryMap params: HashMap<String, Any?>): Result
 
     @POST("getLottery")
     suspend fun getLottery(@Body params: HashMap<String, Any?>): Result
@@ -75,11 +78,14 @@ interface ApiService {
     @GET("/get/notices")
     suspend fun getNoticeList(): Notice
 
+    @GET("/get/newNotices")
+    suspend fun getNewNotice(): NewNotice
+
     @POST("firebasetoken")
     suspend fun setFirebaseToken(@QueryMap params: HashMap<String, Any?>): Result
 
-    @GET("/get/youtubelist")
-    suspend fun getYouTubeList(@QueryMap params: HashMap<String, Any?>): YouTubeInfo
+    @GET("/get/investmentlist")
+    suspend fun getInvestmentList(@QueryMap params: HashMap<String, Any?>): InvestmentInfo
 
     @DELETE("/user")
     suspend fun withDraw(): Result
@@ -89,4 +95,15 @@ interface ApiService {
 
     @GET("/getSecretCode")
     suspend fun getSecretCode(@QueryMap params: HashMap<String, Any?>): WinnerSecretCode
+
+    @GET("/investmentTagList")
+    suspend fun getInvestmentTagList(): InvestmentTag
+
+    @GET("/get/rewardUnit")
+    suspend fun getRewardUnit(): RewardUnit
+
+    @GET("/get/episodeList")
+    suspend fun getEpisodeList(): EpisodeList
+
+
 }

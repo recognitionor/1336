@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_alarm"
+            app:navigationIcon="@drawable/ic_notifications"
             app:theme="@style/Theme.ham.ActionBar"/>
 
     </com.google.android.material.appbar.AppBarLayout>

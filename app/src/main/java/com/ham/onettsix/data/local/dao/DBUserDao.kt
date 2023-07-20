@@ -1,7 +1,6 @@
 package com.ham.onettsix.data.local.dao
 
 import androidx.room.*
-import com.ham.onettsix.data.local.entity.DBSearch
 import com.ham.onettsix.data.local.entity.DBUser
 
 @Dao

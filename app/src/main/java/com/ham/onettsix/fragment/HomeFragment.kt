@@ -1,48 +1,45 @@
 package com.ham.onettsix.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.TextUtils
-import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.room.util.StringUtil
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ham.onettsix.LoginActivity
-import com.ham.onettsix.LotteryHistoryActivity
 import com.ham.onettsix.MainActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.adapter.HomeGameProgressAdapter
+import com.ham.onettsix.adapter.RecyclerDecorationWidth
 import com.ham.onettsix.constant.ActivityResultKey
 import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_LOSE
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_WIN
+import com.ham.onettsix.constant.ResultCode.LOTTERY_INFO_PROCEEDING
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.FragmentHomeBinding
-import com.ham.onettsix.dialog.DialogDismissListener
-import com.ham.onettsix.dialog.OneButtonDialog
-import com.ham.onettsix.dialog.TwoButtonDialog
-import com.ham.onettsix.dialog.WinningDialog
-import com.ham.onettsix.utils.ProfileImageUtil
+import com.ham.onettsix.dialog.*
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.HomeViewModel
 
-
 class HomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var adapter: HomeGameProgressAdapter
 
     val homeViewModel by lazy {
         ViewModelProviders.of(
@@ -57,6 +54,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == ActivityResultKey.LOGIN_RESULT_OK) {
                 (this@HomeFragment.activity as MainActivity).mainViewModel.updateUserInfo()
+                homeViewModel.getLotteryInfo()
+                homeViewModel.getGameTypeInfo()
             }
         }
 
@@ -64,15 +63,56 @@ class HomeFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding.homeGameProgressRv.adapter = adapter
+        binding.homeGameProgressRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.homeGameProgressRv.addItemDecoration(
+            RecyclerDecorationWidth(
+                resources.getDimension(
+                    R.dimen.rv_divider_width
+                )
+            )
+        )
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupObserver()
+        adapter = HomeGameProgressAdapter()
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun setupObserver() {
+        homeViewModel.episodeList.observe(this) { it ->
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.data?.let { list ->
+                        adapter.setItemList(list)
+                    }
+                    adapter.notifyDataSetChanged()
+                    binding.homeGameProgressRv.scrollToPosition(adapter.getCurrentGamePosition())
+                }
+
+                Status.ERROR -> {
+                }
+
+                Status.LOADING -> {
+                }
+            }
+        }
+        homeViewModel.gameTypeInfo.observe(this) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                }
+
+                Status.LOADING -> {
+                }
+
+                Status.ERROR -> {
+                }
+            }
+        }
         homeViewModel.winningViewModel.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -84,6 +124,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 }
                             }).show(parentFragmentManager, WinningDialog.TAG)
                         }
+
                         else -> {
                             OneButtonDialog("", it.data?.description ?: "") { dialog ->
                                 dialog.dismiss()
@@ -91,6 +132,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 }
+
                 else -> {}
             }
         }
@@ -98,59 +140,32 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
-                        binding.homeGameInfo.text =
-                            getString(R.string.home_game_info, lotteryInfo.data.episode)
-                        binding.homeGamePrice.text =
-                            getString(R.string.home_game_price, lotteryInfo.data.winningAmount)
                         if (lotteryInfo.resultCode == ResultCode.LOTTERY_INFO_PROCEEDING) {
-                            binding.homeGameSixSixManQuestionImg.visibility = View.VISIBLE
-                            binding.homeRemainDrawingTimeTitle.text =
-                                getString(R.string.home_remain_drawing_time_title)
+                            binding.homeGameTicketOpenPercent.visibility = View.VISIBLE
+                            binding.homeGameRemainTicketInfoLayout.visibility = View.VISIBLE
+                            val ratePercent: Float =
+                                ((lotteryInfo.data.totalJoinCount.toFloat() / (lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount)) * 100).toFloat()
+                            binding.homeGameTicketParticipationRate.text = "$ratePercent%"
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.limitedDate)
-                            binding.homeGameTicketInfo.text = getString(
-                                R.string.home_game_ticket_info,
-                                lotteryInfo.data.joinUserCount,
+                            binding.homeGameCurrentTicketInfo.text = getString(
+                                R.string.home_game_current_ticket_info,
+                                lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount,
                                 lotteryInfo.data.totalJoinCount
                             )
-                            binding.homeGameNowLeftChance.text = getString(
-                                R.string.home_game_now_left_chance,
-                                lotteryInfo.data.remainLotteryCount
-                            )
-                            binding.homeGameNowLeftChance.visibility = View.VISIBLE
-                            binding.homeGameTicketInfo.visibility = View.VISIBLE
-                            binding.homeGameWhoIsLucky.text =
-                                getString(R.string.home_game_who_is_lucky_who)
                         } else {
-                            binding.homeGameSixSixManQuestionImg.visibility = View.GONE
-                            binding.homeRemainDrawingTimeTitle.text =
-                                getString(R.string.home_remain_drawing_next_time_title)
+                            binding.homeGameTicketOpenPercent.visibility = View.GONE
+                            binding.homeGameRemainTicketInfoLayout.visibility = View.GONE
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.nextEpisodeStartDate)
-                            binding.homeRemainTimeView.stopTime()
-                            binding.homeGameNowLeftChance.visibility = View.GONE
-                            binding.homeGameTicketInfo.visibility = View.GONE
-                            if (TextUtils.isEmpty(lotteryInfo.data.userId)) {
-                                binding.homeGameWhoIsLucky.text =
-                                    getString(R.string.home_game_who_is_lucky_next)
-                            } else {
-                                Glide.with(this)
-                                    .load(ProfileImageUtil.getImageId(lotteryInfo.data.profileImageId))
-                                    .into(binding.homeGameSixSixManImg)
-                                val preString = getString(R.string.home_game_who_is_lucky)
-                                val ssb =
-                                    SpannableStringBuilder("$preString ${lotteryInfo.data.nickName}#${lotteryInfo.data.userId}")
-                                ssb.setSpan(
-                                    ForegroundColorSpan(R.color.main_color),
-                                    preString.length,
-                                    ssb.length,
-                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                                )
-                                binding.homeGameWhoIsLucky.text = ssb
-                            }
                         }
+                        binding.homeGameStatusLayout.homeGameStatusWonPrice.text = getString(
+                            R.string.home_game_status_won_price, "${lotteryInfo.data.winningAmount}"
+                        )
                     }
                 }
+
                 Status.LOADING -> {
                 }
+
                 Status.ERROR -> {
 
                 }
@@ -161,26 +176,66 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.getLotteryInfo()
+        homeViewModel.getNewNotice()
+        homeViewModel.getGameTypeInfo()
+        homeViewModel.getEpisodeList()
 
         binding.homeGameGetTicketBtn.setOnClickListener(this)
-        binding.homeGameGoHistoryTitle.setOnClickListener(this)
-        binding.homeGameGoHistoryForwardImg.setOnClickListener(this)
+        binding.homeGameHelp1.setOnClickListener(this)
+        binding.homeGameHelp2.setOnClickListener(this)
+        binding.homeGameHelp3.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v) {
+            binding.homeGameHelp1 -> {
+                (activity as MainActivity).run {
+                    this.selectedItem(1)
+                }
+            }
+
+            binding.homeGameHelp2 -> {
+                binding.homeGameGetTicketBtn.performClick()
+            }
+
+            binding.homeGameHelp3 -> {
+                (activity as MainActivity).run {
+                    this.selectedItem(2)
+                }
+            }
 
             binding.homeGameGetTicketBtn -> {
                 if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
-                    TwoButtonDialog(
-                        getString(R.string.game_try_dialog_title),
-                        getString(R.string.game_try_dialog_content)
-                    ) { isPositive: Boolean, dialog: DialogFragment ->
-                        if (isPositive) {
-                            homeViewModel.getInstanceLottery()
+                    homeViewModel.gameTypeInfo.value?.data?.data?.let { data ->
+                        val remainTicket = data.allTicket - data.usedTicket
+                        val remainChance =
+                            homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount ?: 0
+                        if (homeViewModel.lotteryInfo.value?.data?.resultCode != LOTTERY_INFO_PROCEEDING) {
+                            Toast.makeText(
+                                requireContext(),
+                                requireContext().getString(R.string.try_next_time),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
                         }
-                        dialog.dismiss()
-                    }.show(parentFragmentManager, TwoButtonDialog.TAG)
+                        if (remainTicket > 0) {
+                            homeViewModel.lotteryInfo.value?.data?.data?.remainLotteryCount
+                            ChallengeGameDialog(
+                                remainTicket.toInt(), remainChance
+                            ) { isPositive: Boolean, remainTicket: Int, dialog: DialogFragment ->
+                                if (isPositive) {
+                                    homeViewModel.getInstanceLottery(remainTicket)
+                                }
+                                dialog.dismiss()
+                            }.show(parentFragmentManager, ChallengeGameDialog.TAG)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                requireContext().getString(R.string.no_ticket),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 } else {
                     OneButtonDialog(content = getString(R.string.login_is_required)) { dialog ->
                         dialog.dismiss()
@@ -188,14 +243,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     }.show(parentFragmentManager, OneButtonDialog.TAG)
                 }
             }
-
-            binding.homeGameGoHistoryTitle, binding.homeGameGoHistoryForwardImg -> {
-                activityResult.launch(
-                    Intent(
-                        this.requireActivity(), LotteryHistoryActivity::class.java
-                    )
-                )
-            }
         }
+    }
+
+    fun refresh() {
+        homeViewModel.getGameTypeInfo()
+        homeViewModel.getLotteryInfo()
     }
 }

@@ -42,7 +42,6 @@ class GameFragment : Fragment() {
         gameViewModel.gameTypeInfo.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-
                     var remainTicket =
                         (it.data?.data?.allTicket ?: 0) - (it.data?.data?.usedTicket ?: 0)
                     if (remainTicket < 0) {
@@ -55,10 +54,10 @@ class GameFragment : Fragment() {
                         this.updateCountText(
                             it.data?.data?.gameCount ?: 0, it.data?.data?.maxCount ?: 0
                         )
-                        this.enableTicket(remainTicket > 0)
+                        this.enableTicket(remainTicket > 0 && (it.data?.data?.gameCount ?: 0) < 30)
                     }
-
                 }
+
                 else -> {}
             }
         }

@@ -1,10 +1,12 @@
 package com.ham.onettsix.view
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
 import com.ham.onettsix.R
 import com.ham.onettsix.databinding.ToolbarLayoutBinding
 import com.ham.onettsix.databinding.ViewRemainDrawingTimeBinding
@@ -32,7 +34,7 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
 
     init {
         val view = inflate(context, R.layout.view_remain_drawing_time, null)
-        binding =  ViewRemainDrawingTimeBinding.inflate(LayoutInflater.from(context))
+        binding = ViewRemainDrawingTimeBinding.inflate(LayoutInflater.from(context))
         view.apply {}
         addView(binding.root)
     }
@@ -40,13 +42,13 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
     fun stopTime() {
         this@RemainTimeView.coroutineScope?.cancel()
         val defaultTime = resources.getString(R.string.home_remain_drawing_time_default)
-        binding.remainTimeHourTv.post{
+        binding.remainTimeHourTv.post {
             binding.remainTimeHourTv.text = defaultTime
         }
-        binding.remainTimeMinsTv.post{
+        binding.remainTimeMinsTv.post {
             binding.remainTimeHourTv.text = defaultTime
         }
-        binding.remainTimeSecsTv.post{
+        binding.remainTimeSecsTv.post {
             binding.remainTimeHourTv.text = defaultTime
         }
     }
@@ -70,12 +72,20 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                 }
             } else {
                 while (true) {
-                    if (coroutineScope?.isActive == false){
-                        return@launch
-                    }
                     val targetTime =
-                        LocalDateTime.ofInstant(Date(limitedDate).toInstant(), ZoneId.systemDefault())
-                    val totalSec = LocalDateTime.now().until(targetTime, ChronoUnit.SECONDS)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            LocalDateTime.ofInstant(
+                                Date(limitedDate).toInstant(),
+                                ZoneId.systemDefault()
+                            )
+                        } else {
+                            java.time.LocalTime.now()
+                        }
+                    val totalSec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        LocalDateTime.now().until(targetTime, ChronoUnit.SECONDS)
+                    } else {
+                        0
+                    }
                     val day = totalSec / (60 * 60 * 24)
                     val hour = (totalSec % (60 * 60 * 24)) / (60 * 60)
                     val min = (totalSec % (60 * 60)) / (60)
@@ -85,16 +95,19 @@ class RemainTimeView(context: Context, attrs: AttributeSet) : FrameLayout(contex
                         binding.remainTimeDaysTv.text = day.toString()
                     }
                     binding.remainTimeHourTv.post {
+                        binding.remainTimeHourTv.text = hour.toString()
                         if (coroutineScope?.isActive == true) {
-                            binding.remainTimeHourTv.text = hour.toString()
+
                         }
                     }
                     binding.remainTimeMinsTv.post {
+                        binding.remainTimeMinsTv.text = min.toString()
                         if (coroutineScope?.isActive == true) {
                             binding.remainTimeMinsTv.text = min.toString()
                         }
                     }
                     binding.remainTimeSecsTv.post {
+                        binding.remainTimeSecsTv.text = sec.toString()
                         if (coroutineScope?.isActive == true) {
                             binding.remainTimeSecsTv.text = sec.toString()
                         }

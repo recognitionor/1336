@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">1336</string>
     <!--common-->
+    <string name="all">전체</string>
     <string name="must">[필수]</string>
+    <string name="new_eng">NEW</string>
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
     <string name="waiting">대기</string>
@@ -10,8 +12,17 @@
     <string name="mail">mail</string>
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
+    <string name="count">개</string>
+    <string name="some_day_ago">일전</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
     <string name="list_empty">리스트가 없습니다.</string>
+
+    <string name="sec_ago">방금 전</string>
+    <string name="min_ago">%1$d 분 전</string>
+    <string name="hour_ago">%1$d 시 전</string>
+    <string name="day_ago">%1$d 일 전</string>
+    <string name="month_ago">%1$d 달 전</string>
+    <string name="year_ago">%1$d 년 전</string>
 
     <!--menu-->
     <string name="menu_home">홈</string>
@@ -38,7 +49,8 @@
     <string name="lottery_history_count">제 %1$s회</string>
     <string name="lottery_history_title">육뉵이 발표</string>
     <string name="lottery_history_end_date">(%1$s 추첨)</string>
-    <string name="lottery_history_next_time">당첨자 없음…\n다음 기회에</string>
+    <string name="lottery_history_next_time">행운의 주인공이 되어 보세요</string>
+    <string name="lottery_history_empty">-</string>
     <string name="lottery_history_winning_btn">당첨 포인트 받으러가기 신나게~~~</string>
     <string name="lottery_history_winning_info_message">당첨 발표 후 7일내 마이페이지를 통해 지급 신청을 해야만 지급이 가능합니다.</string>
     <string name="lottery_history_list_title">역대 육뉵이</string>
@@ -47,8 +59,19 @@
 
 
     <!--Home-->
+    <string name="home_game_progress_open_percent">현재 티켓 오픈율 👀</string>
+    <string name="home_game_progress_episode">%1$s회차</string>
+    <string name="home_game_progress_title">%1$s회차</string>
+    <string name="home_game_progress_end_date">마감일 %1$s</string>
+    <string name="home_game_progress_start_date">시작일 %1$s</string>
+    <string name="home_game_progress_now">게임 진행중</string>
+    <string name="home_game_progress_future">대기중 회차</string>
+    <string name="home_game_progress_winning_amount">당첨금 %1$d</string>
+    <string name="home_game_status_title">오직 단 1명의 행운의 육뉵이 에게</string>
+    <string name="home_game_status_won_price">%1$s원</string>
+    <string name="home_game_status_message">이벤트 기간 내\n제한된 티켓 수만큼 응모하면\n상금이 100% 내 품 안으로!</string>
     <string name="home_remain_drawing_next_time_title">다음 게임까지\n남은 시간</string>
-    <string name="home_remain_drawing_time_title">당첨까지\n남은 시간</string>
+    <string name="home_remain_drawing_time_title">D-DAY</string>
     <string name="home_remain_drawing_time_days">DAYS</string>
     <string name="home_remain_drawing_time_hours">HOURS</string>
     <string name="home_remain_drawing_time_mins">MINUTES</string>
@@ -62,12 +85,27 @@
     <string name="home_game_get_ticket_btn">행운의 당첨자 도전!</string>
     <string name="home_profile_user_name">%1$s 님은</string>
     <string name="home_profile_user_reward">%1$s 입니다.</string>
-    <string name="home_game_who_is_lucky_who">행운의 육뉵이는 뉴규?</string>
+    <string name="home_game_who_is_lucky_who">행운의 당첨자는 뉴규?</string>
     <string name="home_game_who_is_lucky_next">행운의 육뉵이는 다음 기회에</string>
     <string name="home_game_who_is_lucky">행운의 육뉵이는</string>
-    <string name="home_game_now_chance_percent">지금 참여하면 당첨 확률 %1$s%</string>
-    <string name="home_game_now_left_chance">남은 찬스 %1$s개</string>
-    <string name="home_game_ticket_info">%1$s명이 참여해서\n총 %2$s개의 티켓이 모였어요.</string>
+    <string name="home_game_now_chance_percent">지금 참여 하면 당첨 확률 %1$s%</string>
+    <string name="home_game_now_left_chance">당첨 까지\n티켓 %1$s개 남음!</string>
+    <string name="home_game_ticket_info">%1$s 개 모두 응모 시 당첨 확률 100%</string>
+    <string name="home_game_ticket_info_allin">%1$s 개 모두 응모 시 당첨 확률 100%%</string>
+    <string name="home_game_current_ticket_percent">내가 가진 %1$s개 모두 응모 시 확률 %2$s%%</string>
+    <string name="home_game_current_ticket_update_info">%1$s시간 마다 업데이트 됩니다.(%2$s기준)</string>
+    <string name="home_game_help_info">이벤트 참여 순서</string>
+    <string name="home_game_ticket_rate_info">이벤트 기간 내 전체 티켓 수 만큼 응모하면\n100% 당첨 됩니다.</string>
+    <string name="home_game_current_ticket_info">전체 티켓 %1$d개\n응모 티켓 %2$d개</string>
+    <string name="home_game_help_content_1">출석체크 또는 광고보기로 티켓 획득</string>
+    <string name="home_game_help_content_2">기도 메타로 당첨 까지 남은 티켓이 0이 될때 까지 "당첨자 도전" 으로 응모</string>
+    <string name="home_game_help_content_3">마이 페이지에서 정보 입력</string>
+    <string name="home_game_help_title_1">Get 티켓!</string>
+    <string name="home_game_help_title_2">홈화면</string>
+    <string name="home_game_help_title_3">육뉵이 당첨</string>
+    <string name="home_game_help_count_1">&#x261D;</string>
+    <string name="home_game_help_count_2">&#x270C;</string>
+    <string name="home_game_help_count_3">&#x270C;&#xFE0F;&#x270C;&#xFE0F;&#x270C;&#xFE0F;</string>
     <string name="home_game_go_history_title">역대 육뉵이 보러가기</string>
     <string name="home_game_caution_title">유의사항</string>
     <string name="home_game_caution_content">카운트 시작 시 응모 가능한 횟수와 당첨 번호가 지정됩니다.\n이벤트는 최대 참여자수에 도달하면 100% 당첨 됩니다.\n얻은 티켓은 이벤트 운영 기간동안만 유효합니다.\n카운트 다운이 끝나면 모두 회수됩니다.</string>
@@ -75,8 +113,10 @@
 
     <!--티켓참여-->
     <string name="my_ticket">내 티켓</string>
-    <string name="game_daily_title">티켓 득템하러 가기</string>
-    <string name="game_daily_title_info">참여하면 100% 1 티켓 바로 응모</string>
+    <string name="rps_daily_title">가위 바위 보 로 티켓 얻기</string>
+    <string name="rps_daily_title_info">참여 하면 1개 소진 승리 시 3개 지급</string>
+    <string name="quiz_daily_title">퀴즈 맞추고 티켓 얻기</string>
+    <string name="quiz_daily_title_info">퀴즈 세트 모두 맞추면 5개 지급</string>
     <string name="game_rv_title">동영상 보고 티켓 얻기</string>
     <string name="game_rv_title_info">영상 보면 1개 티겟 당첨! 참여시 바로 응모</string>
     <string name="attend_btn">출to the첵</string>
@@ -93,7 +133,7 @@
     <string name="profile_history_item_price">%1$s 원</string>
     <string name="profile_history_item_status_wating">%1$s 회차</string>
     <string name="profile_ticket_info_message">(티겟은 참여 회차의 육뉵이 당첨시까지 유효하며, 미당첨시 다음 회자 당첨시까지로 연장됩니다. 티켓 획득 후 바로 응모를 권장합니다.)</string>
-    <string name="profile_warning_message">당첨 발표 후 7일내 당첨 버튼을 클릭해서 메일을 보내야만 지급이 가능합니다.</string>
+    <string name="profile_warning_message">당첨이 되면 발표 후 7일 내 ‘축!당첨!’\n버튼 클릭 후 Gmail 아이콘을 선택해 \n필요 정보를 보내야만 지급됩니다.</string>
     <string name="profile_history_item_join">내 참여 수 : </string>
     <string name="profile_history_item_total">총 참여 수 : </string>
     <string name="profile_history_game_index_title">회차</string>
@@ -124,8 +164,13 @@
     <string name="game_draw">무승부</string>
     <string name="game_expire">참여 할수 있는 횟수를 초과 했습니다.</string>
     <string name="game_try_dialog_title">육뉵이에 도전하시겠습니까?</string>
-    <string name="game_try_dialog_content">소지한 티켓 1개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
+    <string name="game_try_dialog_chance">당첨 확률 : %1$s</string>
+    <string name="game_try_dialog_remain">내 보유 티켓 : %1$d, 잔여 티켓 : %2$d</string>
+    <string name="game_try_dialog_chance_caution">당첨자는 한명이기에 동시 참여하는 경우 확률에 관계없이 당첨이 보장이 되지 않을 수 있음</string>
+
+    <string name="game_try_dialog_content">소지한 티켓 %1$d개가 소진되며\n응모한 티켓은 반환되지 않습니다.</string>
     <string name="no_ticket">티켓이 없습니다.</string>
+    <string name="try_next_time">다음 게임을 기다려 주세요</string>
     <string name="no_ticket_title">앗! 응모 가능한 티켓이 없습니다.</string>
     <string name="no_ticket_msg">확인을 누르면 티켓을 얻을 수 있는 페이지로 이동합니다. 티켓을 모아 육뉵이에 도전해보세요.</string>
 
@@ -156,10 +201,12 @@
     <string name="profile_detail_version">버전 정보</string>
     <string name="profile_detail_logout">로그아웃</string>
     <string name="profile_detail_withdraw">회원 탈퇴하시려면 여기를 눌러주세요</string>
-
-
+    <string name="withdraw_dialog_title">회원 탈퇴</string>
+    <string name="withdraw_dialog_content">정말로 탈퇴하시겠습니까?</string>
     <!--YouTube-->
     <string name="youtube_last_list">리스트의 마지막입니다.</string>
+    <string name="investment_tag_title">나에게 필요한 돈버는 TAG</string>
+    <string name="investment_blog">[블로그]</string>
 
     <string name="mail_content">%1$s 회차의 육뉵이가 되신 걸 축하합니다!\n
         개인정보 수집·이용에 동의하신다면, 당첨 지급 기한 내 아래 정보를 작성해 ham.factories@gmail.com 로 전달해주세요.
@@ -177,5 +224,9 @@
         - 수집하는 개인정보의 항목: 이름, 계좌번호\n
         - 개인정보의 보유·이용 기간:  경품 지급 완료 후 최대 3개월 (지급 내용 및 관련 응대 완료 후 폐기)\n
 개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으며, 이 경우 이벤트 참여가 제한됩니다.</string>
+
+    <!--quiz-->
+    <string name="quiz_start_button">퀴즈 시작 하기</string>
+
 
 </resources>

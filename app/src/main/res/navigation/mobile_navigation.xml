@@ -9,31 +9,36 @@
         android:id="@+id/nav_home"
         android:name="com.ham.onettsix.fragment.HomeFragment"
         android:label="@string/menu_home"
+        android:tag="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.ham.onettsix.fragment.MyProfileFragment"
         android:label="@string/menu_profile"
+        android:tag="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_get_ticket"
         android:name="com.ham.onettsix.fragment.GameFragment"
         android:label="@string/menu_get_ticket"
+        android:tag="@string/menu_get_ticket"
         tools:layout="@layout/fragment_game" />
 
     <fragment
         android:id="@+id/nav_history"
         android:name="com.ham.onettsix.fragment.LotteryHistoryFragment"
         android:label="@string/menu_game"
+        android:tag="@string/menu_game"
         tools:layout="@layout/fragment_game" />
 
     <fragment
         android:id="@+id/nav_youtube"
-        android:name="com.ham.onettsix.fragment.YouTubeFragment"
+        android:name="com.ham.onettsix.fragment.InvestmentFragment"
         android:label="@string/menu_youtube"
-        tools:layout="@layout/fragment_youtube" />
+        android:tag="@string/menu_youtube"
+        tools:layout="@layout/fragment_investment" />
 
 
 </navigation>

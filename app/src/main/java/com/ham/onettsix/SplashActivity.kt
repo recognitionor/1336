@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.ham.onettsix.data.api.ApiHelperImpl
@@ -22,6 +23,7 @@ import com.ham.onettsix.databinding.ActivitySplashBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.SplashViewModel
+import android.net.Uri
 
 class SplashActivity : AppCompatActivity() {
 
@@ -42,6 +44,7 @@ class SplashActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
         }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 200)
@@ -51,9 +54,14 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupObserver()
         splashViewModel.refreshLogin()
+        splashViewModel.getRewardUnit()
         binding.splashErrorBtn.setOnClickListener {
             splashViewModel.refreshLogin()
         }
+        // ATTENTION: This was auto-generated to handle app links.
+        val appLinkIntent: Intent = intent
+        val appLinkAction: String? = appLinkIntent.action
+        val appLinkData: Uri? = appLinkIntent.data
     }
 
     private fun createNotificationChannel(context: Context) {

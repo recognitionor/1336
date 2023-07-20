@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ham.onettsix">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".application.BaseApplication"
@@ -15,13 +17,23 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="link.onettsix.com"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
@@ -32,8 +44,7 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.ham.NoActionBar" >
-        </activity>
+            android:theme="@style/Theme.ham.NoActionBar"></activity>
         <activity
             android:name=".EulaActivity"
             android:screenOrientation="portrait"
@@ -58,28 +69,63 @@
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <activity
-            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:name=".QuizGameActivity"
             android:screenOrientation="portrait"
-            android:exported="true">
+            android:theme="@style/Theme.ham.NoActionBar" />
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakaod508b76ef17b730d5e4c99875217d6f7" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.ironsource.sdk.controller.ControllerActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:name="com.ironsource.sdk.controller.InterstitialActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.ironsource.sdk.controller.OpenUrlActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <provider
+            android:name="com.ironsource.lifecycle.IronsourceLifecycleProvider"
+            android:authorities="${applicationId}.IronsourceLifecycleProvider" />
 
         <activity
             android:name=".NoticeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ham.NoActionBar" />
 
+        <receiver
+            android:name=".ReferrerBroadCastReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5672204188980144~5165300143"/>
+            android:value="ca-app-pub-5672204188980144~5165300143" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -97,6 +143,7 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="d508b76ef17b730d5e4c99875217d6f7" />
+
 
     </application>
 

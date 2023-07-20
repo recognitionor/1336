@@ -14,19 +14,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_game_progress_rv"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:padding="10dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/home_game_status_layout"
+                layout="@layout/home_game_status_layout"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_progress_rv" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_remain_drawing_time_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/gmarket_sans_ttf_bold"
                 android:gravity="center"
                 android:lineHeight="48dp"
                 android:text="@string/home_remain_drawing_time_title"
                 android:textColor="@color/text_black"
-                android:textSize="44dp"
+                android:textSize="38dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_status_layout" />
 
             <com.ham.onettsix.view.RemainTimeView
                 android:id="@+id/home_remain_time_view"
@@ -38,209 +51,130 @@
                 app:layout_constraintTop_toBottomOf="@+id/home_remain_drawing_time_title" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_info"
+                android:id="@+id/home_game_ticket_open_percent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="31dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_info"
-                android:textColor="@color/text_black"
-                android:textSize="24dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_remain_time_view" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="48dp"
-                android:text="@string/home_game_price"
-                android:textColor="@color/text_main_color"
-                android:textSize="44dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_info" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_who_is_lucky"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/gmarket_sans_ttf_medium"
                 android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_who_is_lucky_who"
-                android:textColor="@color/text_black"
-                android:textSize="18dp"
+                android:text="@string/home_game_progress_open_percent"
+                android:textColor="@color/black"
+                android:textSize="20dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_price" />
+                app:layout_constraintTop_toBottomOf="@+id/home_remain_time_view" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/home_game_six_six_man_img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/profile_layout_background"
-                android:src="@mipmap/ic_sixsix_man"
-                android:layout_marginTop="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/home_game_six_six_man_question_img"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_question_mark"
-                android:layout_marginTop="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_now_left_chance"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/home_game_remain_ticket_info_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_now_left_chance"
-                android:textColor="@color/text_black"
-                android:textSize="24dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/home_game_remain_ticket_background"
+                android:orientation="vertical"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_who_is_lucky" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_ticket_open_percent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/home_game_ticket_participation_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/gmarket_sans_ttf_bold"
+                    android:gravity="center"
+                    android:lineHeight="32dp"
+                    android:textColor="@color/main_color"
+                    android:textSize="30dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/home_game_current_ticket_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/gmarket_sans_ttf_medium"
+                    android:gravity="center"
+                    android:lineHeight="32dp"
+                    android:textColor="@color/text_black"
+                    android:textSize="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_game_ticket_participation_rate" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_ticket_info"
+                android:id="@+id/home_game_remain_ticket_sub_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/gmarket_sans_ttf_medium"
                 android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_ticket_info"
+                android:text="@string/home_game_ticket_rate_info"
                 android:textColor="@color/text_black"
-                android:textSize="24dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_six_six_man_img" />
-
-            <View
-                android:id="@+id/home_game_border_view"
-                android:layout_width="58dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="57dp"
-                android:background="@color/border_grey"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_ticket_info" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_go_history_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_go_history_title"
-                android:textColor="@color/text_black"
-                android:textSize="24dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_border_view" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/home_game_go_history_forward_img"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_forward"
-                app:layout_constraintLeft_toRightOf="@+id/home_game_go_history_title"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/home_game_go_history_title"
-                app:layout_constraintBottom_toBottomOf="@+id/home_game_go_history_title"/>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:src="@drawable/ic_gold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_go_history_title" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/home_game_go_history_img"
-                android:layout_width="83dp"
-                android:layout_height="83dp"
-                android:layout_marginTop="53.5dp"
-                android:gravity="center"
-                android:src="@drawable/ic_money"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_go_history_title" />
-
-            <View
-                android:id="@+id/home_game_border_view2"
-                android:layout_width="58dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/border_grey"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_go_history_img" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_caution_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_caution_title"
-                android:textColor="@color/caution_grey"
-                android:textSize="24dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_border_view2" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/home_game_caution_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gmarket_sans_ttf_bold"
-                android:gravity="center"
-                android:lineHeight="32dp"
-                android:text="@string/home_game_caution_content"
-                android:textColor="@color/caution_grey"
                 android:textSize="12dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_caution_title" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_remain_ticket_info_layout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/home_game_help_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/gmarket_sans_ttf_medium"
+                android:gravity="center"
+                android:lineHeight="48dp"
+                android:text="@string/home_game_help_info"
+                android:textColor="@color/text_black"
+                android:textSize="38dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_remain_ticket_sub_info" />
+
+            <View
+                android:id="@+id/home_game_help_info_border_view"
+                android:layout_width="158dp"
+                android:layout_height="1dp"
+                android:background="@color/border_grey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_help_info" />
+
+            <com.ham.onettsix.view.HomeGameHelpLayout
+                android:id="@+id/home_game_help_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:home_game_help_content="@string/home_game_help_content_1"
+                app:home_game_help_count="@drawable/looks_1"
+                app:home_game_help_title="@string/home_game_help_title_1"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_help_info_border_view" />
+
+            <com.ham.onettsix.view.HomeGameHelpLayout
+                android:id="@+id/home_game_help_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:home_game_help_content="@string/home_game_help_content_2"
+                app:home_game_help_count="@drawable/looks_2"
+                app:home_game_help_title="@string/home_game_help_title_2"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_help_1" />
+
+            <com.ham.onettsix.view.HomeGameHelpLayout
+                android:id="@+id/home_game_help_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:home_game_help_content="@string/home_game_help_content_3"
+                app:home_game_help_count="@drawable/looks_3"
+                app:home_game_help_title="@string/home_game_help_title_3"
+                app:layout_constraintTop_toBottomOf="@+id/home_game_help_2" />
 
             <View
                 android:layout_width="match_parent"
@@ -248,7 +182,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_game_caution_content" />
+                app:layout_constraintTop_toBottomOf="@+id/home_game_help_3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

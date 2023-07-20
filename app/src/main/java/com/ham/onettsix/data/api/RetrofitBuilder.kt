@@ -15,32 +15,24 @@ import java.util.concurrent.TimeUnit
 object RetrofitBuilder {
 
     private fun getRetrofit(): Retrofit {
-        val interceptor = HttpLoggingInterceptor {
-        }
+        val interceptor = HttpLoggingInterceptor {}
 
         val headerInterceptor = Interceptor { chain ->
             val request: Request =
-                chain.request().newBuilder().addHeader(ParamsKeys.KEY_AUTH_TOKEN, accessToken).build()
+                chain.request().newBuilder().addHeader(ParamsKeys.KEY_AUTH_TOKEN, accessToken)
+                    .build()
             chain.proceed(request)
         }
 
         interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-            .addInterceptor(headerInterceptor)
-            .addInterceptor(interceptor).build()
+        val client: OkHttpClient = OkHttpClient.Builder().connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS).writeTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(headerInterceptor).addInterceptor(interceptor).build()
 
-        val gson : Gson = GsonBuilder()
-            .setLenient()
-            .create()
+        val gson: Gson = GsonBuilder().setLenient().create()
 
-        return Retrofit.Builder()
-            .baseUrl(UrlInfo.getBaseURL())
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+        return Retrofit.Builder().baseUrl(UrlInfo.getBaseURL()).client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
     }
 
     val apiService: ApiService = getRetrofit().create(ApiService::class.java)

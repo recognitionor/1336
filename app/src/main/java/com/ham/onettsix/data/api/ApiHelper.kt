@@ -1,12 +1,12 @@
 package com.ham.onettsix.data.api
 
 import com.ham.onettsix.data.model.*
-import retrofit2.http.GET
-import retrofit2.http.QueryMap
 
 interface ApiHelper {
 
     suspend fun getTest(params: HashMap<String, Any?>): Test?
+
+    suspend fun setReferrer(params: HashMap<String, Any?>)
 
     suspend fun setTest(params: HashMap<String, Any?>)
 
@@ -42,20 +42,28 @@ interface ApiHelper {
 
     suspend fun createLottery(): Result
 
-    suspend fun getInstantLottery(): Result
+    suspend fun getInstantLottery(params: HashMap<String, Any?>): Result
 
     suspend fun getHistoryInfo(): HistoryInfo
 
     suspend fun getNoticeList(): Notice
 
-    suspend fun setFirebaseToken(params: HashMap<String, Any?>) : Result
+    suspend fun getNewNotice(): NewNotice
 
-    suspend fun getYouTubeList(params: HashMap<String, Any?>): YouTubeInfo
+    suspend fun setFirebaseToken(params: HashMap<String, Any?>): Result
+
+    suspend fun getInvestmentList(params: HashMap<String, Any?>): InvestmentInfo
+
+    suspend fun getInvestmentTagList(): InvestmentTag
 
     suspend fun withDraw(): Result
 
     suspend fun changeAlarm(params: HashMap<String, Any?>): Result
 
     suspend fun getSecretCode(params: HashMap<String, Any?>): WinnerSecretCode
+
+    suspend fun getRewardUnit(): RewardUnit
+
+    suspend fun getEpisodeList(): EpisodeList
 
 }

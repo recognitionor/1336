@@ -29,8 +29,8 @@ data class Notice(
         val content: String,
         @SerializedName("iconUrl")
         val iconUrl: String,
-        @SerializedName("noticedTime")
-        val noticedTime: Int,
+        @SerializedName("createdAt")
+        val createdAt: Long,
         @SerializedName("noticeType")
         val noticeType: Int,
         ) : Parcelable
