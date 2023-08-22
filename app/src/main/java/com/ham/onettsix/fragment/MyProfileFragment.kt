@@ -159,7 +159,7 @@ class MyProfileFragment : Fragment(), View.OnClickListener {
                     progressDialog.dismiss()
                     if (it.data != null) {
                         binding.profileUserNameTv.text = it.data.nickName
-                        binding.profileUserIdTv.text = "#${it.data.id}"
+                        binding.profileUserIdTv.text = "#${it.data.uid}"
                         binding.profileImageView.setImageResource(
                             ProfileImageUtil.getImageId(
                                 it.data.profileImageId ?: -1

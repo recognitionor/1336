@@ -45,6 +45,9 @@ data class EpisodeList(
         @SerializedName("status")
         val status: String,
 
+        @SerializedName("startDate")
+        val startDate: Long,
+
         @SerializedName("endDate")
         val endDate: Long,
 

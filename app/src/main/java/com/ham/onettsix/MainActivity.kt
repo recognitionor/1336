@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Status.SUCCESS -> {
                     if (it.data != null) {
                         it.data.let { data ->
-                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.id}"
+                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.uid}"
                             navHeaderBinding.navHeaderImg.setImageDrawable(
                                 getDrawable(
                                     ProfileImageUtil.getImageId(data.profileImageId ?: -1)

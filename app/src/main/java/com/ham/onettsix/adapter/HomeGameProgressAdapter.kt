@@ -1,8 +1,12 @@
 package com.ham.onettsix.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
@@ -32,15 +36,24 @@ class HomeGameProgressAdapter :
             }
             if (item.episodeStatus == 0) {
                 binding.homeGameProgressItemLayout.isEnabled = true
-                val date = SimpleDateFormat("yy년MM월dd일", Locale.ENGLISH).format(item.endDate)
+                val date = SimpleDateFormat("yy년MM월dd일", Locale.KOREA).format(item.startDate)
                 binding.homeGameProgressEndData.text =
                     binding.root.context.getString(R.string.home_game_progress_start_date, date)
             } else if (item.isEnd) {
-//                binding.homeGameProgressStatus.textColors=
+                binding.homeGameProgressStatus.setTextColor(Color.parseColor("#808080"))
                 binding.homeGameProgressItemLayout.isEnabled = false
                 val date = SimpleDateFormat("yy년MM월dd일", Locale.ENGLISH).format(item.endDate)
                 binding.homeGameProgressEndData.text =
                     binding.root.context.getString(R.string.home_game_progress_end_date, date)
+            } else {
+                binding.homeGameProgressItemLayout.isEnabled = true
+                val textColor = ContextCompat.getColor(binding.root.context, R.color.main_color)
+                val colorStateList = ColorStateList.valueOf(textColor)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    binding.homeGameProgressStatus.setTextColor(colorStateList)
+                } else {
+                    binding.homeGameProgressStatus.setTextColor(textColor)
+                }
             }
 
             binding.homeGameProgressStatus.text = item.status

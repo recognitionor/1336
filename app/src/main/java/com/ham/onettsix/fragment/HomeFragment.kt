@@ -3,13 +3,11 @@ package com.ham.onettsix.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +18,6 @@ import com.ham.onettsix.R
 import com.ham.onettsix.adapter.HomeGameProgressAdapter
 import com.ham.onettsix.adapter.RecyclerDecorationWidth
 import com.ham.onettsix.constant.ActivityResultKey
-import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_LOSE
 import com.ham.onettsix.constant.ResultCode.LOTTERY_FINISHED_WIN
 import com.ham.onettsix.constant.ResultCode.LOTTERY_INFO_PROCEEDING
@@ -34,6 +31,7 @@ import com.ham.onettsix.dialog.*
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.HomeViewModel
+import kotlin.math.roundToInt
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
@@ -84,7 +82,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     @SuppressLint("ResourceAsColor")
     private fun setupObserver() {
-        homeViewModel.episodeList.observe(this) { it ->
+        homeViewModel.episodeList.observe(this) {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.data?.let { list ->
@@ -140,12 +138,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
-                        if (lotteryInfo.resultCode == ResultCode.LOTTERY_INFO_PROCEEDING) {
+                        if (lotteryInfo.resultCode == LOTTERY_INFO_PROCEEDING) {
                             binding.homeGameTicketOpenPercent.visibility = View.VISIBLE
                             binding.homeGameRemainTicketInfoLayout.visibility = View.VISIBLE
                             val ratePercent: Float =
-                                ((lotteryInfo.data.totalJoinCount.toFloat() / (lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount)) * 100).toFloat()
-                            binding.homeGameTicketParticipationRate.text = "$ratePercent%"
+                                ((lotteryInfo.data.totalJoinCount.toFloat() / (lotteryInfo.data.remainLotteryCount + lotteryInfo.data.totalJoinCount)) * 100)
+                            binding.homeGameTicketParticipationRate.text =
+                                "${((ratePercent * 10000.0).roundToInt() / 10000.0)}%"
                             binding.homeRemainTimeView.setStartTime(lotteryInfo.data.limitedDate)
                             binding.homeGameCurrentTicketInfo.text = getString(
                                 R.string.home_game_current_ticket_info,
