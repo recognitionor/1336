@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,8 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.SplashViewModel
 import android.net.Uri
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class SplashActivity : AppCompatActivity() {
 
@@ -47,14 +50,28 @@ class SplashActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 200)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            splashViewModel.refreshLogin()
+            splashViewModel.getRewardUnit()
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 200)
+            } else {
+                splashViewModel.refreshLogin()
+                splashViewModel.getRewardUnit()
+            }
+        }
+
         createNotificationChannel(this)
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupObserver()
-        splashViewModel.refreshLogin()
-        splashViewModel.getRewardUnit()
+
         binding.splashErrorBtn.setOnClickListener {
             splashViewModel.refreshLogin()
         }
@@ -83,15 +100,27 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                     activityResult.launch(Intent(this, MainActivity::class.java))
                 }
+
                 Status.LOADING -> {
                     binding.splashProgress.visibility = View.VISIBLE
                     binding.splashErrorBtn.visibility = View.GONE
                 }
+
                 Status.ERROR -> {
                     binding.splashProgress.visibility = View.GONE
                     binding.splashErrorBtn.visibility = View.VISIBLE
                 }
             }
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        splashViewModel.refreshLogin()
+        splashViewModel.getRewardUnit()
     }
 }
