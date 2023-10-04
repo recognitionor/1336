@@ -70,5 +70,6 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getRewardUnit(): RewardUnit = apiService.getRewardUnit()
     override suspend fun getEpisodeList(): EpisodeList = apiService.getEpisodeList()
+    override suspend fun getTypingGame(params: HashMap<String, Any?>): TypingGame = apiService.getTypingGame(params)
 
 }

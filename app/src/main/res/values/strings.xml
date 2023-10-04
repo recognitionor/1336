@@ -29,6 +29,7 @@
     <string name="menu_game">참여</string>
     <string name="menu_alarm">알람</string>
     <string name="menu_login">로그인</string>
+    <string name="menu_typing_quiz">타자 게임</string>
     <string name="menu_signup">회원가입</string>
     <string name="menu_profile">내 정보</string>
     <string name="menu_get_ticket">Get 티켓!</string>
@@ -227,6 +228,9 @@
 
     <!--quiz-->
     <string name="quiz_start_button">퀴즈 시작 하기</string>
+
+    <!--typing-->
+    <string name="typing_game_start">Typing Start!!</string>
 
 
 </resources>

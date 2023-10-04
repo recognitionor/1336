@@ -66,4 +66,6 @@ interface ApiHelper {
 
     suspend fun getEpisodeList(): EpisodeList
 
+    suspend fun getTypingGame(params: HashMap<String, Any?>): TypingGame
+
 }

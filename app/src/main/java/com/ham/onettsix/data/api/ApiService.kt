@@ -104,6 +104,8 @@ interface ApiService {
 
     @GET("/get/episodeList")
     suspend fun getEpisodeList(): EpisodeList
+    @GET("/typing-game")
+    suspend fun getTypingGame(@QueryMap params: HashMap<String, Any?>): TypingGame
 
 
 }
