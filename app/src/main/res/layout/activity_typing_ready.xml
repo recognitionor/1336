@@ -14,11 +14,22 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:toolbar_title="@string/menu_typing_quiz" />
+        app:toolbar_title="@string/menu_typing_quiz"
+        app:toolbar_use_add_btn="true" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/get_btn"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_typing_ready"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="40dp"
+        android:background="@color/white_00"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/main_color"
+        app:tabTextColor="@color/text_black" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_typing_ready"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

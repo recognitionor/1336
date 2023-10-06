@@ -20,6 +20,7 @@ data class TypingGame(
         @SerializedName("useAt") var useAt: Boolean,
         @SerializedName("rankingType") var rankingType: String,
         @SerializedName("gameType") var gameType: String,
-        @SerializedName("limitedTime") var limitedTime: Long
+        @SerializedName("limitedTime") var limitedTime: Long,
+        @SerializedName("typingHistoryList") var typingHistoryList: List<TypingHistory>
     ) : Parcelable
 }

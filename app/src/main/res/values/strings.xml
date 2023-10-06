@@ -231,6 +231,12 @@
 
     <!--typing-->
     <string name="typing_game_start">Typing Start!!</string>
-
-
+    <string name="typing_tab_rank_game">랭겜</string>
+    <string name="typing_tab_speed_game">연습 게임</string>
+    <string name="typing_game_ranking_title">랭겜 제시어</string>
+    <string name="typing_game_total_challenger">총 %1$s명 도전 중</string>
+    <string name="typing_game_honorary_member">%1$s인의 명예 육뉵이</string>
+    <string name="typing_game_exam">출제</string>
+    <string name="typing_game_attend_count">참여 중</string>
+    <string name="typing_game_attend">%1$s회 참여</string>
 </resources>

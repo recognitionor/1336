@@ -27,7 +27,6 @@
         android:background="@drawable/main_color_btn_background"
         android:gravity="center"
         android:textColor="@color/white"
-        android:text="dsdsdsdsds"
         app:layout_constraintBottom_toTopOf="@id/home_help_info_content"
         app:layout_constraintLeft_toLeftOf="@+id/home_help_info_content"
         app:layout_constraintRight_toRightOf="@+id/home_help_info_content"
