@@ -47,6 +47,8 @@ object ParamsKeys {
 
     const val KEY_GAME_TYPE = "gameType"
 
+    const val KEY_GAME_QUESTION_ID = "questionId"
+
     const val KEY_TYPE = "type"
 
     const val KEY_TOKEN = "token"
@@ -54,4 +56,6 @@ object ParamsKeys {
     const val KEY_START_EPISODE = "startEpisode"
 
     const val KEY_LOTTERY_COUNT = "lotteryCount"
+
+
 }

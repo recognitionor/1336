@@ -17,6 +17,10 @@ class ToolbarView(context: Context, attrs: AttributeSet) : Toolbar(context, attr
 
     }
 
+    fun getBinding(): ToolbarLayoutBinding {
+        return binding
+    }
+
     init {
         val view = inflate(context, R.layout.toolbar_layout, null)
         binding = ToolbarLayoutBinding.inflate(LayoutInflater.from(context))

@@ -7,7 +7,8 @@ import com.ham.onettsix.R
 import com.ham.onettsix.data.model.TypingHistory
 import com.ham.onettsix.databinding.RvItemTypingHistoryBinding
 
-class TypingHistoryAdapter : RecyclerView.Adapter<TypingHistoryAdapter.TypingHistoryViewHolder>() {
+class TypingHistoryAdapter(private val itemClickListener: OnItemClickListener<TypingHistory>) :
+    RecyclerView.Adapter<TypingHistoryAdapter.TypingHistoryViewHolder>() {
 
     private var list: ArrayList<TypingHistory> = ArrayList<TypingHistory>().apply {
         this.add(TypingHistory(1, "에이미림", 1f, 1))
@@ -39,6 +40,9 @@ class TypingHistoryAdapter : RecyclerView.Adapter<TypingHistoryAdapter.TypingHis
     override fun onBindViewHolder(
         holder: TypingHistoryViewHolder, position: Int
     ) {
+        holder.itemView.rootView.setOnClickListener {
+            itemClickListener.onItemClick(list[position], position, it)
+        }
         holder.bind(list[position])
     }
 

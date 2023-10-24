@@ -143,7 +143,7 @@
                 android:id="@+id/home_game_help_info_border_view"
                 android:layout_width="158dp"
                 android:layout_height="1dp"
-                android:background="@color/border_grey"
+                android:background="@color/border_gray"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_game_help_info" />

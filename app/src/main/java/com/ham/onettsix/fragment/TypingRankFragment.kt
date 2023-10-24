@@ -1,24 +1,41 @@
 package com.ham.onettsix.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.ham.onettsix.R
+import com.ham.onettsix.TypingGameActivity
+import com.ham.onettsix.adapter.OnItemClickListener
 import com.ham.onettsix.adapter.TypingHistoryAdapter
-import com.ham.onettsix.data.api.UrlInfo
-import com.ham.onettsix.databinding.FragmentEulaBinding
+import com.ham.onettsix.data.api.ApiHelperImpl
+import com.ham.onettsix.data.api.RetrofitBuilder
+import com.ham.onettsix.data.local.DatabaseBuilder
+import com.ham.onettsix.data.local.DatabaseHelperImpl
+import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.model.TypingHistory
 import com.ham.onettsix.databinding.FragmentTypingRankBinding
-import kotlin.math.abs
+import com.ham.onettsix.utils.Status
+import com.ham.onettsix.utils.ViewModelFactory
+import com.ham.onettsix.viewmodel.TypingNormalViewModel
 
 
-class TypingRankFragment() : Fragment() {
+class TypingRankFragment : Fragment() {
 
-    lateinit var typingHistoryAdapter: TypingHistoryAdapter
+    private val typingReadyViewModel by lazy {
+        ViewModelProviders.of(
+            this, ViewModelFactory(
+                ApiHelperImpl(RetrofitBuilder.apiService),
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext())),
+                PreferencesHelper.getInstance(requireContext())
+            )
+        )[TypingNormalViewModel::class.java]
+    }
+
+    private lateinit var typingHistoryAdapter: TypingHistoryAdapter
 
     companion object {
         @JvmStatic
@@ -38,12 +55,33 @@ class TypingRankFragment() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        typingHistoryAdapter = TypingHistoryAdapter()
+        typingHistoryAdapter = TypingHistoryAdapter(object : OnItemClickListener<TypingHistory> {
+            override fun onItemClick(item: TypingHistory, index: Int, view: View?) {
+                binding.typingBottomAlert.show(item)
+            }
+        })
+        setupObserver()
+
+    }
+
+    private fun setupObserver() {
+        typingReadyViewModel.typingGameList.observe(this) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    typingHistoryAdapter
+                }
+                Status.LOADING -> {}
+                Status.ERROR -> {}
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.typingHistoryRv.layoutManager = LinearLayoutManager(context)
         binding.typingHistoryRv.adapter = typingHistoryAdapter
+        binding.typingGameRankLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), TypingGameActivity::class.java))
+        }
     }
 }

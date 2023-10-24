@@ -13,6 +13,7 @@
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
     <string name="count">개</string>
+    <string name="start">시작하기</string>
     <string name="some_day_ago">일전</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
     <string name="list_empty">리스트가 없습니다.</string>
@@ -236,7 +237,22 @@
     <string name="typing_game_ranking_title">랭겜 제시어</string>
     <string name="typing_game_total_challenger">총 %1$s명 도전 중</string>
     <string name="typing_game_honorary_member">%1$s인의 명예 육뉵이</string>
-    <string name="typing_game_exam">출제</string>
+    <string name="typing_game_exam">출제  /</string>
     <string name="typing_game_attend_count">참여 중</string>
     <string name="typing_game_attend">%1$s회 참여</string>
+    <string name="typing_game_result_title">엄청난 실력자 군요</string>
+    <string name="typing_game_result_content">%1$s초 달성</string>
+    <string name="typing_game_random_start">랜덤 문구로 시작</string>
+    <string name="typing_game_register_title">제시어 응모</string>
+    <string name="typing_game_register_keyword">제시어</string>
+    <string name="typing_game_register_description">설명</string>
+    <string name="typing_game_register_tag">태그(최대 5개)</string>
+    <string name="typing_game_register_custom_tag">+ 직접 입력</string>
+    <string name="typing_game_register_edit_hint">문제를 등록 해주세요 (최대 30자)</string>
+    <string name="typing_game_register_description_hint">제시어에 대한 설명을 입력 해주세요</string>
+    <string name="typing_game_register_edit_tag">문제를 등록 해주세요 (최대 30자)</string>
+    <string name="typing_game_register_info">응모해주시면 육뉵이에서 검수 후 제시어로 채택됩니다.\n사랑 고백도 환영이니 설명에 사연을 기입해주세요.</string>
+    <string name="typing_game_register_confirm">작성완료</string>
+
+
 </resources>

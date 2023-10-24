@@ -5,18 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ham.onettsix.data.api.ApiHelper
-import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
-import com.ham.onettsix.data.model.Pagination
-import com.ham.onettsix.data.model.Result
-import com.ham.onettsix.data.model.TypingGame
+import com.ham.onettsix.data.model.TypingGameList
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TypingGameViewModel(
     private val apiHelper: ApiHelper,
@@ -24,39 +19,55 @@ class TypingGameViewModel(
     private val preferenceHelper: PreferencesHelper?
 ) : ViewModel() {
 
-    val typingGame = MutableLiveData<Resource<TypingGame>>()
+    val typingGame = MutableLiveData<Resource<TypingGameList>>()
 
     val typingGameTimer = MutableLiveData<Float>()
 
-    val typingGameStatus = MutableLiveData(false)
+    val readyCountDown = MutableLiveData(0)
 
-    fun getGame() {
+    val typingGameStatus = MutableLiveData(GAME_START_STATUS_DEFAULT)
+
+    // 0-> 게임 시작전, 1 -> 게임중, 2 -> 게임끝
+    companion object {
+        const val GAME_START_STATUS_DEFAULT = 0
+        const val GAME_START_STATUS_READY = 1
+        const val GAME_START_STATUS_ING = 2
+        const val GAME_START_STATUS_DONE = 3
+    }
+
+    fun getGame(gameType: String) {
+    }
+
+    fun ready() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e $e")
         }
         viewModelScope.launch(exceptionHandler) {
-            Log.d("jhlee", "getGame :")
-            val map = hashMapOf<String, Any?>()
-            val result = apiHelper.getTypingGame(map)
-            typingGame.postValue(Resource.success(result))
+            readyCountDown.value = 3
+            while ((readyCountDown.value ?: 0) > 0) {
+                delay(1000)
+                readyCountDown.postValue(readyCountDown.value?.minus(1))
+            }
+            typingGameStatus.postValue(GAME_START_STATUS_READY)
         }
     }
 
     fun startGame() {
-        Log.d("jhlee", "startGame")
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             Log.d("jhlee", "e $e")
         }
+        typingGameStatus.value = GAME_START_STATUS_ING
         viewModelScope.launch(exceptionHandler) {
-            Log.d("jhlee", "launch :")
             val timeOffset = System.currentTimeMillis()
-            while (typingGameStatus.value == false) {
+            while (typingGameStatus.value == GAME_START_STATUS_ING) {
                 val time = (System.currentTimeMillis() - timeOffset).toFloat() / 1000
-
                 typingGameTimer.postValue(time)
                 delay(100)
             }
         }
+    }
+
+    fun finishGame() {
+        typingGameStatus.value = GAME_START_STATUS_DONE
     }
 
 }

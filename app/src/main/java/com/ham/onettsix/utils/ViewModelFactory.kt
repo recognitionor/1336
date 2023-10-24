@@ -79,8 +79,8 @@ class ViewModelFactory(
             return TypingGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
-        if (modelClass.isAssignableFrom(TypingReadyViewModel::class.java)) {
-            return TypingReadyViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        if (modelClass.isAssignableFrom(TypingNormalViewModel::class.java)) {
+            return TypingNormalViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
         throw IllegalArgumentException("Unknown class name")

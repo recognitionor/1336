@@ -104,8 +104,26 @@ interface ApiService {
 
     @GET("/get/episodeList")
     suspend fun getEpisodeList(): EpisodeList
+
+    @GET("/list/typing-game")
+    suspend fun getTypingGameList(@QueryMap params: HashMap<String, Any?>): TypingGameList
+
     @GET("/typing-game")
-    suspend fun getTypingGame(@QueryMap params: HashMap<String, Any?>): TypingGame
+    suspend fun getTypingGame(@QueryMap params: HashMap<String, Any?>): TypingGameItem.Data
 
+    @GET("/typing-game/rank")
+    suspend fun getTypingGameByRanking(@QueryMap params: HashMap<String, Any?>): TypingGameList
 
+    @GET("/typing-game/{questionId}/end")
+    suspend fun endTypingGame(
+        @Query(value = "gameType") gameType: String,
+        @Query(value = "historyId") historyId: Long,
+        @Query(value = "duration") duration: Long,
+        @Path(value = "questionId") questionId: Long
+    ): TypingGameList
+
+    @GET("/typing-game/{questionId}/end")
+    suspend fun startTypingGame(
+        @Query(value = "gameType") gameType: String, @Path(value = "questionId") questionId: String
+    ): TypingGameList
 }

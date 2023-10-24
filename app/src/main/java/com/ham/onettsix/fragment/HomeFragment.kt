@@ -16,7 +16,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ham.onettsix.LoginActivity
 import com.ham.onettsix.MainActivity
+import com.ham.onettsix.QuizGameActivity
 import com.ham.onettsix.R
+import com.ham.onettsix.TypingReadyActivity
 import com.ham.onettsix.adapter.HomeGameProgressAdapter
 import com.ham.onettsix.adapter.RecyclerDecorationWidth
 import com.ham.onettsix.constant.ActivityResultKey
@@ -205,6 +207,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
             binding.homeGameGetTicketBtn -> {
+                startActivity(Intent(requireActivity(), TypingReadyActivity::class.java))
+                return
+
+
+
                 if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
                     homeViewModel.gameTypeInfo.value?.data?.data?.let { data ->
                         val remainTicket = data.allTicket - data.usedTicket
