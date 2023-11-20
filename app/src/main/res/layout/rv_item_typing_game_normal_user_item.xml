@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/typing_game_normal_user_image"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/typing_game_user_gray_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/typing_game_normal_user_rank_mark"
+        android:layout_width="29dp"
+        android:layout_height="20dp"
+        android:layout_margin="6dp"
+        android:background="@drawable/rank_mark_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="@+id/typing_game_normal_user_image"
+        app:layout_constraintTop_toTopOf="@+id/typing_game_normal_user_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/typing_game_normal_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
+        android:gravity="center"
+        android:textColor="@color/text_black"
+        android:textSize="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typing_game_normal_user_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/typing_game_normal_user_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typing_game_normal_user_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

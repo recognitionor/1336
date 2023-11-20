@@ -21,7 +21,7 @@ object RetrofitBuilder {
             val request: Request =
                 chain.request().newBuilder().addHeader(ParamsKeys.KEY_AUTH_TOKEN, accessToken)
                     .build()
-            Log.d("jhlee", "accessToken : $accessToken")
+            Log.d("jhlee", "request : $request")
             chain.proceed(request)
         }
 

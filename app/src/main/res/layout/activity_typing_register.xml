@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TypingRegisterActivity">
+    tools:context=".TypingGameInfoActivity">
 
     <com.ham.onettsix.view.ToolbarView
         android:id="@+id/typing_game_register_toolbar_back"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/typing_game_register_description_edit"
+            android:id="@+id/typing_game_register_content_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/typing_game_register_edit_hint"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/typing_game_register_tag_edit"
+            android:id="@+id/typing_game_register_description_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/typing_game_register_description_hint"
@@ -121,6 +121,7 @@
             android:id="@+id/typing_game_register_tag_rv"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/typing_game_register_keyword_title" />
@@ -128,6 +129,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/typing_game_register_tag_btn"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginStart="20dp"
@@ -157,6 +159,7 @@
         android:layout_weight="1" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/typing_game_register_btn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"

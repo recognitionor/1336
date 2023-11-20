@@ -1,14 +1,13 @@
 package com.ham.onettsix
 
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.ham.onettsix.constant.ExtraKey
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
@@ -26,12 +26,13 @@ import com.ham.onettsix.databinding.ActivityTypingGameBinding
 import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
-import com.ham.onettsix.view.ToolbarView
 import com.ham.onettsix.viewmodel.TypingGameViewModel
 
 class TypingGameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTypingGameBinding
+
+    private var isRankGame = false
 
     private val typingGameViewModel by lazy {
         ViewModelProviders.of(
@@ -45,11 +46,14 @@ class TypingGameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("jhlee", "onCreate")
+
+        initIntentExtra()
+
         binding = ActivityTypingGameBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
         setupObserver()
+        binding.typingGameToolbarBack.setOnClickListener { finish() }
         binding.typingGameStartBtn.setOnClickListener {
             it.visibility = View.GONE
             typingGameViewModel.ready()
@@ -83,7 +87,11 @@ class TypingGameActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (typingGameViewModel.typingGameStatus.value == TypingGameViewModel.GAME_START_STATUS_READY) {
-                    typingGameViewModel.startGame()
+                    if (isRankGame) {
+                        typingGameViewModel.startRankGame()
+                    } else {
+                        typingGameViewModel.startRandomGame()
+                    }
                 }
                 val question = binding.typingGameQuestionTv.text.toString()
                 val span = SpannableString(question)
@@ -125,9 +133,39 @@ class TypingGameActivity : AppCompatActivity() {
         })
     }
 
+    private fun initIntentExtra() {
+        val questionId = intent.getLongExtra(ExtraKey.TYPING_GAME_QUESTION_ID, -1)
+        val episode = intent.getIntExtra(ExtraKey.TYPING_GAME_EPISODE, -1)
+        val content = intent.getStringExtra(ExtraKey.TYPING_GAME_CONTENT) ?: ""
+        val isRankGame = intent.getBooleanExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, false)
+        this.isRankGame = isRankGame
+        if (questionId > 0 && content.isNotEmpty()) {
+            typingGameViewModel.setTypingGameInfo(questionId.toInt(), episode, content)
+        } else {
+            Toast.makeText(this, getString(R.string.common_error), Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+    }
+
     private fun setupObserver() {
+        typingGameViewModel.content.observe(this) {
+            binding.typingGameQuestionTv.text = it
+        }
+
+
         typingGameViewModel.typingGameStatus.observe(this) {
             when (it) {
+                TypingGameViewModel.GAME_START_STATUS_ERROR -> {
+                    OneButtonDialog(
+                        getString(R.string.typing_game_invalid_game)
+                    ) { dialog ->
+                        dialog.dismiss()
+                        this@TypingGameActivity.setResult(Activity.RESULT_OK)
+                        this@TypingGameActivity.finish()
+                    }.show(supportFragmentManager, OneButtonDialog.TAG)
+                }
+
                 TypingGameViewModel.GAME_START_STATUS_DEFAULT -> {}
                 TypingGameViewModel.GAME_START_STATUS_READY -> {
                     binding.typingGameTypingEditText.visibility = View.VISIBLE

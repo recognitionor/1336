@@ -114,16 +114,31 @@ interface ApiService {
     @GET("/typing-game/rank")
     suspend fun getTypingGameByRanking(@QueryMap params: HashMap<String, Any?>): TypingGameList
 
-    @GET("/typing-game/{questionId}/end")
+    @GET("/typing-game/{historyId}/end")
     suspend fun endTypingGame(
-        @Query(value = "gameType") gameType: String,
-        @Query(value = "historyId") historyId: Long,
-        @Query(value = "duration") duration: Long,
-        @Path(value = "questionId") questionId: Long
-    ): TypingGameList
+        @Path(value = "historyId") historyId: Long, @QueryMap params: HashMap<String, Any?>
+    ): TypingGameEnd
 
-    @GET("/typing-game/{questionId}/end")
+    @GET("/typing-game/{questionId}/start")
     suspend fun startTypingGame(
-        @Query(value = "gameType") gameType: String, @Path(value = "questionId") questionId: String
-    ): TypingGameList
+        @Path(value = "questionId") questionId: Long, @QueryMap params: HashMap<String, Any?>
+    ): TypingGameStart
+
+    @GET("/random/typing-game")
+    suspend fun getRandomTypingGame(
+        @QueryMap params: HashMap<String, Any?>
+    ): TypingRandomGame
+
+    @GET("/typing-game/rank-main")
+    suspend fun getRankMain(): TypingGameRankMain
+
+    @POST("/typing-game")
+    suspend fun registerTypingGame(@QueryMap params: HashMap<String, Any?>): Result
+
+    @GET("/my-page")
+    suspend fun getMyPage(): TypingGameMyInfo
+
+    @GET("/get/tags")
+    suspend fun getTagList(): TypingGameTag
+
 }

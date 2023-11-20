@@ -1,22 +1,27 @@
 package com.ham.onettsix.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ham.onettsix.TypingGameActivity
 import com.ham.onettsix.adapter.OnItemClickListener
 import com.ham.onettsix.adapter.TypingGameNormalAdapter
+import com.ham.onettsix.constant.ExtraKey
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseBuilder
 import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.TypingGameItem
-import com.ham.onettsix.data.model.TypingGameList
 import com.ham.onettsix.databinding.FragmentTypingNormalBinding
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
@@ -46,6 +51,11 @@ class TypingNormalFragment : Fragment() {
 
     private lateinit var typeTypingGameNormalAdapter: TypingGameNormalAdapter
 
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            typingNormalViewModel.getTypingGameList()
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -59,13 +69,43 @@ class TypingNormalFragment : Fragment() {
             TypingGameNormalAdapter(object : OnItemClickListener<TypingGameItem.Data> {
 
                 override fun onItemClick(item: TypingGameItem.Data, index: Int, view: View?) {
-                    typingNormalViewModel.getTypingGame(item.questionId)
+
+                    val intent = Intent(
+                        requireContext(), TypingGameActivity::class.java
+                    )
+                    intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, item.content)
+                    intent.putExtra(
+                        ExtraKey.TYPING_GAME_QUESTION_ID, item.questionId
+                    )
+                    intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, false)
+                    startForResult.launch(intent)
                 }
             })
         setupObserver()
     }
 
     private fun setupObserver() {
+        typingNormalViewModel.randomGame.observe(this) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let { typingGame ->
+                        val intent = Intent(
+                            requireContext(), TypingGameActivity::class.java
+                        )
+                        intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, typingGame.data.content)
+                        intent.putExtra(
+                            ExtraKey.TYPING_GAME_QUESTION_ID, typingGame.data.questionId.toLong()
+                        )
+                        intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, false)
+                        startForResult.launch(intent)
+                    }
+                }
+
+                Status.ERROR -> {}
+                Status.LOADING -> {}
+            }
+        }
+
         typingNormalViewModel.typingGameList.observe(this) {
             when (it.status) {
                 Status.ERROR -> {
@@ -96,6 +136,9 @@ class TypingNormalFragment : Fragment() {
             )
         )
         binding.typingGameNormalRv.adapter = this.typeTypingGameNormalAdapter
+        binding.typingGameRandomStart.setOnClickListener {
+            typingNormalViewModel.getRandomTypingGame()
+        }
 
     }
 }

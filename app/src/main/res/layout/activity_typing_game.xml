@@ -93,7 +93,6 @@
             android:layout_height="100dp"
             android:fontFamily="@font/gmarket_sans_ttf_bold"
             android:gravity="center"
-            android:text="왕이 넘어지면 킹콩콩콩콩그레츄레이션"
             android:textColor="@color/text_black"
             android:textSize="26sp" />
 

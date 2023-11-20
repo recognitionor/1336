@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <com.ham.onettsix.view.ToolbarView
+        android:id="@+id/typing_game_toolbar_back"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_title="@string/menu_typing_quiz"
+        app:toolbar_back_btn="false"
+        app:toolbar_use_add_btn="true" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_typing_ready"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white_00"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/main_color"
+        app:tabTextColor="@color/text_black" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_typing_ready"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

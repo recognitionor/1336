@@ -8,6 +8,7 @@ import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.model.TypingRandomGame
 import com.ham.onettsix.data.model.TypingGameItem
 import com.ham.onettsix.data.model.TypingGameList
 import com.ham.onettsix.utils.Resource
@@ -24,6 +25,8 @@ class TypingNormalViewModel(
 
     val typingGameList = MutableLiveData<Resource<TypingGameList>>()
 
+    val randomGame = MutableLiveData<Resource<TypingRandomGame>>()
+
     val selectedTypingGame = MutableLiveData<Resource<TypingGameItem.Data>>()
 
     companion object {
@@ -35,32 +38,41 @@ class TypingNormalViewModel(
         getTypingGameList()
     }
 
-    fun getTypingGame(itemId: Long) {
-        Log.d("jhlee", "getTypingGame : $itemId")
+    fun getRandomTypingGame() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             Log.d("jhlee", "e : ${e.message}")
+        }
+        viewModelScope.launch(exceptionHandler) {
+            val map: HashMap<String, Any?> = HashMap<String, Any?>().apply {
+                this[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_N
+            }
+            val result = apiHelper.getRandomTypingGame(map)
+            randomGame.postValue(Resource.success(result))
+        }
+    }
+
+    fun getTypingGame(itemId: Long) {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val params = hashMapOf<String, Any?>()
                 params[ParamsKeys.KEY_GAME_QUESTION_ID] = itemId
                 val result = apiHelper.getTypingGame(params)
-                Log.d("jhlee", "getTypingGame result : $result")
                 selectedTypingGame.postValue(Resource.success(result))
             }
         }
     }
 
-    private fun getTypingGameList() {
-        Log.d("jhlee", "getTypingGame")
+    fun getTypingGameList() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e : ${e.message}")
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val params = hashMapOf<String, Any?>()
-                params[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_R
+                params[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_N
                 val result = apiHelper.getTypingGameList(params)
+                Log.d("jhlee", "result : $result")
                 typingGameList.postValue(Resource.success(result))
             }
         }

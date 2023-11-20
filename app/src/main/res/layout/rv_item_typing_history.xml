@@ -29,7 +29,6 @@
             android:layout_height="72dp"
             android:layout_marginStart="18dp"
             android:background="@drawable/grey_radius_background"
-            android:src="@drawable/ic_profile_turtle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/bottom_index_tv"
             app:layout_constraintTop_toTopOf="parent" />

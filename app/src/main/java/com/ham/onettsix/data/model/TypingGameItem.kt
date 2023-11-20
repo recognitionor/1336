@@ -19,6 +19,7 @@ data class TypingGameItem(
         @SerializedName("userId") var userId: Long,
         @SerializedName("nickname") var nickname: String,
         @SerializedName("duration") var duration: Long,
-        @SerializedName("content") var content: String
+        @SerializedName("content") var content: String,
+        @SerializedName("userOrders") var userOrders: List<TypingGameUserItem>
     ) : Parcelable
 }

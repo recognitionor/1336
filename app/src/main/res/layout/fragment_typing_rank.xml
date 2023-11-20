@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/typing_game_rank_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/typing_game_rank_empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
+            android:gravity="center"
+            android:text="@string/typing_game_rank_empty"
+            android:textColor="@color/text_black"
+            android:textSize="24dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/typing_game_rank_empty_image"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:src="@drawable/ic_refresh"
+            android:textSize="24dp" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,6 +78,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/typing_game_rank_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -45,7 +87,6 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/gmarket_sans_ttf_bold"
                 android:maxLines="1"
-                android:text="왕이 넘어지면 킹콩콩콩콩왕이 넘어지면 킹콩콩콩콩왕이 넘어지면 킹콩콩콩콩"
                 android:textColor="@color/text_black"
                 android:textSize="26dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -110,7 +151,6 @@
             android:paddingTop="4dp"
             android:paddingEnd="12dp"
             android:paddingBottom="4dp"
-            android:text="00:00:00"
             android:textColor="@color/white_00"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/typing_game_honorary_member"
@@ -128,10 +168,21 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/typing_game_honorary_member" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/my_info_record"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/circle_drawable_grey_background"
+            android:padding="10dp"
+            android:src="@mipmap/ic_track"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
         <com.ham.onettsix.view.BottomPopupAlert
             android:id="@+id/typing_bottom_alert"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="120dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

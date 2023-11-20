@@ -1,9 +1,8 @@
 package com.ham.onettsix.utils
 
 import android.content.Context
-import android.util.Log
 import com.ham.onettsix.R
-import java.util.*
+import java.math.BigDecimal
 
 class TimeUtils {
     enum class TimeValue(val value: Int, val maximum: Int, val msg: String) {
@@ -13,6 +12,12 @@ class TimeUtils {
     }
 
     companion object {
+
+        fun <T> getSecondString(sec: T): String {
+            val result = BigDecimal(sec.toString()).multiply(BigDecimal("0.001"))
+            return result.toString()
+        }
+
         fun timeDiff(ctx: Context, time: Long): String {
             val curTime = System.currentTimeMillis()
             val diffTime = curTime - (time)

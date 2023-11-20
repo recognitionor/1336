@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/main_soft_color_btn_background"
-    android:orientation="vertical">
+    android:background="@drawable/white_background"
+    android:orientation="vertical"
+    android:padding="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/white_background">
+        android:layout_height="100dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/typing_normal_status_layout"
@@ -73,9 +73,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <FrameLayout
+        android:id="@+id/user_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

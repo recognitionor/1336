@@ -3,22 +3,18 @@ package com.ham.onettsix.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ham.onettsix.LoginActivity
 import com.ham.onettsix.MainActivity
-import com.ham.onettsix.QuizGameActivity
 import com.ham.onettsix.R
-import com.ham.onettsix.TypingReadyActivity
 import com.ham.onettsix.adapter.HomeGameProgressAdapter
 import com.ham.onettsix.adapter.RecyclerDecorationWidth
 import com.ham.onettsix.constant.ActivityResultKey
@@ -75,6 +71,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 )
             )
         )
+        binding.topMenu.setOnClickListener {
+            (activity as MainActivity).run {
+                this.selectedItem(2)
+            }
+        }
         return binding.root
     }
 
@@ -202,16 +203,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             binding.homeGameHelp3 -> {
                 (activity as MainActivity).run {
-                    this.selectedItem(2)
+                    this.selectedItem(3)
                 }
             }
 
             binding.homeGameGetTicketBtn -> {
-                startActivity(Intent(requireActivity(), TypingReadyActivity::class.java))
-                return
-
-
-
                 if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
                     homeViewModel.gameTypeInfo.value?.data?.data?.let { data ->
                         val remainTicket = data.allTicket - data.usedTicket

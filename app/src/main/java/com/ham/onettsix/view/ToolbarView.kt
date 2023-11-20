@@ -36,6 +36,11 @@ class ToolbarView(context: Context, attrs: AttributeSet) : Toolbar(context, attr
                     } else {
                         binding.addBtn.visibility = View.GONE
                     }
+                    if (getBoolean(R.styleable.ToolbarView_toolbar_back_btn, true)) {
+                        binding.backBtn.visibility = View.VISIBLE
+                    } else {
+                        binding.backBtn.visibility = View.GONE
+                    }
                 } finally {
                     recycle()
                 }

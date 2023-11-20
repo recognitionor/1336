@@ -27,6 +27,13 @@
         tools:layout="@layout/fragment_game" />
 
     <fragment
+        android:id="@+id/nav_typing_game"
+        android:name="com.ham.onettsix.fragment.TypingFragment"
+        android:label="@string/menu_get_ticket"
+        android:tag="@string/menu_get_ticket"
+        tools:layout="@layout/fragment_typing_ready" />
+
+    <fragment
         android:id="@+id/nav_history"
         android:name="com.ham.onettsix.fragment.LotteryHistoryFragment"
         android:label="@string/menu_game"

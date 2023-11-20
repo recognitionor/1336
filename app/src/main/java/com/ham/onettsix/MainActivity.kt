@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.nav_home,
                 R.id.nav_profile,
                 R.id.nav_get_ticket,
+                R.id.nav_typing_game,
                 R.id.nav_history,
                 R.id.nav_youtube
             ), binding.drawerLayout
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Status.SUCCESS -> {
                     if (it.data != null) {
                         it.data.let { data ->
-                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.id}"
+                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.uid}"
                             navHeaderBinding.navHeaderImg.setImageDrawable(
                                 getDrawable(
                                     ProfileImageUtil.getImageId(data.profileImageId ?: -1)

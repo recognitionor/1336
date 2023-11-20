@@ -3,6 +3,7 @@
     <declare-styleable name="ToolbarView">
         <attr name="toolbar_title" format="string" />
         <attr name="toolbar_use_add_btn" format="boolean" />
+        <attr name="toolbar_back_btn" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="HomeGameHelpLayout">

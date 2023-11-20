@@ -31,6 +31,10 @@ object ParamsKeys {
 
     const val KEY_ACCESS_CONTENT = "content"
 
+    const val KEY_QUESTION_EXPLAIN = "questionExplain"
+
+    const val KEY_TAGS = "tags"
+
     const val KEY_ACCESS_USER_EMAIL = "userEmail"
 
     const val KEY_ENABLE_ALARM = "enableAlarm"
@@ -47,7 +51,11 @@ object ParamsKeys {
 
     const val KEY_GAME_TYPE = "gameType"
 
+    const val KEY_GAME_DURATION = "duration"
+
     const val KEY_GAME_QUESTION_ID = "questionId"
+
+    const val KEY_GAME_HISTORY_ID = "historyId"
 
     const val KEY_TYPE = "type"
 
