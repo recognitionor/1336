@@ -1,6 +1,7 @@
 package com.ham.onettsix
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ class TypingGameInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        typingGameMyInfoViewModel.getMyPage()
         adapter = TypingGameMyInfoAdapter()
         binding = ActivityTypingInfoBinding.inflate(layoutInflater)
 
@@ -49,6 +51,7 @@ class TypingGameInfoActivity : AppCompatActivity() {
         typingGameMyInfoViewModel.myInfo.observe(this) { result ->
             when (result.status) {
                 Status.SUCCESS -> {
+                    binding.typingGameMyInfoEmptyView.visibility = View.GONE
                     adapter.setList(result.data)
                     adapter.notifyDataSetChanged()
                 }

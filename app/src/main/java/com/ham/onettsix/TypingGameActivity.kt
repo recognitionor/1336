@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -149,6 +150,18 @@ class TypingGameActivity : AppCompatActivity() {
     }
 
     private fun setupObserver() {
+        typingGameViewModel.endTypingGame.observe(this) {
+            Log.d("jhlee", "${typingGameViewModel.typingGameTimer.value}")
+            OneButtonDialog(
+                it.resultMsg, getString(
+                    R.string.typing_game_result_content,
+                    "${typingGameViewModel.typingGameTimer.value}"
+                )
+            ) { dialog ->
+                finish()
+                dialog.dismiss()
+            }.show(supportFragmentManager, OneButtonDialog.TAG)
+        }
         typingGameViewModel.content.observe(this) {
             binding.typingGameQuestionTv.text = it
         }
@@ -178,15 +191,15 @@ class TypingGameActivity : AppCompatActivity() {
 
                 TypingGameViewModel.GAME_START_STATUS_ING -> {}
                 TypingGameViewModel.GAME_START_STATUS_DONE -> {
-                    OneButtonDialog(
-                        getString(R.string.typing_game_result_title), getString(
-                            R.string.typing_game_result_content,
-                            "${typingGameViewModel.typingGameTimer.value}"
-                        )
-                    ) { dialog ->
-                        finish()
-                        dialog.dismiss()
-                    }.show(supportFragmentManager, OneButtonDialog.TAG)
+//                    OneButtonDialog(
+//                        "it.resultMsg", getString(
+//                            R.string.typing_game_result_content,
+//                            "${typingGameViewModel.typingGameTimer.value}"
+//                        )
+//                    ) { dialog ->
+//                        finish()
+//                        dialog.dismiss()
+//                    }.show(supportFragmentManager, OneButtonDialog.TAG)
                 }
             }
         }

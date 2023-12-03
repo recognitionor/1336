@@ -10,17 +10,18 @@
         android:id="@+id/typing_game_random_start"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:textColor="@color/white_00"
-        android:textSize="26dp"
-        android:fontFamily="@font/gmarket_sans_ttf_medium"
         android:background="@drawable/main_color_btn_background"
-        android:text="@string/typing_game_random_start" />
+        android:fontFamily="@font/gmarket_sans_ttf_medium"
+        android:text="@string/typing_game_random_start"
+        android:textColor="@color/white_00"
+        android:textSize="26dp" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/typing_game_normal_rv"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

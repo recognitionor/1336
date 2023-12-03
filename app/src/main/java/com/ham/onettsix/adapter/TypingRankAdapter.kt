@@ -56,6 +56,7 @@ class TypingRankAdapter(private val itemClickListener: OnItemClickListener<Typin
     }
 
     fun setList(list: List<TypingGameRankMain.Data.TypingGameHistoryResItem>) {
+        this.list.clear()
         this.list.addAll(list)
     }
 }

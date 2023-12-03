@@ -22,18 +22,12 @@ class TypingGameMyInfoViewModel(
 
     val myInfo = MutableLiveData<Resource<List<TypingGameMyInfo.Data>>>()
 
-    init {
-        getMyPage()
-    }
-
-    private fun getMyPage() {
+    fun getMyPage() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e : ${e.message}")
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getMyPage()
-                Log.d("jhlee", "result  : $result")
                 myInfo.postValue(Resource.success(result.data))
             }
         }

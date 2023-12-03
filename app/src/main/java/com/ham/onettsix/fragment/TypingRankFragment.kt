@@ -70,8 +70,7 @@ class TypingRankFragment : Fragment() {
             override fun onItemClick(
                 item: TypingGameRankMain.Data.TypingGameHistoryResItem, index: Int, view: View?
             ) {
-                binding.myInfoRecord.visibility = View.GONE
-                binding.typingBottomAlert.show(item, index)
+//                binding.typingBottomAlert.show(item, index)
             }
         })
 
@@ -81,9 +80,32 @@ class TypingRankFragment : Fragment() {
     }
 
     private fun setupObserver() {
+        typingRankViewModel.userInfo.observe(this) { result ->
+            when (result.status) {
+                Status.SUCCESS -> {
+                    result.data?.let {
+                        binding.typingBottomAlert.setUserInfo(it)
+                    }
+                }
+
+                Status.LOADING -> {}
+                Status.ERROR -> {}
+            }
+        }
+        typingRankViewModel.myTypingGameRecord.observe(this) { result ->
+            when (result.status) {
+                Status.SUCCESS -> {
+                    binding.typingBottomAlert.setMyInfoListData(result.data)
+                }
+
+                Status.LOADING -> {}
+                Status.ERROR -> {}
+            }
+        }
         typingRankViewModel.rankGame.observe(this) { result ->
             when (result.status) {
                 Status.SUCCESS -> {
+                    binding.typingBottomAlert.setRankGameData(result.data)
                     binding.typingGameRankProgressLayout.visibility = View.GONE
                     binding.typingGameRankEmptyLayout.visibility = View.GONE
                     result.data?.let { rankGameData ->
@@ -97,6 +119,7 @@ class TypingRankFragment : Fragment() {
 
                         val remainingHours = hours % 24
                         val remainingMinutes = minutes % 60
+
                         binding.typingGameTime.text = "${days}일${remainingHours}시간 남음"
                         binding.typingGameRankContent.text = rankGameData.content
                         binding.typingGameHonoraryMember.text = resources.getString(
@@ -160,14 +183,19 @@ class TypingRankFragment : Fragment() {
                 startForResult.launch(intent)
             }
         }
+        binding.typingBottomAlert.setOnClickListener {
+            startActivity(Intent(requireContext(), TypingGameInfoActivity::class.java))
+        }
         binding.typingBottomAlert.setDismissListener {
             binding.myInfoRecord.visibility = View.VISIBLE
         }
-        binding.myInfoRecord.setOnClickListener {
-            startActivity(Intent(requireContext(), TypingGameInfoActivity::class.java))
-        }
+
         binding.typingGameRankEmptyLayout.setOnClickListener {
             typingRankViewModel.getRankMain()
+        }
+        binding.myInfoRecord.setOnClickListener {
+            it.visibility = View.GONE
+            binding.typingBottomAlert.visibility = View.VISIBLE
         }
     }
 }

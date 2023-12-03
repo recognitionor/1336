@@ -7,8 +7,10 @@ import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.TypingGameItem
 import com.ham.onettsix.data.model.TypingGameList
+import com.ham.onettsix.data.model.TypingGameMyInfo
 import com.ham.onettsix.data.model.TypingGameRankMain
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -28,8 +30,26 @@ class TypingRankViewModel(
 
     val selectedTypingGame = MutableLiveData<Resource<TypingGameItem.Data>>()
 
+    val myTypingGameRecord = MutableLiveData<Resource<List<TypingGameMyInfo.Data>>>()
+
+    val userInfo = MutableLiveData<Resource<DBUser>>()
+
+
     init {
         getRankMain()
+        getMyPage()
+    }
+
+    private fun getMyPage() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+        }
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+                userInfo.postValue(Resource.success(dbHelper.getUser()))
+                val result = apiHelper.getMyPage()
+                myTypingGameRecord.postValue(Resource.success(result.data))
+            }
+        }
     }
 
     fun getRankMain() {

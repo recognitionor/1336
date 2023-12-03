@@ -1,5 +1,6 @@
 package com.ham.onettsix.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
+import com.ham.onettsix.data.model.TypingGameEnd
 import com.ham.onettsix.data.model.TypingGameList
 import com.ham.onettsix.data.model.TypingGameStart
 import com.ham.onettsix.utils.Resource
@@ -29,6 +31,8 @@ class TypingGameViewModel(
     val content = MutableLiveData<String>()
 
     private val startTypingGame = MutableLiveData<TypingGameStart.Data>()
+
+    val endTypingGame = MutableLiveData<TypingGameEnd.Data>()
 
     val typingGame = MutableLiveData<Resource<TypingGameList>>()
 
@@ -67,6 +71,7 @@ class TypingGameViewModel(
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             typingGameStatus.value = GAME_START_STATUS_ERROR
         }
+        typingGameStatus.value = GAME_START_STATUS_ING
         viewModelScope.launch(exceptionHandler) {
             val params = HashMap<String, Any?>()
             params[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_R
@@ -75,7 +80,7 @@ class TypingGameViewModel(
                 questionId.value?.toLong() ?: 0, params
             ).data
 
-            typingGameStatus.value = GAME_START_STATUS_ING
+
             val timeOffset = System.currentTimeMillis()
             while (typingGameStatus.value == GAME_START_STATUS_ING) {
                 val time = (System.currentTimeMillis() - timeOffset).toFloat() / 1000
@@ -86,15 +91,15 @@ class TypingGameViewModel(
     }
 
     fun startRandomGame() {
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         }
+        typingGameStatus.value = GAME_START_STATUS_ING
         viewModelScope.launch(exceptionHandler) {
             val params = HashMap<String, Any?>()
             params[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_N
             startTypingGame.value = apiHelper.startTypingGame(
                 questionId.value?.toLong() ?: 0, params
             ).data
-            typingGameStatus.value = GAME_START_STATUS_ING
             val timeOffset = System.currentTimeMillis()
             while (typingGameStatus.value == GAME_START_STATUS_ING) {
                 val time = (System.currentTimeMillis() - timeOffset).toFloat() / 1000
@@ -110,14 +115,14 @@ class TypingGameViewModel(
         }
         viewModelScope.launch(exceptionHandler) {
             val historyId = startTypingGame.value?.historyId
-            val timeOffset = typingGameTimer.value
-            if (historyId != null && timeOffset != null) {
+            val timeOffset = typingGameTimer.value ?: 0f
+            if (historyId != null) {
                 val params = HashMap<String, Any?>()
                 params[ParamsKeys.KEY_GAME_DURATION] = (timeOffset * 1000).toLong()
-                apiHelper.endTypingGame(historyId, params)
+                val result = apiHelper.endTypingGame(historyId, params)
+                endTypingGame.postValue(result.data)
             }
         }
-        typingGameTimer.value = 0f
     }
 
     fun setTypingGameInfo(questionId: Int, episode: Int, content: String?) {

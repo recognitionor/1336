@@ -1,6 +1,5 @@
 package com.ham.onettsix.fragment
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -51,8 +50,11 @@ class TypingNormalFragment : Fragment() {
 
     private lateinit var typeTypingGameNormalAdapter: TypingGameNormalAdapter
 
+    private var isGameClick: Boolean = false
+
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            isGameClick = false
             typingNormalViewModel.getTypingGameList()
         }
 
@@ -69,7 +71,6 @@ class TypingNormalFragment : Fragment() {
             TypingGameNormalAdapter(object : OnItemClickListener<TypingGameItem.Data> {
 
                 override fun onItemClick(item: TypingGameItem.Data, index: Int, view: View?) {
-
                     val intent = Intent(
                         requireContext(), TypingGameActivity::class.java
                     )
@@ -85,19 +86,22 @@ class TypingNormalFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        typingNormalViewModel.randomGame.observe(this) {
+        typingNormalViewModel.randomGame.observe(this@TypingNormalFragment) {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { typingGame ->
-                        val intent = Intent(
-                            requireContext(), TypingGameActivity::class.java
-                        )
-                        intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, typingGame.data.content)
-                        intent.putExtra(
-                            ExtraKey.TYPING_GAME_QUESTION_ID, typingGame.data.questionId.toLong()
-                        )
-                        intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, false)
-                        startForResult.launch(intent)
+                        if (isGameClick) {
+                            val intent = Intent(
+                                requireContext(), TypingGameActivity::class.java
+                            )
+                            intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, typingGame.data.content)
+                            intent.putExtra(
+                                ExtraKey.TYPING_GAME_QUESTION_ID,
+                                typingGame.data.questionId.toLong()
+                            )
+                            intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, false)
+                            startForResult.launch(intent)
+                        }
                     }
                 }
 
@@ -137,6 +141,7 @@ class TypingNormalFragment : Fragment() {
         )
         binding.typingGameNormalRv.adapter = this.typeTypingGameNormalAdapter
         binding.typingGameRandomStart.setOnClickListener {
+            isGameClick = true
             typingNormalViewModel.getRandomTypingGame()
         }
 

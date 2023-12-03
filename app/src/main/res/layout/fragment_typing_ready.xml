@@ -7,16 +7,6 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <com.ham.onettsix.view.ToolbarView
-        android:id="@+id/typing_game_toolbar_back"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:toolbar_title="@string/menu_typing_quiz"
-        app:toolbar_back_btn="false"
-        app:toolbar_use_add_btn="true" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_typing_ready"

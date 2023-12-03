@@ -11,10 +11,12 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.ham.ActionBar">
 
-        <androidx.appcompat.widget.Toolbar
+
+        <com.ham.onettsix.view.ToolbarView
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:toolbar_back_btn="false"
             app:navigationIcon="@drawable/ic_notifications"
             app:theme="@style/Theme.ham.ActionBar"/>
 

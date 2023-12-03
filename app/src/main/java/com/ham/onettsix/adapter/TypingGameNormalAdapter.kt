@@ -23,8 +23,7 @@ class TypingGameNormalAdapter(
     private val listener: OnItemClickListener<TypingGameItem.Data>
 ) : RecyclerView.Adapter<TypingGameNormalAdapter.TypingGameNormalViewHolder>() {
 
-    private var list: List<TypingGameItem.Data> = ArrayList()
-
+    private var list: ArrayList<TypingGameItem.Data> = ArrayList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -38,7 +37,7 @@ class TypingGameNormalAdapter(
 
     @SuppressLint("UseCompatLoadingForDrawables")
     class TypingGameUserView(
-        context: Context, attrs: AttributeSet?, private val userItemList: List<TypingGameUserItem>
+        context: Context, attrs: AttributeSet?, userItemList: List<TypingGameUserItem>
     ) : LinearLayoutCompat(context, attrs) {
 
 
@@ -48,6 +47,10 @@ class TypingGameNormalAdapter(
 
             LayoutInflater.from(context)
                 .inflate(R.layout.rv_item_typing_game_normal_user_layout, this)
+            itemViewList.forEachIndexed { index, _ ->
+                itemViewList[index] = null
+            }
+            itemViewList.clear()
             itemViewList.add(0, findViewById(R.id.rv_item_typing_game_normal_user_item_1))
             itemViewList.add(1, findViewById(R.id.rv_item_typing_game_normal_user_item_2))
             itemViewList.add(2, findViewById(R.id.rv_item_typing_game_normal_user_item_3))
@@ -75,13 +78,8 @@ class TypingGameNormalAdapter(
                     ?.apply {
                         this.text = "${(index + 1)} 등"
                     }
-                Log.d(
-                    "jhlee",
-                    "typingGameUserItem.duration.toFloat() :${typingGameUserItem.duration}"
-                )
                 tempView?.findViewById<AppCompatTextView>(R.id.typing_game_normal_user_record)
                     ?.apply {
-                        Log.d("jhlee", "${"${TimeUtils.getSecondString(typingGameUserItem.duration)}초"}")
                         this.text = "${TimeUtils.getSecondString(typingGameUserItem.duration)}초"
                     }
             }
@@ -95,6 +93,7 @@ class TypingGameNormalAdapter(
                 binding.userListLayout.visibility = View.GONE
             } else {
                 binding.userListLayout.visibility = View.VISIBLE
+                binding.userListLayout.removeAllViews()
                 // 아이템의 레이아웃 파라미터 설정
                 binding.userListLayout.addView(
                     TypingGameUserView(
@@ -126,6 +125,7 @@ class TypingGameNormalAdapter(
     }
 
     fun setList(list: List<TypingGameItem.Data>) {
-        this.list = list
+        this.list.clear()
+        this.list.addAll(list)
     }
 }

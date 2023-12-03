@@ -44,11 +44,12 @@ class TypingFragment : Fragment() {
         val tabs: TabLayout = binding.tabTypingReady
         tabs.setupWithViewPager(viewPager)
         tabs.selectTab(tabs.getTabAt(selectedSection))
+        activity?.actionBar
 
-        binding.typingGameToolbarBack.getBinding().addBtn.setOnClickListener {
-            startActivity(Intent(requireContext(), TypingGameRegisterActivity::class.java))
-        }
-        binding.typingGameToolbarBack.getBinding().backBtn.setOnClickListener {}
+//        binding.typingGameToolbarBack.getBinding().addBtn.setOnClickListener {
+//            startActivity(Intent(requireContext(), TypingGameRegisterActivity::class.java))
+//        }
+//        binding.typingGameToolbarBack.getBinding().backBtn.setOnClickListener {}
     }
 
 }

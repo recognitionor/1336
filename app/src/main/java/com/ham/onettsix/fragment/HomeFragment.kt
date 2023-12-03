@@ -72,8 +72,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
             )
         )
         binding.topMenu.setOnClickListener {
-            (activity as MainActivity).run {
-                this.selectedItem(2)
+            if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
+                (activity as MainActivity).run {
+                    this.selectedItem(2)
+                }
+            } else {
+                OneButtonDialog(content = getString(R.string.login_is_required)) { dialog ->
+                    dialog.dismiss()
+                    activityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+                }.show(parentFragmentManager, OneButtonDialog.TAG)
             }
         }
         return binding.root

@@ -1,6 +1,8 @@
 package com.ham.onettsix
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -39,9 +41,9 @@ class TypingGameRegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tagAdapter = TypingGameTagAdapter()
+        tagAdapter = TypingGameTagAdapter(::checkRegisterButtonEnable)
         binding = ActivityTypingRegisterBinding.inflate(layoutInflater)
-        progressDialog = ProgressDialog()
+        progressDialog = ProgressDialog.getInstance(supportFragmentManager)
         setContentView(binding.root)
         setupObserver()
 
@@ -66,6 +68,41 @@ class TypingGameRegisterActivity : AppCompatActivity() {
         binding.typingGameRegisterToolbarBack.setOnClickListener {
             finish()
         }
+        binding.typingGameRegisterDescriptionEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                checkRegisterButtonEnable()
+            }
+
+        })
+
+
+        binding.typingGameRegisterContentEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                checkRegisterButtonEnable()
+            }
+        })
+
+
+    }
+
+    private fun checkRegisterButtonEnable() {
+        val contentTextLength = binding.typingGameRegisterContentEdit.text?.length ?: 0
+        val descriptionTextLength = binding.typingGameRegisterDescriptionEdit.text?.length ?: 0
+        val tagSelectedLength = tagAdapter.getSelectedList().size
+        binding.typingGameRegisterBtn.isEnabled =
+            contentTextLength > 0 && descriptionTextLength > 0 && tagSelectedLength > 0
     }
 
     private fun setupObserver() {
@@ -86,7 +123,9 @@ class TypingGameRegisterActivity : AppCompatActivity() {
 
                 Status.ERROR -> {
                     progressDialog.dismiss()
-                    Toast.makeText(this, getString(R.string.typing_game_register_error), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this, getString(R.string.typing_game_register_error), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

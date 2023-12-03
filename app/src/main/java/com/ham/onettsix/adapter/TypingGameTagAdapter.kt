@@ -1,7 +1,5 @@
 package com.ham.onettsix.adapter
 
-import android.nfc.Tag
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,8 @@ import com.ham.onettsix.R
 import com.ham.onettsix.data.model.TypingGameTag
 import com.ham.onettsix.databinding.RvItemTypingGameTagItemBinding
 
-class TypingGameTagAdapter : RecyclerView.Adapter<TypingGameTagAdapter.TypingGameTagViewHolder>() {
+class TypingGameTagAdapter(private val selectedChangedListener: () -> Unit) :
+    RecyclerView.Adapter<TypingGameTagAdapter.TypingGameTagViewHolder>() {
 
     private var list: MutableList<TypingGameTag.Data> = ArrayList()
 
@@ -36,7 +35,7 @@ class TypingGameTagAdapter : RecyclerView.Adapter<TypingGameTagAdapter.TypingGam
         holder: TypingGameTagViewHolder, position: Int
     ) {
         holder.itemView.findViewById<View>(R.id.typing_game_tag_title).apply {
-            this.isSelected = false
+
             this.setOnClickListener {
                 if (selectedList.contains(list[position])) {
                     selectedList.remove(list[position])
@@ -45,7 +44,9 @@ class TypingGameTagAdapter : RecyclerView.Adapter<TypingGameTagAdapter.TypingGam
                     selectedList.add(list[position])
                     it.isSelected = true
                 }
+                selectedChangedListener.invoke()
             }
+            this.isSelected = selectedList.contains(list[position])
         }
         holder.bind(list[position])
 
@@ -56,7 +57,9 @@ class TypingGameTagAdapter : RecyclerView.Adapter<TypingGameTagAdapter.TypingGam
     }
 
     fun addTag(inputTag: String) {
-        this.list.add(0, TypingGameTag.Data(0, inputTag))
+        val data = TypingGameTag.Data(0, inputTag)
+        selectedList.add(data)
+        this.list.add(0, data)
     }
 
     fun getSelectedList(): List<String> {

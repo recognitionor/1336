@@ -40,7 +40,6 @@ class TypingNormalViewModel(
 
     fun getRandomTypingGame() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e : ${e.message}")
         }
         viewModelScope.launch(exceptionHandler) {
             val map: HashMap<String, Any?> = HashMap<String, Any?>().apply {
@@ -72,7 +71,6 @@ class TypingNormalViewModel(
                 val params = hashMapOf<String, Any?>()
                 params[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_N
                 val result = apiHelper.getTypingGameList(params)
-                Log.d("jhlee", "result : $result")
                 typingGameList.postValue(Resource.success(result))
             }
         }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ham.onettsix.constant.ResultCode
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.ParamsKeys
 import com.ham.onettsix.data.local.DatabaseHelper
@@ -32,8 +33,7 @@ class TypingGameRegisterViewModel(
     }
 
     fun registerTypingGame(content: String, description: String, selectedList: List<String>) {
-        val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e : ${e.message}")
+        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         }
         viewModelScope.launch(exceptionHandler) {
             registerResult.postValue(Resource.loading(null))
@@ -43,7 +43,7 @@ class TypingGameRegisterViewModel(
                 selectedList.joinToString(prefix = "", postfix = "", separator = ",")
             param[ParamsKeys.KEY_QUESTION_EXPLAIN] = description
             val result = apiHelper.registerTypingGame(param)
-            if (result.resultCode == 200) {
+            if (result.resultCode == ResultCode.REGISTER_SUCCESS) {
                 registerResult.postValue(Resource.success(true))
             } else {
                 registerResult.postValue(Resource.error(result.description, false))
@@ -53,11 +53,11 @@ class TypingGameRegisterViewModel(
 
     fun getTagList() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
-            Log.d("jhlee", "e : ${e.message}")
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getTagList().data
+                Log.d("jhlee", "tagList : $result")
                 tagList.postValue(Resource.success(result))
             }
         }

@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">1336</string>
+    <string name="app_name">일삼삼뉵</string>
     <!--common-->
     <string name="all">전체</string>
     <string name="must">[필수]</string>
@@ -30,11 +30,11 @@
     <string name="menu_game">참여</string>
     <string name="menu_alarm">알람</string>
     <string name="menu_login">로그인</string>
-    <string name="menu_typing_quiz">타자 게임</string>
+    <string name="menu_typing_quiz">도도도독</string>
     <string name="menu_signup">회원가입</string>
     <string name="menu_profile">내 정보</string>
     <string name="menu_get_ticket">Get 티켓!</string>
-    <string name="menu_typing_game">타닥타닥</string>
+    <string name="menu_typing_game">도도도독</string>
     <string name="menu_history">역대 육뉵이</string>
     <string name="menu_youtube">돈버는 정보</string>
 
@@ -233,9 +233,9 @@
 
     <!--typing-->
     <string name="typing_game_start">Typing Start!!</string>
-    <string name="typing_tab_rank_game">랭겜</string>
+    <string name="typing_tab_rank_game">랭킹 게임</string>
     <string name="typing_tab_speed_game">연습 게임</string>
-    <string name="typing_game_ranking_title">랭겜 제시어</string>
+    <string name="typing_game_ranking_title">랭킹 게임 제시어</string>
     <string name="typing_game_total_challenger">총 %1$s명 도전 중</string>
     <string name="typing_game_honorary_member">%1$s인의 명예 육뉵이</string>
     <string name="typing_game_exam">출제  /</string>
@@ -258,7 +258,7 @@
     <string name="typing_game_info">엄지족 모여라! 타자 치고 육뉵이 티켓 얻어 가세요</string>
     <string name="typing_game_invalid_game">현재 유효하지 않은 게임 입니다.</string>
     <string name="typing_game_my_info_title">나의 기록</string>
-
+    <string name="typing_game_my_info_empty">앗 아직 기록이 없어요 도전해 기록을 세워보세요</string>
     <string name="typing_game_register_success">등록 성공! 검토 후 등록 까지 기다려 주세요.</string>
     <string name="typing_game_register_error">등록 실패 했습니다. 다시 시도 해주세요</string>
     <string name="typing_game_rank_empty">참여 가능한 게임이 없습니다.\n잠시후 다시 시도해주세요.</string>

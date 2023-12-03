@@ -16,6 +16,7 @@ data class TypingGameEnd(
     data class Data(
         @SerializedName("questionId") var questionId: Long,
         @SerializedName("historyId") var historyId: Long,
-        @SerializedName("gameDuration") var gameDuration: Long
+        @SerializedName("gameDuration") var gameDuration: Long,
+        @SerializedName("resultMsg") var resultMsg: String
     ) : Parcelable
 }

@@ -3,11 +3,13 @@ package com.ham.onettsix
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -33,6 +35,7 @@ import com.ham.onettsix.fragment.HomeFragment
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
+import com.ham.onettsix.view.ToolbarView
 import com.ham.onettsix.viewmodel.MainViewModel
 
 
@@ -176,11 +179,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_typing_game -> {
+                updateTypingGameToolBar()
+            }
+
             R.id.nav_profile -> {
                 if (!mainViewModel.isLogin()) {
                     login()
                     return false
                 }
+                binding.appBarMain.toolbar.setTitle("")
+                binding.appBarMain.toolbar.removeMenu()
+            }
+
+            else -> {
+                binding.appBarMain.toolbar.setTitle("")
+                binding.appBarMain.toolbar.removeMenu()
             }
         }
         NavigationUI.onNavDestinationSelected(item, navController)
@@ -199,8 +213,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
+    private fun updateTypingGameToolBar() {
+        binding.appBarMain.toolbar.setTitle(getString(R.string.menu_typing_game))
+        binding.appBarMain.toolbar.addMenu(AppCompatImageView(this).apply {
+            background = getDrawable(R.drawable.ic_add)
+            this.setOnClickListener {
+                startActivity(Intent(this@MainActivity, TypingGameRegisterActivity::class.java))
+            }
+        })
+    }
 
+    fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
+        if (selectedIndex == 2) {
+            updateTypingGameToolBar()
+        } else {
+            binding.appBarMain.toolbar.removeMenu()
+        }
         val menu = binding.navView.menu.getItem(selectedIndex)
         menu.isChecked = true
         NavigationUI.onNavDestinationSelected(menu, navController)

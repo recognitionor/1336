@@ -176,13 +176,14 @@
             android:background="@drawable/circle_drawable_grey_background"
             android:padding="10dp"
             android:src="@mipmap/ic_track"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
         <com.ham.onettsix.view.BottomPopupAlert
             android:id="@+id/typing_bottom_alert"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

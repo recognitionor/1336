@@ -1,10 +1,14 @@
 package com.ham.onettsix.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ham.onettsix.R
 import com.ham.onettsix.data.model.TypingGameMyInfo
 import com.ham.onettsix.databinding.RvItemTypingGameMyinfoItemBinding
+import com.ham.onettsix.utils.TimeUtils
 import com.ham.onettsix.viewmodel.TypingNormalViewModel.Companion.KEY_GAME_TYPE_R
 
 class TypingGameMyInfoAdapter :
@@ -25,9 +29,24 @@ class TypingGameMyInfoAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TypingGameMyInfo.Data, position: Int) {
             binding.typingGameMyInfoContent.text = item.content
-            binding.typingGameMyInfoRecord.text = item.duration.toString()
-            binding.typingGameMyInfoTypeTv.text = if (item.gameType == KEY_GAME_TYPE_R) "랭킹게임" else "연습게임"
+            binding.typingGameMyInfoRecord.text = TimeUtils.getSecondString(item.duration) + "초"
+            binding.typingGameMyInfoTypeTv.text =
+                if (item.gameType == KEY_GAME_TYPE_R) "랭킹게임" else "연습게임"
             binding.typingGameMyInfoStatus.text = "${item.gameOrder}등"
+            val drawable: Drawable? = if (item.gameOrder == 1) {
+                binding.root.context.getDrawable(R.drawable.myinfo_record_top_background)
+            } else if (item.gameOrder == 2) {
+                binding.root.context.getDrawable(R.drawable.myinfo_record_second_background)
+            } else if (item.gameOrder < 100) {
+                binding.root.context.getDrawable(R.drawable.myinfo_record_normal_background)
+            } else {
+                binding.typingGameMyInfoStatus.visibility = View.GONE
+                null
+            }
+            drawable?.let {
+                binding.typingGameMyInfoStatus.background = it
+            }
+
         }
     }
 

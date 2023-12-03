@@ -13,6 +13,12 @@
         android:layout_height="50dp"
         app:toolbar_title="@string/typing_game_my_info_title" />
 
+    <com.ham.onettsix.view.EmptyView
+        android:id="@+id/typing_game_my_info_empty_view"
+        android:layout_width="match_parent"
+        app:empty_msg="@string/typing_game_my_info_empty"
+        android:layout_height="match_parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/typing_game_my_info_rv"
         android:layout_width="match_parent"
