@@ -74,6 +74,21 @@
             android:theme="@style/Theme.ham.NoActionBar" />
 
         <activity
+            android:name=".TypingGameActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ham.NoActionBar" />
+
+        <activity
+            android:name=".TypingGameRegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ham.NoActionBar" />
+
+        <activity
+            android:name=".TypingGameInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ham.NoActionBar" />
+
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true"
             android:screenOrientation="portrait">

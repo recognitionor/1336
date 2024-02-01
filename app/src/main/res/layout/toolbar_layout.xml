@@ -42,4 +42,23 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/menu_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="6dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_add"
+            android:visibility="gone"
+            tools:ignore="RtlHardcoded" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 </LinearLayout>

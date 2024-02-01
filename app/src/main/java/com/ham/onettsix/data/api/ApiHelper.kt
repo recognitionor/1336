@@ -66,4 +66,25 @@ interface ApiHelper {
 
     suspend fun getEpisodeList(): EpisodeList
 
+    suspend fun getTypingGameList(params: HashMap<String, Any?>): TypingGameList
+
+    suspend fun getRankMain(): TypingGameRankMain
+    suspend fun getTypingGame(params: HashMap<String, Any?>): TypingGameItem.Data
+
+    suspend fun getTypingGameByRanking(params: HashMap<String, Any?>): TypingGameList
+
+    suspend fun endTypingGame(historyId: Long, params: HashMap<String, Any?>): TypingGameEnd
+
+    suspend fun startTypingGame(questionId: Long, params: HashMap<String, Any?>): TypingGameStart
+
+    suspend fun getRandomTypingGame(params: HashMap<String, Any?>): TypingRandomGame
+
+    suspend fun registerTypingGame(params: HashMap<String, Any?>): Result
+
+    suspend fun getMyPage(): TypingGameMyInfo
+
+    suspend fun getTagList(): TypingGameTag
+
+    suspend fun getTypeGameValidation(): TypingGameValidation
+
 }

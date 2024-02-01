@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">1336</string>
+    <string name="app_name">일삼삼뉵</string>
     <!--common-->
     <string name="all">전체</string>
     <string name="must">[필수]</string>
@@ -13,6 +13,7 @@
     <string name="count_divide_mark">/</string>
     <string name="won">원</string>
     <string name="count">개</string>
+    <string name="start">시작하기</string>
     <string name="some_day_ago">일전</string>
     <string name="sign_in_error">로그인에 실패 했습니다. 잠시 후 다시 시도 부탁드려요</string>
     <string name="list_empty">리스트가 없습니다.</string>
@@ -29,9 +30,11 @@
     <string name="menu_game">참여</string>
     <string name="menu_alarm">알람</string>
     <string name="menu_login">로그인</string>
+    <string name="menu_typing_quiz">도도도독</string>
     <string name="menu_signup">회원가입</string>
     <string name="menu_profile">내 정보</string>
     <string name="menu_get_ticket">Get 티켓!</string>
+    <string name="menu_typing_game">도도도독</string>
     <string name="menu_history">역대 육뉵이</string>
     <string name="menu_youtube">돈버는 정보</string>
 
@@ -228,5 +231,41 @@
     <!--quiz-->
     <string name="quiz_start_button">퀴즈 시작 하기</string>
 
+    <!--typing-->
+    <string name="typing_game_start">Typing Start!!</string>
+    <string name="typing_tab_rank_game">랭킹 게임</string>
+    <string name="typing_tab_speed_game">연습 게임</string>
+    <string name="typing_game_ranking_title">랭킹 게임 제시어</string>
+    <string name="typing_game_total_challenger">총 %1$s명 도전 중</string>
+    <string name="typing_game_honorary_member">%1$s인의 명예 육뉵이</string>
+    <string name="typing_game_exam">출제  /</string>
+    <string name="typing_game_attend_count">참여 중</string>
+    <string name="typing_game_attend">%1$s회 참여</string>
+    <string name="typing_game_result_title">엄청난 실력자 군요</string>
+    <string name="typing_game_result_content">%1$s초 달성</string>
+    <string name="typing_game_random_start">랜덤 문구로 시작</string>
+    <string name="typing_game_register_title">제시어 응모</string>
+    <string name="typing_game_register_keyword">제시어</string>
+    <string name="typing_game_register_description">설명</string>
+    <string name="typing_game_register_tag">태그(최대 5개)</string>
+    <string name="typing_game_register_custom_tag">+ 직접 입력</string>
+    <string name="typing_game_register_edit_hint">문제를 등록 해주세요 (최대 30자)</string>
+    <string name="typing_game_register_description_hint">제시어에 대한 설명을 입력 해주세요</string>
+    <string name="typing_game_register_edit_tag">문제를 등록 해주세요 (최대 30자)</string>
+    <string name="typing_game_register_info">응모해주시면 육뉵이에서 검수 후 제시어로 채택됩니다.\n사랑 고백도 환영이니 설명에 사연을 기입해주세요.</string>
+    <string name="typing_game_register_confirm">작성완료</string>
+    <string name="typing_game_user_record">%1$s초</string>
+    <string name="typing_game_info">엄지족 모여라! 타자 치고 육뉵이 티켓 얻어 가세요</string>
+    <string name="typing_game_invalid_game">현재 유효하지 않은 게임 입니다.</string>
+    <string name="typing_game_my_info_title">나의 기록</string>
+    <string name="typing_game_my_info_empty">앗 아직 기록이 없어요 도전해 기록을 세워보세요</string>
+    <string name="typing_game_register_success">등록 성공! 검토 후 등록 까지 기다려 주세요.</string>
+    <string name="typing_game_register_error">등록 실패 했습니다. 다시 시도 해주세요</string>
+    <string name="typing_game_rank_empty">참여 가능한 게임이 없습니다.\n잠시후 다시 시도해주세요.</string>
 
+    <string name="typing_game_rank_validation_title">도도도독 참전!</string>
+    <string name="typing_game_rank_validation_message_valid">오늘 %1$s회 참전 가능합니다.</string>
+    <string name="typing_game_rank_validation_message_invalid">앗 하루 도전 기회 3회를 모두 사용 했어요</string>
+
+    <string name="chase_notification_msg">🚨%1$s에게 %2$s초로 추격 당하고 있어요🚨</string>
 </resources>

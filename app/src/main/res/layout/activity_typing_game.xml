@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+
+    <com.ham.onettsix.view.ToolbarView
+        android:id="@+id/typing_game_toolbar_back"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_title="@string/menu_typing_quiz" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/typing_game_start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/main_color_selector_btn_background"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
+        android:lineHeight="36dp"
+        android:text="@string/start"
+        android:textColor="@color/white"
+        android:textSize="28dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/typing_game_ready_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/gmarket_sans_ttf_bold"
+        android:text="0"
+        android:textColor="@color/sub_color_gradient_red"
+        android:textSize="56dp"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/typing_game_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:visibility="visible" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <LinearLayout
+        android:id="@+id/typing_game_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="19dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="20dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/typing_game_toolbar_back">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/typing_game_timer_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
+            android:gravity="center"
+            android:textSize="24dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/typing_game_question_tv"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:fontFamily="@font/gmarket_sans_ttf_bold"
+            android:gravity="center"
+            android:textColor="@color/text_black"
+            android:textSize="26sp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/typing_game_typing_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:clickable="false"
+            android:enabled="false"
+            android:inputType="textNoSuggestions"
+            android:longClickable="false"
+            android:textIsSelectable="false"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

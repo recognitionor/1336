@@ -13,4 +13,5 @@ object ResultCode {
     const val LOTTERY_INFO_PROCEEDING = 4
     const val LOTTERY_INFO_FINISHED = 0
     const val PERMISSION_EULA_CONFIRM = 3000
+    const val REGISTER_SUCCESS = 4001
 }

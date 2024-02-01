@@ -6,4 +6,5 @@
     <dimen name="rv_divider_width">10dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="rv_divider_spacing">40dp</dimen>
 </resources>

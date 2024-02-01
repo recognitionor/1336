@@ -3,13 +3,11 @@ package com.ham.onettsix.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -73,6 +71,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 )
             )
         )
+        binding.topMenu.setOnClickListener {
+            if (PreferencesHelper.getInstance(requireActivity()).isLogin()) {
+                (activity as MainActivity).run {
+                    this.selectedItem(2)
+                }
+            } else {
+                OneButtonDialog(content = getString(R.string.login_is_required)) { dialog ->
+                    dialog.dismiss()
+                    activityResult.launch(Intent(requireActivity(), LoginActivity::class.java))
+                }.show(parentFragmentManager, OneButtonDialog.TAG)
+            }
+        }
         return binding.root
     }
 
@@ -140,7 +150,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
-                        if (lotteryInfo.resultCode == ResultCode.LOTTERY_INFO_PROCEEDING) {
+                        if (lotteryInfo.resultCode == LOTTERY_INFO_PROCEEDING) {
                             binding.homeGameTicketOpenPercent.visibility = View.VISIBLE
                             binding.homeGameRemainTicketInfoLayout.visibility = View.VISIBLE
                             val ratePercent: Float =
@@ -200,7 +210,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             binding.homeGameHelp3 -> {
                 (activity as MainActivity).run {
-                    this.selectedItem(2)
+                    this.selectedItem(3)
                 }
             }
 

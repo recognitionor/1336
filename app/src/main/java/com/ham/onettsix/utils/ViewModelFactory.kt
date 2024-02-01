@@ -11,8 +11,7 @@ class ViewModelFactory(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
     private val preferenceHelper: PreferencesHelper? = null
-) :
-    ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TestViewModel::class.java)) {
             return TestViewModel(apiHelper, dbHelper) as T
@@ -74,6 +73,26 @@ class ViewModelFactory(
 
         if (modelClass.isAssignableFrom(QuizGameViewModel::class.java)) {
             return QuizGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(TypingGameViewModel::class.java)) {
+            return TypingGameViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(TypingNormalViewModel::class.java)) {
+            return TypingNormalViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(TypingRankViewModel::class.java)) {
+            return TypingRankViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(TypingGameRegisterViewModel::class.java)) {
+            return TypingGameRegisterViewModel(apiHelper, dbHelper, preferenceHelper) as T
+        }
+
+        if (modelClass.isAssignableFrom(TypingGameMyInfoViewModel::class.java)) {
+            return TypingGameMyInfoViewModel(apiHelper, dbHelper, preferenceHelper) as T
         }
 
         throw IllegalArgumentException("Unknown class name")

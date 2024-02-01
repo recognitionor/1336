@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="EmptyView">
+        <attr name="empty_msg" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="ToolbarView">
         <attr name="toolbar_title" format="string" />
+        <attr name="toolbar_use_add_btn" format="boolean" />
+        <attr name="toolbar_back_btn" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="HomeGameHelpLayout">
@@ -9,8 +15,6 @@
         <attr name="home_game_help_count" format="reference" />
         <attr name="home_game_help_content" format="string" />
     </declare-styleable>
-
-
 
 
 </resources>

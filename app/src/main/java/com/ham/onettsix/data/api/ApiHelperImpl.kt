@@ -70,5 +70,34 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getRewardUnit(): RewardUnit = apiService.getRewardUnit()
     override suspend fun getEpisodeList(): EpisodeList = apiService.getEpisodeList()
+    override suspend fun getTypingGameList(params: HashMap<String, Any?>): TypingGameList =
+        apiService.getTypingGameList(params)
+
+    override suspend fun getRankMain(): TypingGameRankMain = apiService.getRankMain()
+
+    override suspend fun getTypingGame(params: HashMap<String, Any?>): TypingGameItem.Data =
+        apiService.getTypingGame(params)
+
+    override suspend fun getTypingGameByRanking(params: HashMap<String, Any?>): TypingGameList =
+        apiService.getTypingGameByRanking(params)
+
+    override suspend fun endTypingGame(
+        historyId: Long, params: HashMap<String, Any?>,
+    ): TypingGameEnd = apiService.endTypingGame(historyId, params)
+
+    override suspend fun startTypingGame(
+        questionId: Long, params: HashMap<String, Any?>,
+    ): TypingGameStart = apiService.startTypingGame(questionId, params)
+
+    override suspend fun getRandomTypingGame(params: HashMap<String, Any?>): TypingRandomGame =
+        apiService.getRandomTypingGame(params)
+
+    override suspend fun registerTypingGame(params: HashMap<String, Any?>): Result =
+        apiService.registerTypingGame(params)
+
+    override suspend fun getMyPage(): TypingGameMyInfo = apiService.getMyPage()
+    override suspend fun getTagList(): TypingGameTag = apiService.getTagList()
+    override suspend fun getTypeGameValidation(): TypingGameValidation =
+        apiService.getTypeGameValidation()
 
 }

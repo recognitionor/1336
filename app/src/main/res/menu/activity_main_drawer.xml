@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_book_online"
             android:title="@string/menu_get_ticket" />
         <item
+            android:id="@+id/nav_typing_game"
+            android:icon="@drawable/ic_keyboard"
+            android:title="@string/menu_typing_game" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person"
             android:title="@string/menu_profile" />

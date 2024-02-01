@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog.getInstance(supportFragmentManager)
     }
+
+    private var addImageView: AppCompatImageView? = null
 
     val mainViewModel by lazy {
         ViewModelProviders.of(
@@ -103,6 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.nav_home,
                 R.id.nav_profile,
                 R.id.nav_get_ticket,
+                R.id.nav_typing_game,
                 R.id.nav_history,
                 R.id.nav_youtube
             ), binding.drawerLayout
@@ -126,7 +130,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Status.SUCCESS -> {
                     if (it.data != null) {
                         it.data.let { data ->
-                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.id}"
+                            navHeaderBinding.navHeaderNickname.text = "${data.nickName}#${data.uid}"
                             navHeaderBinding.navHeaderImg.setImageDrawable(
                                 getDrawable(
                                     ProfileImageUtil.getImageId(data.profileImageId ?: -1)
@@ -174,12 +178,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        if (binding.navView.checkedItem?.itemId == item.itemId) {
+            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            drawer.closeDrawers()
+            return true
+        }
         when (item.itemId) {
+            R.id.nav_typing_game -> {
+                updateTypingGameToolBar()
+            }
+
             R.id.nav_profile -> {
                 if (!mainViewModel.isLogin()) {
                     login()
                     return false
                 }
+                binding.appBarMain.toolbar.setTitle("")
+                binding.appBarMain.toolbar.removeMenu()
+            }
+
+            else -> {
+                binding.appBarMain.toolbar.setTitle("")
+                binding.appBarMain.toolbar.removeMenu()
             }
         }
         NavigationUI.onNavDestinationSelected(item, navController)
@@ -198,8 +218,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
+    private fun updateTypingGameToolBar() {
+        binding.appBarMain.toolbar.setTitle(getString(R.string.menu_typing_game))
+        binding.appBarMain.toolbar.removeView(addImageView)
+        addImageView = AppCompatImageView(this).apply {
+            background = getDrawable(R.drawable.ic_add)
+            this.setOnClickListener {
+                startActivity(Intent(this@MainActivity, TypingGameRegisterActivity::class.java))
+            }
+        }
+        binding.appBarMain.toolbar.addMenu(addImageView!!)
+    }
 
+    fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
+        binding.appBarMain.toolbar.removeMenu()
+        if (selectedIndex == 2) {
+            updateTypingGameToolBar()
+        }
         val menu = binding.navView.menu.getItem(selectedIndex)
         menu.isChecked = true
         NavigationUI.onNavDestinationSelected(menu, navController)

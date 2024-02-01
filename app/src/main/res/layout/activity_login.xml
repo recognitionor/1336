@@ -97,7 +97,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="@string/login_eula_confirm"
-                android:textColor="@color/grey_040"
+                android:textColor="@color/gray_040"
                 android:textSize="13sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -109,7 +109,7 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="@string/login_personal_privacy"
-                android:textColor="@color/grey_040"
+                android:textColor="@color/gray_040"
                 android:textSize="13sp" />
 
 
