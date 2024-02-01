@@ -58,8 +58,8 @@ class TypingGameTagAdapter(private val selectedChangedListener: () -> Unit) :
 
     fun addTag(inputTag: String) {
         val data = TypingGameTag.Data(0, inputTag)
-        selectedList.add(data)
         this.list.add(0, data)
+        selectedList.add(data)
     }
 
     fun getSelectedList(): List<String> {

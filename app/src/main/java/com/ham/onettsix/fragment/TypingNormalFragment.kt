@@ -2,7 +2,6 @@ package com.ham.onettsix.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +25,7 @@ import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.TypingNormalViewModel
 
-
 class TypingNormalFragment : Fragment() {
-
     companion object {
         @JvmStatic
         fun newInstance(): TypingNormalFragment {

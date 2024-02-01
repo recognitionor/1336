@@ -14,7 +14,10 @@
     <color name="gray_070">#282828</color>
     <color name="gray_030">#d2d2d2</color>
     <color name="green_02">#4ac370</color>
-    <color name="black">#b3000000</color>
+    <color name="black">#000000</color>
+    <color name="warning">#FFF0F0</color>
+    <color name="warning_text">#FF3C3C</color>
+
 
     <color name="gray_040">#9c9c9c</color>
     <color name="caution_gray">#7D7D7D</color>

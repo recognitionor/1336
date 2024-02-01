@@ -82,11 +82,11 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
         apiService.getTypingGameByRanking(params)
 
     override suspend fun endTypingGame(
-        historyId: Long, params: HashMap<String, Any?>
+        historyId: Long, params: HashMap<String, Any?>,
     ): TypingGameEnd = apiService.endTypingGame(historyId, params)
 
     override suspend fun startTypingGame(
-        questionId: Long, params: HashMap<String, Any?>
+        questionId: Long, params: HashMap<String, Any?>,
     ): TypingGameStart = apiService.startTypingGame(questionId, params)
 
     override suspend fun getRandomTypingGame(params: HashMap<String, Any?>): TypingRandomGame =
@@ -97,5 +97,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
     override suspend fun getMyPage(): TypingGameMyInfo = apiService.getMyPage()
     override suspend fun getTagList(): TypingGameTag = apiService.getTagList()
+    override suspend fun getTypeGameValidation(): TypingGameValidation =
+        apiService.getTypeGameValidation()
 
 }

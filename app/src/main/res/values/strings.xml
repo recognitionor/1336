@@ -262,4 +262,10 @@
     <string name="typing_game_register_success">등록 성공! 검토 후 등록 까지 기다려 주세요.</string>
     <string name="typing_game_register_error">등록 실패 했습니다. 다시 시도 해주세요</string>
     <string name="typing_game_rank_empty">참여 가능한 게임이 없습니다.\n잠시후 다시 시도해주세요.</string>
+
+    <string name="typing_game_rank_validation_title">도도도독 참전!</string>
+    <string name="typing_game_rank_validation_message_valid">오늘 %1$s회 참전 가능합니다.</string>
+    <string name="typing_game_rank_validation_message_invalid">앗 하루 도전 기회 3회를 모두 사용 했어요</string>
+
+    <string name="chase_notification_msg">🚨%1$s에게 %2$s초로 추격 당하고 있어요🚨</string>
 </resources>

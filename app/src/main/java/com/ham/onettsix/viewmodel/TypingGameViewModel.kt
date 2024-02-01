@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class TypingGameViewModel(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
-    private val preferenceHelper: PreferencesHelper?
+    private val preferenceHelper: PreferencesHelper?,
 ) : ViewModel() {
 
     val questionId = MutableLiveData<Int>()
@@ -30,7 +30,11 @@ class TypingGameViewModel(
 
     val content = MutableLiveData<String>()
 
+    val invalidChecker = MutableLiveData<MutableMap<String, Boolean>>()
+
     private val startTypingGame = MutableLiveData<TypingGameStart.Data>()
+
+    val startTypingGameError = MutableLiveData<String>()
 
     val endTypingGame = MutableLiveData<TypingGameEnd.Data>()
 
@@ -67,6 +71,14 @@ class TypingGameViewModel(
         }
     }
 
+    fun invalidCheck(substring: String?) {
+        substring?.forEach {
+            if (invalidChecker.value?.contains(it.toString()) == true) {
+                invalidChecker.value?.set(it.toString(), true)
+            }
+        }
+    }
+
     fun startRankGame() {
         val exceptionHandler = CoroutineExceptionHandler { _, e ->
             typingGameStatus.value = GAME_START_STATUS_ERROR
@@ -76,16 +88,21 @@ class TypingGameViewModel(
             val params = HashMap<String, Any?>()
             params[ParamsKeys.KEY_GAME_TYPE] = KEY_GAME_TYPE_R
             params[ParamsKeys.KEY_EPISODE] = episode.value
-            startTypingGame.value = apiHelper.startTypingGame(
+            params[ParamsKeys.KEY_GAME_EPISODE] = episode.value
+            val result = apiHelper.startTypingGame(
                 questionId.value?.toLong() ?: 0, params
-            ).data
-
-
-            val timeOffset = System.currentTimeMillis()
-            while (typingGameStatus.value == GAME_START_STATUS_ING) {
-                val time = (System.currentTimeMillis() - timeOffset).toFloat() / 1000
-                typingGameTimer.postValue(time)
-                delay(100)
+            )
+            if (result.data != null) {
+                startTypingGame.value = result.data
+                val timeOffset = System.currentTimeMillis()
+                while (typingGameStatus.value == GAME_START_STATUS_ING) {
+                    val time = (System.currentTimeMillis() - timeOffset).toFloat() / 1000
+                    typingGameTimer.postValue(time)
+                    delay(100)
+                }
+            } else {
+                // 2001 No Ticket Error
+                startTypingGameError.postValue(result.description)
             }
         }
     }
@@ -121,6 +138,7 @@ class TypingGameViewModel(
                 params[ParamsKeys.KEY_GAME_DURATION] = (timeOffset * 1000).toLong()
                 val result = apiHelper.endTypingGame(historyId, params)
                 endTypingGame.postValue(result.data)
+            } else {
             }
         }
     }
@@ -129,5 +147,10 @@ class TypingGameViewModel(
         this.questionId.postValue(questionId)
         this.episode.postValue(episode)
         this.content.postValue(content)
+        val map = mutableMapOf<String, Boolean>()
+        content?.forEach {
+            map[it.toString()] = false
+        }
+        this.invalidChecker.postValue(map)
     }
 }

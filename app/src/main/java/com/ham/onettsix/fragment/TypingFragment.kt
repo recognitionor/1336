@@ -1,6 +1,5 @@
 package com.ham.onettsix.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.ham.onettsix.TypingGameInfoActivity
-import com.ham.onettsix.TypingGameRegisterActivity
 import com.ham.onettsix.adapter.TypingReadyPagerAdapter
 import com.ham.onettsix.databinding.FragmentTypingReadyBinding
 
@@ -44,12 +41,6 @@ class TypingFragment : Fragment() {
         val tabs: TabLayout = binding.tabTypingReady
         tabs.setupWithViewPager(viewPager)
         tabs.selectTab(tabs.getTabAt(selectedSection))
-        activity?.actionBar
 
-//        binding.typingGameToolbarBack.getBinding().addBtn.setOnClickListener {
-//            startActivity(Intent(requireContext(), TypingGameRegisterActivity::class.java))
-//        }
-//        binding.typingGameToolbarBack.getBinding().backBtn.setOnClickListener {}
     }
-
 }

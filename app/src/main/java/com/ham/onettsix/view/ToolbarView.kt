@@ -2,11 +2,13 @@ package com.ham.onettsix.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.ham.onettsix.R
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
 import androidx.core.view.get
 import com.ham.onettsix.databinding.ToolbarLayoutBinding
 import java.lang.Exception

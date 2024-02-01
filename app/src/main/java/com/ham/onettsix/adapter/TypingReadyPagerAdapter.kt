@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.ham.onettsix.R
-import com.ham.onettsix.fragment.EulaFragment
 import com.ham.onettsix.fragment.TypingNormalFragment
 import com.ham.onettsix.fragment.TypingRankFragment
 

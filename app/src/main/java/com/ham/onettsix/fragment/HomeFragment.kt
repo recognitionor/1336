@@ -150,7 +150,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { lotteryInfo ->
-                        if (lotteryInfo.resultCode == ResultCode.LOTTERY_INFO_PROCEEDING) {
+                        if (lotteryInfo.resultCode == LOTTERY_INFO_PROCEEDING) {
                             binding.homeGameTicketOpenPercent.visibility = View.VISIBLE
                             binding.homeGameRemainTicketInfoLayout.visibility = View.VISIBLE
                             val ratePercent: Float =

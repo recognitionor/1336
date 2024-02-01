@@ -85,4 +85,6 @@ interface ApiHelper {
 
     suspend fun getTagList(): TypingGameTag
 
+    suspend fun getTypeGameValidation(): TypingGameValidation
+
 }

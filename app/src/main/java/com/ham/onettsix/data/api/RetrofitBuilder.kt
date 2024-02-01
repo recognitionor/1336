@@ -1,6 +1,5 @@
 package com.ham.onettsix.data.api
 
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -21,7 +20,6 @@ object RetrofitBuilder {
             val request: Request =
                 chain.request().newBuilder().addHeader(ParamsKeys.KEY_AUTH_TOKEN, accessToken)
                     .build()
-            Log.d("jhlee", "request : $request")
             chain.proceed(request)
         }
 

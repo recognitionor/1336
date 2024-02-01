@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.text.Selection
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
@@ -68,11 +69,19 @@ class TypingGameActivity : AppCompatActivity() {
                         Toast.makeText(this@TypingGameActivity, "글자가 틀렸습니다.", Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        binding.typingGameTypingEditText.clearFocus()
-                        val imm =
-                            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                        imm.hideSoftInputFromWindow(binding.typingGameTypingEditText.windowToken, 0)
-                        typingGameViewModel.finishGame()
+                        if (typingGameViewModel.invalidChecker.value?.containsValue(false) == true) {
+                            Toast.makeText(
+                                this@TypingGameActivity, "부정한 입력이 감지 되었습니다.", Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            binding.typingGameTypingEditText.clearFocus()
+                            val imm =
+                                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.hideSoftInputFromWindow(
+                                binding.typingGameTypingEditText.windowToken, 0
+                            )
+                            typingGameViewModel.finishGame()
+                        }
                     }
                     return true
                 }
@@ -82,54 +91,64 @@ class TypingGameActivity : AppCompatActivity() {
 
         binding.typingGameTypingEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
-                s: CharSequence?, start: Int, count: Int, after: Int
+                s: CharSequence?, start: Int, count: Int, after: Int,
             ) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (typingGameViewModel.typingGameStatus.value == TypingGameViewModel.GAME_START_STATUS_READY) {
-                    if (isRankGame) {
-                        typingGameViewModel.startRankGame()
-                    } else {
-                        typingGameViewModel.startRandomGame()
-                    }
-                }
-                val question = binding.typingGameQuestionTv.text.toString()
-                val span = SpannableString(question)
-                if ((s?.length ?: 0) < 2) {
-                    span.setSpan(
-                        ForegroundColorSpan(Color.BLACK),
-                        0,
-                        question.length,
-                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                } else {
-                    s?.forEachIndexed { index, c ->
-                        if (index + 1 < s.length) {
-                            val originTemp = question.substring(index, index + 1)
-                            if (originTemp == c.toString()) {
-                                span.setSpan(
-                                    ForegroundColorSpan(Color.GREEN),
-                                    index,
-                                    index + 1,
-                                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                                )
-                            } else {
-                                span.setSpan(
-                                    ForegroundColorSpan(Color.RED),
-                                    index,
-                                    index + 1,
-                                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                                )
-                            }
-
+                try {
+                    if (typingGameViewModel.typingGameStatus.value == TypingGameViewModel.GAME_START_STATUS_READY) {
+                        if (isRankGame) {
+                            typingGameViewModel.startRankGame()
+                        } else {
+                            typingGameViewModel.startRandomGame()
                         }
                     }
+                    val question = binding.typingGameQuestionTv.text.toString()
+                    val span = SpannableString(question)
+                    if ((s?.length ?: 0) < 2) {
+                        span.setSpan(
+                            ForegroundColorSpan(Color.BLACK),
+                            0,
+                            question.length,
+                            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    } else {
+                        s?.forEachIndexed { index, c ->
+                            if (index + 1 < s.length) {
+                                val originTemp = question.substring(index, index + 1)
+                                if (originTemp == c.toString()) {
+                                    span.setSpan(
+                                        ForegroundColorSpan(Color.GREEN),
+                                        index,
+                                        index + 1,
+                                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                                    )
+                                } else {
+                                    span.setSpan(
+                                        ForegroundColorSpan(Color.RED),
+                                        index,
+                                        index + 1,
+                                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    binding.typingGameQuestionTv.text = span
+                } catch (_: Exception) {
                 }
-                binding.typingGameQuestionTv.text = span
             }
 
             override fun afterTextChanged(s: Editable?) {
+                val text = s?.toString()
+                if (!text.isNullOrBlank()) {
+                    val cursorPosition = Selection.getSelectionEnd(s) // 커서 위치 얻기
+                    val lastChar = text.getOrNull(cursorPosition - 1) // 커서 앞의 문자 얻기
+                    if (lastChar != null) {
+                        typingGameViewModel.invalidCheck(lastChar.toString())
+                    }
+                }
             }
         })
     }
@@ -150,8 +169,9 @@ class TypingGameActivity : AppCompatActivity() {
     }
 
     private fun setupObserver() {
+        typingGameViewModel.startTypingGameError.observe(this) {
+        }
         typingGameViewModel.endTypingGame.observe(this) {
-            Log.d("jhlee", "${typingGameViewModel.typingGameTimer.value}")
             OneButtonDialog(
                 it.resultMsg, getString(
                     R.string.typing_game_result_content,
@@ -190,17 +210,7 @@ class TypingGameActivity : AppCompatActivity() {
                 }
 
                 TypingGameViewModel.GAME_START_STATUS_ING -> {}
-                TypingGameViewModel.GAME_START_STATUS_DONE -> {
-//                    OneButtonDialog(
-//                        "it.resultMsg", getString(
-//                            R.string.typing_game_result_content,
-//                            "${typingGameViewModel.typingGameTimer.value}"
-//                        )
-//                    ) { dialog ->
-//                        finish()
-//                        dialog.dismiss()
-//                    }.show(supportFragmentManager, OneButtonDialog.TAG)
-                }
+                TypingGameViewModel.GAME_START_STATUS_DONE -> {}
             }
         }
         typingGameViewModel.readyCountDown.observe(this) { count ->
@@ -217,7 +227,7 @@ class TypingGameActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     binding.typingGameProgressBar.visibility = View.GONE
-                    it.data?.let { typingGame ->
+                    it.data?.let { _ ->
                     }
                 }
 

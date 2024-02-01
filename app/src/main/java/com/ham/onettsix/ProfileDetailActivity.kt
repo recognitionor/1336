@@ -133,7 +133,6 @@ class ProfileDetailActivity : AppCompatActivity(), View.OnClickListener {
                         dialog.dialog?.cancel()
                     }
                 }.show(supportFragmentManager, TwoButtonDialog.TAG)
-
             }
 
             binding.loginToolbarBack -> {

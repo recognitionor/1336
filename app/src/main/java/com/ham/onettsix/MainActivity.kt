@@ -3,7 +3,6 @@ package com.ham.onettsix
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -35,7 +34,6 @@ import com.ham.onettsix.fragment.HomeFragment
 import com.ham.onettsix.utils.ProfileImageUtil
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
-import com.ham.onettsix.view.ToolbarView
 import com.ham.onettsix.viewmodel.MainViewModel
 
 
@@ -53,6 +51,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val progressDialog: ProgressDialog by lazy {
         ProgressDialog.getInstance(supportFragmentManager)
     }
+
+    private var addImageView: AppCompatImageView? = null
 
     val mainViewModel by lazy {
         ViewModelProviders.of(
@@ -178,6 +178,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        if (binding.navView.checkedItem?.itemId == item.itemId) {
+            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            drawer.closeDrawers()
+            return true
+        }
         when (item.itemId) {
             R.id.nav_typing_game -> {
                 updateTypingGameToolBar()
@@ -215,19 +220,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun updateTypingGameToolBar() {
         binding.appBarMain.toolbar.setTitle(getString(R.string.menu_typing_game))
-        binding.appBarMain.toolbar.addMenu(AppCompatImageView(this).apply {
+        binding.appBarMain.toolbar.removeView(addImageView)
+        addImageView = AppCompatImageView(this).apply {
             background = getDrawable(R.drawable.ic_add)
             this.setOnClickListener {
                 startActivity(Intent(this@MainActivity, TypingGameRegisterActivity::class.java))
             }
-        })
+        }
+        binding.appBarMain.toolbar.addMenu(addImageView!!)
     }
 
     fun selectedItem(selectedIndex: Int, doClose: Boolean = true) {
+        binding.appBarMain.toolbar.removeMenu()
         if (selectedIndex == 2) {
             updateTypingGameToolBar()
-        } else {
-            binding.appBarMain.toolbar.removeMenu()
         }
         val menu = binding.navView.menu.getItem(selectedIndex)
         menu.isChecked = true

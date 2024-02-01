@@ -1,7 +1,10 @@
 package com.ham.onettsix.fragment
 
+import android.animation.AnimatorInflater
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +25,8 @@ import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.TypingGameRankMain
 import com.ham.onettsix.databinding.FragmentTypingRankBinding
+import com.ham.onettsix.dialog.OneButtonDialog
+import com.ham.onettsix.dialog.TwoButtonDialog
 import com.ham.onettsix.utils.Status
 import com.ham.onettsix.utils.ViewModelFactory
 import com.ham.onettsix.viewmodel.TypingRankViewModel
@@ -56,7 +61,7 @@ class TypingRankFragment : Fragment() {
     private lateinit var binding: FragmentTypingRankBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentTypingRankBinding.inflate(layoutInflater)
         binding.typingHistoryRv.adapter = typingRankAdapter
@@ -65,12 +70,12 @@ class TypingRankFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         typingRankAdapter = TypingRankAdapter(object :
             OnItemClickListener<TypingGameRankMain.Data.TypingGameHistoryResItem> {
             override fun onItemClick(
-                item: TypingGameRankMain.Data.TypingGameHistoryResItem, index: Int, view: View?
+                item: TypingGameRankMain.Data.TypingGameHistoryResItem, index: Int, view: View?,
             ) {
-//                binding.typingBottomAlert.show(item, index)
             }
         })
 
@@ -80,6 +85,64 @@ class TypingRankFragment : Fragment() {
     }
 
     private fun setupObserver() {
+        typingRankViewModel.typingGameValidation.observe(this) { result ->
+            when (result.status) {
+                Status.SUCCESS -> {
+                    val joinCnt = result.data?.data?.joinCnt ?: 0
+                    val maxCnt = result.data?.data?.maxCount ?: 0
+                    val remainedTicket = result.data?.data?.remainedTicket ?: 0
+                    if (remainedTicket < 1) {
+                        val message =
+                            getString(R.string.no_ticket)
+                        OneButtonDialog(
+                            getString(R.string.typing_game_rank_validation_title), message
+                        ) {
+                            it.dismiss()
+                        }.show(this@TypingRankFragment.childFragmentManager, OneButtonDialog.TAG)
+                        return@observe
+                    }
+
+                    if (joinCnt >= maxCnt) {
+                        val message =
+                            getString(R.string.typing_game_rank_validation_message_invalid)
+                        OneButtonDialog(
+                            getString(R.string.typing_game_rank_validation_title), message
+                        ) {
+                            it.dismiss()
+                        }.show(this@TypingRankFragment.childFragmentManager, OneButtonDialog.TAG)
+                    } else {
+                        val message = getString(
+                            R.string.typing_game_rank_validation_message_valid,
+                            (maxCnt - joinCnt).toString()
+                        )
+                        TwoButtonDialog(
+                            getString(R.string.typing_game_rank_validation_title), message
+                        ) { isPositive, dialog ->
+                            if (isPositive) {
+                                val intent =
+                                    Intent(requireContext(), TypingGameActivity::class.java)
+                                val rankMainData = typingRankViewModel.rankGame.value?.data
+                                rankMainData?.let {
+                                    intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, it.content)
+                                    intent.putExtra(ExtraKey.TYPING_GAME_QUESTION_ID, it.questionId)
+                                    intent.putExtra(ExtraKey.TYPING_GAME_EPISODE, it.episode)
+                                    intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, true)
+                                    startForResult.launch(intent)
+                                }
+                            }
+                            dialog.dismiss()
+                        }.show(this@TypingRankFragment.childFragmentManager, TwoButtonDialog.TAG)
+                    }
+                }
+
+                Status.LOADING -> {
+                }
+
+                Status.ERROR -> {
+                }
+            }
+        }
+
         typingRankViewModel.userInfo.observe(this) { result ->
             when (result.status) {
                 Status.SUCCESS -> {
@@ -95,6 +158,7 @@ class TypingRankFragment : Fragment() {
         typingRankViewModel.myTypingGameRecord.observe(this) { result ->
             when (result.status) {
                 Status.SUCCESS -> {
+                    alertLayout()
                     binding.typingBottomAlert.setMyInfoListData(result.data)
                 }
 
@@ -130,7 +194,9 @@ class TypingRankFragment : Fragment() {
                             R.string.typing_game_total_challenger,
                             rankGameData.totalJoinUserCount.toString()
                         )
+                        alertLayout()
                         typingRankAdapter.setList(rankGameData.typingGameHistoryResList)
+                        typingRankAdapter.setMyInfo(typingRankViewModel.userInfo)
                         typingRankAdapter.notifyDataSetChanged()
                     }
                 }
@@ -166,22 +232,47 @@ class TypingRankFragment : Fragment() {
         }
     }
 
+    private fun alertLayout() {
+        val userInfo = typingRankViewModel.userInfo.value?.data
+        val gameList = typingRankViewModel.rankGame.value?.data?.typingGameHistoryResList
+        var chaseUser: TypingGameRankMain.Data.TypingGameHistoryResItem?
+        var myInfo: TypingGameRankMain.Data.TypingGameHistoryResItem?
+        try {
+            if (gameList != null && gameList.isNotEmpty() && userInfo != null) {
+                gameList.forEachIndexed { index, typingGameHistoryResItem ->
+                    if (typingGameHistoryResItem.userId == userInfo.uid?.toLong()) {
+                        if (gameList[index + 1].userId != userInfo.uid.toLong()) {
+                            myInfo = gameList[index]
+                            chaseUser = gameList[index + 1]
+                            if (chaseUser != null && myInfo != null) {
+                                val fadeOut = AnimatorInflater.loadAnimator(
+                                    this.requireContext(), R.animator.vanish
+                                ) as ObjectAnimator
+                                fadeOut.target = binding.chaseNotificationTv
+
+                                // Start the animation
+                                fadeOut.start()
+                                binding.chaseNotificationTv.visibility = View.VISIBLE
+                                binding.chaseNotificationTv.text = resources.getString(
+                                    R.string.chase_notification_msg,
+                                    "${chaseUser!!.nickname}#${chaseUser!!.userId}",
+                                    "${chaseUser!!.duration - myInfo!!.duration}"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (_: Exception) {
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.typingHistoryRv.layoutManager = LinearLayoutManager(context)
         binding.typingHistoryRv.adapter = typingRankAdapter
         binding.typingGameRankLayout.setOnClickListener {
-            val intent = Intent(
-                requireContext(), TypingGameActivity::class.java
-            )
-            val rankMainData = typingRankViewModel.rankGame.value?.data
-            rankMainData?.let {
-                intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, it.content)
-                intent.putExtra(ExtraKey.TYPING_GAME_QUESTION_ID, it.questionId)
-                intent.putExtra(ExtraKey.TYPING_GAME_EPISODE, it.episode)
-                intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, true)
-                startForResult.launch(intent)
-            }
+            typingRankViewModel.getTypingGameValidation()
         }
         binding.typingBottomAlert.setOnClickListener {
             startActivity(Intent(requireContext(), TypingGameInfoActivity::class.java))

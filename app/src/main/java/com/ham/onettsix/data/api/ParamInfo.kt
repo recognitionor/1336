@@ -51,6 +51,8 @@ object ParamsKeys {
 
     const val KEY_GAME_TYPE = "gameType"
 
+    const val KEY_GAME_EPISODE = "episode"
+
     const val KEY_GAME_DURATION = "duration"
 
     const val KEY_GAME_QUESTION_ID = "questionId"

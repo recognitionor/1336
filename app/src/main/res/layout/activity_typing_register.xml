@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="*"
             android:textColor="@color/warning_icon_color"
-            app:layout_constraintLeft_toRightOf="@+id/typing_game_register_tag_title"
+            app:layout_constraintLeft_toRightOf="@+id/typing_game_register_title"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -87,8 +87,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/typing_game_register_description_hint"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/typing_game_register_tag_title" />
+            app:layout_constraintLeft_toLeftOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

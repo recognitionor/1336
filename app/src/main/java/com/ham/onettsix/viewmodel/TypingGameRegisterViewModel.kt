@@ -57,7 +57,6 @@ class TypingGameRegisterViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 val result = apiHelper.getTagList().data
-                Log.d("jhlee", "tagList : $result")
                 tagList.postValue(Resource.success(result))
             }
         }

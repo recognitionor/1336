@@ -1,11 +1,12 @@
 package com.ham.onettsix.dialog
 
+import android.app.ActionBar.LayoutParams
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
-import com.ham.onettsix.R
-import com.ham.onettsix.databinding.ActivityProfileDetailBinding
 import com.ham.onettsix.databinding.DialogOneButtonBinding
 
 class OneButtonDialog(
@@ -25,7 +26,7 @@ class OneButtonDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogOneButtonBinding.inflate(layoutInflater)
         binding.oneButtonTitle.text = title
         binding.oneButtonContent.text = content

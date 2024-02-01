@@ -1,5 +1,6 @@
 package com.ham.onettsix.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,16 +13,18 @@ import com.ham.onettsix.data.model.TypingGameItem
 import com.ham.onettsix.data.model.TypingGameList
 import com.ham.onettsix.data.model.TypingGameMyInfo
 import com.ham.onettsix.data.model.TypingGameRankMain
+import com.ham.onettsix.data.model.TypingGameValidation
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.logging.Logger
 
 class TypingRankViewModel(
     private val apiHelper: ApiHelper,
     private val dbHelper: DatabaseHelper,
-    private val preferenceHelper: PreferencesHelper?
+    private val preferenceHelper: PreferencesHelper?,
 ) : ViewModel() {
 
     val typingGameList = MutableLiveData<Resource<TypingGameList>>()
@@ -34,6 +37,7 @@ class TypingRankViewModel(
 
     val userInfo = MutableLiveData<Resource<DBUser>>()
 
+    val typingGameValidation = MutableLiveData<Resource<TypingGameValidation>>()
 
     init {
         getRankMain()
@@ -48,6 +52,19 @@ class TypingRankViewModel(
                 userInfo.postValue(Resource.success(dbHelper.getUser()))
                 val result = apiHelper.getMyPage()
                 myTypingGameRecord.postValue(Resource.success(result.data))
+            }
+        }
+    }
+
+    fun getTypingGameValidation() {
+        val exceptionHandler = CoroutineExceptionHandler { _, e ->
+            rankGame.postValue(Resource.error(e.message.toString(), null))
+        }
+        viewModelScope.launch(exceptionHandler) {
+            withContext(Dispatchers.IO) {
+
+                val params = apiHelper.getTypeGameValidation()
+                typingGameValidation.postValue(Resource.success(params))
             }
         }
     }

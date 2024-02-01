@@ -63,6 +63,7 @@ class TypingGameRegisterActivity : AppCompatActivity() {
                 dialog.dismiss()
                 tagAdapter.addTag(input)
                 tagAdapter.notifyDataSetChanged()
+                checkRegisterButtonEnable()
             }.show(supportFragmentManager, EditTextDialog.TAG)
         }
         binding.typingGameRegisterToolbarBack.setOnClickListener {

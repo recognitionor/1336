@@ -2,11 +2,14 @@ package com.ham.onettsix.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ham.onettsix.R
+import com.ham.onettsix.data.local.entity.DBUser
 import com.ham.onettsix.data.model.TypingGameRankMain
 import com.ham.onettsix.databinding.RvItemTypingHistoryBinding
 import com.ham.onettsix.utils.ProfileImageUtil
+import com.ham.onettsix.utils.Resource
 import com.ham.onettsix.utils.TimeUtils
 
 class TypingRankAdapter(private val itemClickListener: OnItemClickListener<TypingGameRankMain.Data.TypingGameHistoryResItem>) :
@@ -15,13 +18,14 @@ class TypingRankAdapter(private val itemClickListener: OnItemClickListener<Typin
     private var list: ArrayList<TypingGameRankMain.Data.TypingGameHistoryResItem> = ArrayList()
 
     override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
+        parent: ViewGroup, viewType: Int,
     ): TypingHistoryViewHolder {
         val binding = RvItemTypingHistoryBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return TypingHistoryViewHolder(binding)
     }
+
 
     class TypingHistoryViewHolder(private val binding: RvItemTypingHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -43,7 +47,7 @@ class TypingRankAdapter(private val itemClickListener: OnItemClickListener<Typin
     }
 
     override fun onBindViewHolder(
-        holder: TypingHistoryViewHolder, position: Int
+        holder: TypingHistoryViewHolder, position: Int,
     ) {
         holder.itemView.rootView.setOnClickListener {
             itemClickListener.onItemClick(list[position], position, it)
@@ -55,8 +59,13 @@ class TypingRankAdapter(private val itemClickListener: OnItemClickListener<Typin
         return list.size
     }
 
+
     fun setList(list: List<TypingGameRankMain.Data.TypingGameHistoryResItem>) {
         this.list.clear()
         this.list.addAll(list)
+    }
+
+    fun setMyInfo(userInfo: MutableLiveData<Resource<DBUser>>) {
+        
     }
 }
