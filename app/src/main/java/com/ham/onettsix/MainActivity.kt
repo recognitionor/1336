@@ -64,6 +64,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )[MainViewModel::class.java]
     }
 
+    private val typingGameResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                LOGIN_RESULT_OK -> {
+                    mainViewModel.updateUserInfo()
+                    selectedItem(2)
+                }
+            }
+        }
+
     private val loginResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             mainViewModel.updateUserInfo()
@@ -185,7 +195,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         when (item.itemId) {
             R.id.nav_typing_game -> {
-                updateTypingGameToolBar()
+                if (!mainViewModel.isLogin()) {
+                    typingGameResult.launch(
+                        Intent(
+                            this@MainActivity, LoginActivity::class.java
+                        )
+                    )
+                    return false
+                }
             }
 
             R.id.nav_profile -> {
