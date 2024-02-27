@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.ham.onettsix.adapter.TypingReadyPagerAdapter
 import com.ham.onettsix.databinding.FragmentTypingReadyBinding
+import com.ham.onettsix.dialog.AdDialog
 
 class TypingFragment : Fragment() {
 

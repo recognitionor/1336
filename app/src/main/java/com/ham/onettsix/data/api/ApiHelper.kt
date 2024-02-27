@@ -87,4 +87,6 @@ interface ApiHelper {
 
     suspend fun getTypeGameValidation(): TypingGameValidation
 
+    suspend fun getRvConfig(params: HashMap<String, Any?>): RvConfigList
+
 }

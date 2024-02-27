@@ -29,6 +29,7 @@ import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.databinding.ActivityMainBinding
 import com.ham.onettsix.databinding.NavHeaderMainBinding
+import com.ham.onettsix.dialog.AdDialog
 import com.ham.onettsix.dialog.ProgressDialog
 import com.ham.onettsix.fragment.HomeFragment
 import com.ham.onettsix.utils.ProfileImageUtil

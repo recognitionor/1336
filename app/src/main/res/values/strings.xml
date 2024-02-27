@@ -268,4 +268,8 @@
     <string name="typing_game_rank_validation_message_invalid">앗 하루 도전 기회 3회를 모두 사용 했어요</string>
 
     <string name="chase_notification_msg">🚨%1$s에게 %2$s초로 추격 당하고 있어요🚨</string>
+
+    <string name="ad_dialog_view_ad">광고 보고 참여</string>
+    <string name="ad_dialog_ad_loading">광고 로드중</string>
+    <string name="ad_dialog_no_ad">광고 로드에 실패 했습니다. 잠시후 다시 시도 해주세요</string>
 </resources>

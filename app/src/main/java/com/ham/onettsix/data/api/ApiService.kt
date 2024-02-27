@@ -144,4 +144,7 @@ interface ApiService {
     @GET("/typing-game/validation")
     suspend fun getTypeGameValidation(): TypingGameValidation
 
+    @GET("/getRvConfig")
+    suspend fun getRvConfig(@QueryMap params: HashMap<String, Any?>): RvConfigList
+
 }

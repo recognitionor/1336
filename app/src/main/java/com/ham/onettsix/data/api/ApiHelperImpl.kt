@@ -100,4 +100,7 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun getTypeGameValidation(): TypingGameValidation =
         apiService.getTypeGameValidation()
 
+    override suspend fun getRvConfig(params: HashMap<String, Any?>): RvConfigList =
+        apiService.getRvConfig(params)
+
 }

@@ -30,6 +30,43 @@ class AdmobAdapter {
 
     fun load(
         activity: Activity,
+        placementId: String,
+        rvId: String,
+        signature: String,
+        listener: AdManager.AdManagerListener
+    ) {
+        MobileAds.initialize(
+            activity
+        ) {
+            val adRequest = AdRequest.Builder().build()
+            RewardedAd.load(
+                activity,
+                placementId,
+                adRequest,
+                object : RewardedAdLoadCallback() {
+
+                    override fun onAdFailedToLoad(error: LoadAdError) {
+                        super.onAdFailedToLoad(error)
+                        listener.onFailLoaded(error.message)
+                    }
+
+                    override fun onAdLoaded(rewardedAd: RewardedAd) {
+                        super.onAdLoaded(rewardedAd)
+                        val serverSideVerificationOptions = ServerSideVerificationOptions.Builder()
+                        serverSideVerificationOptions.setUserId(rvId)
+                        serverSideVerificationOptions.setCustomData(signature)
+                        listener.onSuccessLoaded()
+                        rewardedAd.setServerSideVerificationOptions(serverSideVerificationOptions.build())
+                        rewardedAd.show(
+                            activity
+                        ) {}
+                    }
+                })
+        }
+    }
+
+    fun load(
+        activity: Activity,
         videoData: VideoSignature.Data,
         rvConfig: RVConfig,
         listener: AdManager.AdManagerListener
@@ -55,10 +92,19 @@ class AdmobAdapter {
                         serverSideVerificationOptions.setUserId(videoData.rvId)
                         serverSideVerificationOptions.setCustomData(videoData.signature)
                         listener.onSuccessLoaded()
+                        rewardedAd.fullScreenContentCallback =
+                            object : FullScreenContentCallback() {
+                                override fun onAdDismissedFullScreenContent() {
+                                    super.onAdDismissedFullScreenContent()
+                                    listener.onClosed()
+                                }
+                            }
                         rewardedAd.setServerSideVerificationOptions(serverSideVerificationOptions.build())
                         rewardedAd.show(
                             activity
-                        ) {}
+                        ) {
+
+                        }
                     }
                 })
         }

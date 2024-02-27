@@ -16,5 +16,6 @@ data class RVConfig(
 
     @SerializedName("etcConfig1") val etcConfig1: String,
 
-    @SerializedName("etcConfig2") val etcConfig2: String
-) : Parcelable
+    @SerializedName("etcConfig2") val etcConfig2: String,
+
+    ) : Parcelable

@@ -67,5 +67,9 @@ object ParamsKeys {
 
     const val KEY_LOTTERY_COUNT = "lotteryCount"
 
+    const val KEY_TYPING = "typing"
+
+    const val KEY_AD_UNIT_ID = "adUnitId"
+
 
 }

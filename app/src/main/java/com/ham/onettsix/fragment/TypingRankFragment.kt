@@ -4,6 +4,7 @@ import android.animation.AnimatorInflater
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.ham.onettsix.data.local.DatabaseHelperImpl
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.model.TypingGameRankMain
 import com.ham.onettsix.databinding.FragmentTypingRankBinding
+import com.ham.onettsix.dialog.AdDialog
 import com.ham.onettsix.dialog.OneButtonDialog
 import com.ham.onettsix.dialog.TwoButtonDialog
 import com.ham.onettsix.utils.Status
@@ -77,10 +79,14 @@ class TypingRankFragment : Fragment() {
             ) {
             }
         })
-
-
         setupObserver()
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModelStore.clear()
+        typingRankViewModel.typingGameValidation.removeObservers(viewLifecycleOwner)
     }
 
     private fun setupObserver() {
@@ -91,8 +97,7 @@ class TypingRankFragment : Fragment() {
                     val maxCnt = result.data?.data?.maxCount ?: 0
                     val remainedTicket = result.data?.data?.remainedTicket ?: 0
                     if (remainedTicket < 1) {
-                        val message =
-                            getString(R.string.no_ticket)
+                        val message = getString(R.string.no_ticket)
                         OneButtonDialog(
                             getString(R.string.typing_game_rank_validation_title), message
                         ) {
@@ -104,11 +109,19 @@ class TypingRankFragment : Fragment() {
                     if (joinCnt >= maxCnt) {
                         val message =
                             getString(R.string.typing_game_rank_validation_message_invalid)
-                        OneButtonDialog(
-                            getString(R.string.typing_game_rank_validation_title), message
-                        ) {
+                        AdDialog(getString(R.string.typing_game_rank_validation_title), message) {
                             it.dismiss()
-                        }.show(this@TypingRankFragment.childFragmentManager, OneButtonDialog.TAG)
+                            val intent =
+                                Intent(requireContext(), TypingGameActivity::class.java)
+                            val rankMainData = typingRankViewModel.rankGame.value?.data
+                            rankMainData?.let {
+                                intent.putExtra(ExtraKey.TYPING_GAME_CONTENT, it.content)
+                                intent.putExtra(ExtraKey.TYPING_GAME_QUESTION_ID, it.questionId)
+                                intent.putExtra(ExtraKey.TYPING_GAME_EPISODE, it.episode)
+                                intent.putExtra(ExtraKey.TYPING_GAME_IS_RANK_GAME, true)
+                                startForResult.launch(intent)
+                            }
+                        }.show(this@TypingRankFragment.childFragmentManager, AdDialog.TAG)
                     } else {
                         val message = getString(
                             R.string.typing_game_rank_validation_message_valid,
@@ -237,7 +250,7 @@ class TypingRankFragment : Fragment() {
         var chaseUser: TypingGameRankMain.Data.TypingGameHistoryResItem?
         var myInfo: TypingGameRankMain.Data.TypingGameHistoryResItem?
         try {
-            if (gameList != null && gameList.isNotEmpty() && userInfo != null) {
+            if (!gameList.isNullOrEmpty() && userInfo != null) {
                 gameList.forEachIndexed { index, typingGameHistoryResItem ->
                     if (typingGameHistoryResItem.userId == userInfo.uid?.toLong()) {
                         if (gameList[index + 1].userId != userInfo.uid.toLong()) {

@@ -141,8 +141,6 @@ class VideoFragment : Fragment(), View.OnClickListener, AdManager.AdManagerListe
                             return@observe
                         }
                     }
-
-
                 }
 
                 Status.ERROR -> {

@@ -1,6 +1,5 @@
 package com.ham.onettsix.dialog
 
-import android.app.ActionBar.LayoutParams
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

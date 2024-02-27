@@ -19,7 +19,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.logging.Logger
 
 class TypingRankViewModel(
     private val apiHelper: ApiHelper,
@@ -62,7 +61,6 @@ class TypingRankViewModel(
         }
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
-
                 val params = apiHelper.getTypeGameValidation()
                 typingGameValidation.postValue(Resource.success(params))
             }
