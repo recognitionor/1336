@@ -1,10 +1,12 @@
 package com.ham.onettsix.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.ham.onettsix.R
 import com.ham.onettsix.data.api.UrlInfo
@@ -31,9 +33,11 @@ class EulaFragment(private val sectionNumber: Int, private val listener: OnEulaR
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val url = if (sectionNumber == 0) "https://eula.onettsix.com/get/eula" else "https://eula.onettsix.com/get/personalPrivacy"
+        val url =
+            if (sectionNumber == 0) "https://eula.onettsix.com/get/eula" else "https://eula.onettsix.com/get/personalPrivacy"
 
         binding.webviewEula.loadUrl(url)
         isReadDone = listener.getCheckState(sectionNumber)

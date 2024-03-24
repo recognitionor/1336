@@ -49,12 +49,17 @@ class BottomPopupAlert(ctx: Context, attrs: AttributeSet) : FrameLayout(ctx, att
         update()
     }
 
-    private fun update() {
+    fun update() {
+        var minInfo = Long.MAX_VALUE
         myInfoList?.forEach {
             if (it.questionId == rankGameInfo?.questionId) {
-                binding.bottomUserRecord.text = TimeUtils.getSecondString(it.duration) + "초"
-                return
+                if (it.duration < minInfo) {
+                    minInfo = it.duration
+                }
             }
+        }
+        if (minInfo < Long.MAX_VALUE) {
+            binding.bottomUserRecord.text = TimeUtils.getSecondString(minInfo) + "초"
         }
     }
 

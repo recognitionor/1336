@@ -38,6 +38,7 @@ class TypingRankFragment : Fragment() {
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
             typingRankViewModel.getRankMain()
+            typingRankViewModel.getMyPage()
         }
 
     private val typingRankViewModel by lazy {
@@ -172,6 +173,7 @@ class TypingRankFragment : Fragment() {
                 Status.SUCCESS -> {
                     alertLayout()
                     binding.typingBottomAlert.setMyInfoListData(result.data)
+                    binding.typingBottomAlert.update()
                 }
 
                 Status.LOADING -> {}
