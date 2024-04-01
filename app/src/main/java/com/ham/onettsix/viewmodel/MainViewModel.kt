@@ -5,11 +5,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ham.onettsix.ad.AdManager
 import com.ham.onettsix.data.api.ApiHelper
 import com.ham.onettsix.data.api.RetrofitBuilder
 import com.ham.onettsix.data.local.DatabaseHelper
 import com.ham.onettsix.data.local.PreferencesHelper
 import com.ham.onettsix.data.local.entity.DBUser
+import com.ham.onettsix.data.model.VideoSignature
 import com.ham.onettsix.utils.Resource
 import kotlinx.coroutines.*
 
@@ -20,7 +22,6 @@ class MainViewModel(
 ) : ViewModel() {
 
     val userInfo = MutableLiveData<Resource<DBUser>>()
-
 
     fun isLogin(): Boolean {
         return (userInfo.value?.data?.uid ?: -1) > 0

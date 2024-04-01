@@ -3,6 +3,7 @@ package com.ham.onettsix
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +21,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
+import com.ham.onettsix.ad.AdManager
 import com.ham.onettsix.constant.ActivityResultKey.LOGIN_RESULT_OK
 import com.ham.onettsix.data.api.ApiHelperImpl
 import com.ham.onettsix.data.api.RetrofitBuilder
@@ -132,6 +135,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         navHeaderBinding.navHeaderImg.setOnClickListener(this)
         navHeaderBinding.navHeaderNickname.setOnClickListener(this)
+        MobileAds.initialize(
+            this
+        )
     }
 
     private fun setupObserve() {

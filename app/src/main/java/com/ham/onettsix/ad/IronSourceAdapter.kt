@@ -50,7 +50,9 @@ class IronSourceAdapter private constructor() {
                         if (isReady) {
                             listener.onSuccessLoaded()
                             IronSource.setDynamicUserId(videoData.rvId)
-                            IronSource.showRewardedVideo(rvConfig.placementId)
+                            if (!AdManager.getInstance().isTimeout.get()) {
+                                IronSource.showRewardedVideo(rvConfig.placementId)
+                            }
                         }
                     }
 

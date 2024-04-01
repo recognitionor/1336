@@ -3,10 +3,11 @@ package com.ham.onettsix.ad
 import android.app.Activity
 import android.util.Log
 import com.ham.onettsix.data.model.VideoSignature
+import java.util.concurrent.atomic.AtomicBoolean
 
 class AdManager private constructor() {
 
-    var isTimeout = false
+    var isTimeout: AtomicBoolean = AtomicBoolean(false)
 
     var isLoaded = false
 
@@ -31,14 +32,18 @@ class AdManager private constructor() {
             return instance as AdManager
         }
     }
+
     fun load(videoData: VideoSignature.Data, activity: Activity, listener: AdManagerListener) {
         videoData.rvConfig[0].let {
             when (it.network) {
                 ADMOB -> {
-                    AdmobAdapter.getInstance().load(activity, videoData, it, listener)
+                    AdmobAdapter.getInstance()
+                        .load(activity, videoData, it, listener)
                 }
+
                 IRONSOURCE -> {
-                    IronSourceAdapter.getInstance().load(activity, videoData, it, listener)
+                    IronSourceAdapter.getInstance()
+                        .load(activity, videoData, it, listener)
                 }
             }
         }

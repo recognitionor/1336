@@ -18,4 +18,6 @@ data class RVConfig(
 
     @SerializedName("etcConfig2") val etcConfig2: String,
 
-    ) : Parcelable
+    @SerializedName("timeout") val timeout: Int
+
+) : Parcelable

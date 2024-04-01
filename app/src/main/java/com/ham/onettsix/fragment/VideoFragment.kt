@@ -1,6 +1,7 @@
 package com.ham.onettsix.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -117,20 +118,23 @@ class VideoFragment : Fragment(), View.OnClickListener, AdManager.AdManagerListe
                         binding.videoValidCheckBtn.text = getString(R.string.video_btn)
                         binding.videoValidCheckBtn.isEnabled = true
                         AdManager.getInstance().isLoaded = false
-                        AdManager.getInstance().isTimeout = false
+                        AdManager.getInstance().isTimeout.set(false)
                         it.data.data.let { signature ->
                             if (signature.rvConfig.isNotEmpty()) {
                                 val placementId = signature.rvConfig[0].placementId
+                                val timeout = signature.rvConfig[0].timeout
+                                val offset = System.currentTimeMillis()
                                 if (placementId.isNotEmpty()) {
                                     lifecycleScope.launch {
-                                        delay(20000L)
+                                        delay(timeout.toLong())
                                         progressDialog.dismiss()
-                                        AdManager.getInstance().isTimeout = true
+                                        AdManager.getInstance().isTimeout.set(true)
                                         if (!AdManager.getInstance().isLoaded) {
                                             onFailLoaded("Load TimeOut")
                                         }
                                     }.start()
-                                    AdManager.getInstance().load(signature, requireActivity(), this@VideoFragment)
+                                    AdManager.getInstance()
+                                        .load(signature, requireActivity(), this@VideoFragment)
                                     return@observe
                                 }
                             }
@@ -170,13 +174,11 @@ class VideoFragment : Fragment(), View.OnClickListener, AdManager.AdManagerListe
 
     override fun onSuccessLoaded() {
         AdManager.getInstance().isLoaded = true
-        AdManager.getInstance().isTimeout = false
         progressDialog.dismiss()
     }
 
     override fun onFailLoaded(error: String) {
         AdManager.getInstance().isLoaded = false
-        AdManager.getInstance().isTimeout = false
         progressDialog.dismiss()
         Toast.makeText(
             requireContext(),
