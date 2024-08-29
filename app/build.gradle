@@ -48,9 +48,9 @@ android {
     defaultConfig {
         applicationId "com.ham.onettsix"
         minSdk 21
-        targetSdk 33
-        versionCode 143
-        versionName "1.4.3"
+        targetSdk 34
+        versionCode 144
+        versionName "1.4.4"
         multiDexEnabled = true
     }
 
